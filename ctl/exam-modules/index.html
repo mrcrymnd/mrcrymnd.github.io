@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+	<meta name="generator" content="Hugo 0.104.2">
+	<title>Physical Exam Modules</title>
+	<link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/album/">
+	<link href="https://getbootstrap.com/docs/5.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+	<meta name="theme-color" content="#000d74">
+	<style>		
+		body { 
+		  background: url(cuimc.jpg) no-repeat center center; 
+		  -webkit-background-size: cover;
+		  -moz-background-size: cover;
+		  -o-background-size: cover;
+		  background-size: cover;
+		font-family: 'Montserrat', sans-serif;}    
+	</style>
+	<script>
+function myFunction() {
+  // Declare variables
+  var input, filter, div, a, i, txtValue;
+  input = document.getElementById('myInput');
+  filter = input.value.toUpperCase();
+div= document.getElementById("myAlbum");
+  li = ul.getElementsByTagName('li');
+
+  // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      div[i].style.display = "";
+    } else {
+      div[i].style.display = "none";
+    }
+  }
+}
+</script>
+</head>
+<body>
+<main> 
+<section class="py-5 text-center container">
+	<div class="row py-lg-5">
+		<div class="col-lg-8 col-md-10 mx-auto">     
+			<h1 class="text-light display-1">
+				Physical Exam Modules 
+			</h1>
+			<p class="lead text-light">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur sapien eu ligula congue egestas. Sed fringilla diam massa, sit amet pharetra quam tempor pulvinar. 
+			</p>
+		</div>
+	</div>
+	<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for modules.">
+</section>
+<div class="album py-5" id="myAlbum">
+	<div class="container">
+		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-3">
+			<div class="col">
+				<div class="card">
+					<img class="bd-placeholder-img card-img-top" height="100%" src="iStock-898903946.jpg" /> 
+					<div class="card-body">
+						<div class="card-title">
+							Gynecological Exam 
+						</div>
+						<p class="card-text">
+							This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. 
+						</p>
+						<div class="d-flex justify-content-between align-items-center">
+							<a href="https://www1.columbia.edu/sec/ccnmtl/remote/static/learningobjects/stream/Barron/exams/exam-gyn/story.html" target="_blank" class="btn btn-sm btn-outline-primary">Launch</a> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="bd-placeholder-img card-img-top" height="100%" src="https://dummyimage.com/2119x1414/ccc/666&text=Placeholder" /> 
+					<div class="card-body">
+						<div class="card-title">
+							Title 
+						</div>
+						<p class="card-text">
+							This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. 
+						</p>
+						<div class="d-flex justify-content-between align-items-center">
+							<button type="button" class="btn btn-sm btn-outline-primary">Launch</button> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="bd-placeholder-img card-img-top" height="100%" src="https://dummyimage.com/2119x1414/ccc/666&text=Placeholder" /> 
+					<div class="card-body">
+						<div class="card-title">
+							Title 
+						</div>
+						<p class="card-text">
+							This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. 
+						</p>
+						<div class="d-flex justify-content-between align-items-center">
+							<button type="button" class="btn btn-sm btn-outline-primary">Launch</button> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="bd-placeholder-img card-img-top" height="100%" src="https://dummyimage.com/2119x1414/ccc/666&text=Placeholder" /> 
+					<div class="card-body">
+						<div class="card-title">
+							Title 
+						</div>
+						<p class="card-text">
+							This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. 
+						</p>
+						<div class="d-flex justify-content-between align-items-center">
+							<button type="button" class="btn btn-sm btn-outline-primary">Launch</button> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="bd-placeholder-img card-img-top" height="100%" src="https://dummyimage.com/2119x1414/ccc/666&text=Placeholder" /> 
+					<div class="card-body">
+						<div class="card-title">
+							Title 
+						</div>
+						<p class="card-text">
+							This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. 
+						</p>
+						<div class="d-flex justify-content-between align-items-center">
+							<button type="button" class="btn btn-sm btn-outline-primary">Launch</button> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="bd-placeholder-img card-img-top" height="100%" src="https://dummyimage.com/2119x1414/ccc/666&text=Placeholder" /> 
+					<div class="card-body">
+						<div class="card-title">
+							Title 
+						</div>
+						<p class="card-text">
+							This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. 
+						</p>
+						<div class="d-flex justify-content-between align-items-center">
+							<button type="button" class="btn btn-sm btn-outline-primary">Launch</button> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="bd-placeholder-img card-img-top" height="100%" src="https://dummyimage.com/2119x1414/ccc/666&text=Placeholder" /> 
+					<div class="card-body">
+						<div class="card-title">
+							Title 
+						</div>
+						<p class="card-text">
+							This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. 
+						</p>
+						<div class="d-flex justify-content-between align-items-center">
+							<button type="button" class="btn btn-sm btn-outline-primary">Launch</button> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="bd-placeholder-img card-img-top" height="100%" src="https://dummyimage.com/2119x1414/ccc/666&text=Placeholder" /> 
+					<div class="card-body">
+						<div class="card-title">
+							Title 
+						</div>
+						<p class="card-text">
+							This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. 
+						</p>
+						<div class="d-flex justify-content-between align-items-center">
+							<button type="button" class="btn btn-sm btn-outline-primary">Launch</button> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="bd-placeholder-img card-img-top" height="100%" src="https://dummyimage.com/2119x1414/ccc/666&text=Placeholder" /> 
+					<div class="card-body">
+						<div class="card-title">
+							Title 
+						</div>
+						<p class="card-text">
+							This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. 
+						</p>
+						<div class="d-flex justify-content-between align-items-center">
+							<button type="button" class="btn btn-sm btn-outline-primary">Launch</button> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="bd-placeholder-img card-img-top" height="100%" src="https://dummyimage.com/2119x1414/ccc/666&text=Placeholder" /> 
+					<div class="card-body">
+						<div class="card-title">
+							Title 
+						</div>
+						<p class="card-text">
+							This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. 
+						</p>
+						<div class="d-flex justify-content-between align-items-center">
+							<button type="button" class="btn btn-sm btn-outline-primary">Launch</button> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="bd-placeholder-img card-img-top" height="100%" src="https://dummyimage.com/2119x1414/ccc/666&text=Placeholder" /> 
+					<div class="card-body">
+						<div class="card-title">
+							Title 
+						</div>
+						<p class="card-text">
+							This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. 
+						</p>
+						<div class="d-flex justify-content-between align-items-center">
+							<button type="button" class="btn btn-sm btn-outline-primary">Launch</button> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="bd-placeholder-img card-img-top" height="100%" src="https://dummyimage.com/2119x1414/ccc/666&text=Placeholder" /> 
+					<div class="card-body">
+						<div class="card-title">
+							Title 
+						</div>
+						<p class="card-text">
+							This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. 
+						</p>
+						<div class="d-flex justify-content-between align-items-center">
+							<button type="button" class="btn btn-sm btn-outline-primary">Launch</button> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="bd-placeholder-img card-img-top" height="100%" src="https://dummyimage.com/2119x1414/ccc/666&text=Placeholder" /> 
+					<div class="card-body">
+						<div class="card-title">
+							Title 
+						</div>
+						<p class="card-text">
+							This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. 
+						</p>
+						<div class="d-flex justify-content-between align-items-center">
+							<button type="button" class="btn btn-sm btn-outline-primary">Launch</button> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="bd-placeholder-img card-img-top" height="100%" src="https://dummyimage.com/2119x1414/ccc/666&text=Placeholder" /> 
+					<div class="card-body">
+						<div class="card-title">
+							Title 
+						</div>
+						<p class="card-text">
+							This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. 
+						</p>
+						<div class="d-flex justify-content-between align-items-center">
+							<button type="button" class="btn btn-sm btn-outline-primary">Launch</button> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="bd-placeholder-img card-img-top" height="100%" src="https://dummyimage.com/2119x1414/ccc/666&text=Placeholder" /> 
+					<div class="card-body">
+						<div class="card-title">
+							Title 
+						</div>
+						<p class="card-text">
+							This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. 
+						</p>
+						<div class="d-flex justify-content-between align-items-center">
+							<button type="button" class="btn btn-sm btn-outline-primary">Launch</button> 
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="bd-placeholder-img card-img-top" height="100%" src="https://dummyimage.com/2119x1414/ccc/666&text=Placeholder" /> 
+					<div class="card-body">
+						<div class="card-title">
+							Title 
+						</div>
+						<p class="card-text">
+							This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer. 
+						</p>
+						<div class="d-flex justify-content-between align-items-center">
+							<button type="button" class="btn btn-sm btn-outline-primary">Launch</button> 
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</main> 
+<footer class="text-light py-5">
+	<div class="container">
+		<p class="float-end">
+			<a href="#" class="btn btn-sm btn-light">Back to top</a> 
+		</p>
+		<p class="mb-1">
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec efficitur sapien eu ligula congue egestas. 
+		</p>
+		<p class="mb-1">
+			Sed fringilla diam massa, sit amet pharetra quam tempor pulvinar. 
+		</p>
+	</div>
+</footer>
+<script src="/docs/5.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+#START Siteplus builder rules section
+#Do not delete/modify this section for preventing broke you builder
+#If you need some additional rules for you application you can add them after this section
+
+RewriteEngine On
+RewriteBase /
+ErrorDocument 404 /404.html
+DirectoryIndex index.html index.php index.shtml
+#END Siteplus builder rules section
