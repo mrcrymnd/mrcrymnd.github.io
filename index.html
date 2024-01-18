@@ -3,7 +3,7 @@
 * Author           : Jorge Perez
 * Version          : 2.0.2
 * Updated          : November 2023
-* File Description : Background Gradient index.html file. ------------------->
+* File Description : Background Video index.html file. ------------------->
 
 <!DOCTYPE html>
 
@@ -38,7 +38,7 @@
     <!-- Custom Style CSS -->
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <!-- Custom BG Video CSS -->
-    <link rel="stylesheet" type="text/css" href="assets/css/colors/gradient-bg.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/colors/video-mode.css">
 
 </head>
 
@@ -51,6 +51,18 @@
         </div>
     </div>
     <!-- 1. End: Loader/Spinner --------------------->
+
+
+    <!-- Background Video Player --------------------------------------------------------------------------------------
+        The parameters of the playback are specified in the line below, IE:
+        Autoplay starts the video automatically, Loop, muted, etc -------------------------------------------------------->
+    <video autoplay loop muted playsinline class="bg-video">
+
+        <!-- Change your video here - (Make sure the video is placed inside the "images" folder) -->
+        <!-- replace the src="your video here" with the actual video path  -->
+        <source src="assets/images/gradient.mp4" type="video/mp4" />
+
+    </video>
 
 
     <!-- 3. Start: Header Section ------------------->
