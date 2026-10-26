@@ -1,1 +1,1417 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="support.js"></script>
 
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>:root{--bs-primary:#1D4F91;--bs-primary-rgb:29,79,145;--bs-primary-bg-subtle:#E4ECF7;--bs-primary-border-subtle:#C9D8EE;--bs-primary-text-emphasis:#163D72;--bs-link-color:#1D4F91;--bs-link-color-rgb:29,79,145;--bs-link-hover-color:#163D72;--bs-link-hover-color-rgb:22,61,114;
+--cuimc-navy:#1D4F91;--cuimc-navy-dark:#163D72;--cuimc-card-blue:#2058A2;--cuimc-accent:#0077C8;--cuimc-accent-dark:#005FA3;
+--bs-body-font-family:'Montserrat',system-ui,sans-serif;--bs-body-color:#15232B;--bs-secondary-color:#5A6B75;--bs-border-color:#DCE3E7;--bs-focus-ring-color:rgba(29,79,145,.35);
+--bs-border-radius:2px;--bs-border-radius-sm:2px;--bs-border-radius-lg:2px;--bs-border-radius-xl:2px;--bs-border-radius-xxl:2px;--bs-border-radius-pill:2px;
+--bs-success:#1E7B4F;--bs-success-rgb:30,123,79;--bs-success-bg-subtle:#E3F3EA;--bs-success-border-subtle:#BFE0CE;--bs-success-text-emphasis:#1E7B4F;
+--bs-warning:#B26A00;--bs-warning-rgb:178,106,0;--bs-warning-bg-subtle:#FFF3D6;--bs-warning-border-subtle:#F2D9A0;--bs-warning-text-emphasis:#8A5200;
+--bs-danger:#B42318;--bs-danger-rgb:180,35,24;--bs-danger-bg-subtle:#FDE8E6;--bs-danger-border-subtle:#F5C2BD;--bs-danger-text-emphasis:#B42318;
+--bs-info:#0B6A8F;--bs-info-rgb:11,106,143;--bs-info-bg-subtle:#E1F1F7;--bs-info-border-subtle:#B7DCEA;--bs-info-text-emphasis:#0B6A8F;
+--bs-form-invalid-color:#B42318;--bs-form-invalid-border-color:#B42318}
+body{background:#F4F6F7;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6,.card-title{font-weight:700;line-height:1.2}
+a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
+.btn-link{font-weight:600}
+.btn:focus-visible{box-shadow:0 0 0 .25rem rgba(29,79,145,.35)!important}
+.btn-primary{--bs-btn-bg:#1D4F91;--bs-btn-border-color:#1D4F91;--bs-btn-hover-bg:#163D72;--bs-btn-hover-border-color:#163D72;--bs-btn-active-bg:#122F59;--bs-btn-active-border-color:#122F59;--bs-btn-disabled-bg:#1D4F91;--bs-btn-disabled-border-color:#1D4F91;--bs-btn-focus-shadow-rgb:29,79,145}
+.btn-cta{--bs-btn-bg:#0077C8;--bs-btn-border-color:#0077C8;--bs-btn-color:#fff;--bs-btn-hover-bg:#005FA3;--bs-btn-hover-border-color:#005FA3;--bs-btn-hover-color:#fff;--bs-btn-active-bg:#004D85;--bs-btn-active-border-color:#004D85;--bs-btn-active-color:#fff;--bs-btn-font-weight:600;--bs-btn-focus-shadow-rgb:29,79,145;min-height:44px}
+.btn-outline-primary{--bs-btn-color:#1D4F91;--bs-btn-border-color:#1D4F91;--bs-btn-hover-bg:#1D4F91;--bs-btn-hover-border-color:#1D4F91;--bs-btn-active-bg:#163D72;--bs-btn-active-border-color:#163D72;--bs-btn-focus-shadow-rgb:29,79,145}
+.btn-success{--bs-btn-bg:#1E7B4F;--bs-btn-border-color:#1E7B4F;--bs-btn-hover-bg:#17603D;--bs-btn-hover-border-color:#17603D;--bs-btn-active-bg:#124D31;--bs-btn-active-border-color:#124D31}
+.btn-outline-success{--bs-btn-color:#1E7B4F;--bs-btn-border-color:#1E7B4F;--bs-btn-hover-bg:#1E7B4F;--bs-btn-hover-border-color:#1E7B4F;--bs-btn-active-bg:#17603D;--bs-btn-active-border-color:#17603D}
+.btn-danger{--bs-btn-bg:#B42318;--bs-btn-border-color:#B42318;--bs-btn-hover-bg:#8F1C13;--bs-btn-hover-border-color:#8F1C13;--bs-btn-active-bg:#7A170F;--bs-btn-active-border-color:#7A170F}
+.btn-outline-danger{--bs-btn-color:#B42318;--bs-btn-border-color:#B42318;--bs-btn-hover-bg:#B42318;--bs-btn-hover-border-color:#B42318;--bs-btn-active-bg:#8F1C13;--bs-btn-active-border-color:#8F1C13}
+.nav{--bs-nav-link-color:#3A4A53;--bs-nav-link-hover-color:#1D4F91}
+.nav-tabs{--bs-nav-tabs-link-active-color:#1D4F91;--bs-nav-tabs-border-radius:0}
+.nav-tabs .nav-link.active{border-top:3px solid #0077C8}
+.nav-dark .nav-link{color:#FFFFFF}
+.nav-dark .nav-link:hover,.nav-dark .nav-link:focus-visible{color:#FFFFFF;background:rgba(255,255,255,.12)}
+.nav-dark .nav-link.active{color:#FFFFFF;background:#0077C8;font-weight:600}
+.progress{--bs-progress-bar-bg:#1D4F91;--bs-progress-bg:#DCE3E7}
+.list-group{--bs-list-group-active-bg:#1D4F91;--bs-list-group-active-border-color:#1D4F91}
+.breadcrumb{--bs-breadcrumb-item-active-color:#15232B}
+.card{--bs-card-border-color:#DCE3E7}
+.card-title--accent::after{content:"";display:block;width:32px;height:2px;margin-top:10px;background:#0077C8}
+.card-blue{background:#2058A2;border-color:#2058A2;color:#FFFFFF}
+.card-blue .card-title--accent::after{background:#FFFFFF}
+.alert{border-left-width:4px}
+.alert-primary{border-left-color:#1D4F91}.alert-success{border-left-color:#1E7B4F}.alert-danger{border-left-color:#B42318}.alert-warning{border-left-color:#B26A00}.alert-info{border-left-color:#0B6A8F}.alert-secondary{border-left-color:#5A6B75}
+.form-control,.form-select{border-color:#DCE3E7}
+.form-control:focus,.form-select:focus,.form-check-input:focus{border-color:#1D4F91;box-shadow:0 0 0 .25rem rgba(29,79,145,.35)}
+.form-check-input:checked{background-color:#1D4F91;border-color:#1D4F91}</style>
+</helmet>
+<div class="d-flex min-vh-100">
+<sc-if value="{{ showSidebar }}" hint-placeholder-val="{{ false }}">
+<!-- TODO: replace with approved CUIMC lockup (placeholder "e" mark below and in the student top bar, landing and sign-in pages) -->
+<aside class="d-flex flex-column flex-shrink-0 p-3 sticky-top vh-100 text-white" style="width:240px;background:#1D4F91">
+<button type="button" sc-camel-on-click="{{ goHome }}" class="btn d-flex align-items-center gap-2 px-2 border-0 text-white">
+<span class="bg-white rounded-2 d-inline-flex align-items-center justify-content-center fw-bold" style="width:36px;height:36px;font-size:12px;letter-spacing:-.02em;color:#B42318">R4R</span>
+<span class="fs-5 fw-bold">eHospital</span>
+</button>
+<div class="fw-semibold text-uppercase px-3 pt-4 pb-2" style="letter-spacing:.08em;font-size:12px;color:rgba(255,255,255,.8)">Faculty</div>
+<ul class="nav nav-pills nav-dark flex-column gap-1">
+<sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+<li class="nav-item">
+<sc-if value="{{ n.active }}"><button type="button" sc-camel-on-click="{{ n.onClick }}" class="nav-link active w-100 text-start fw-semibold d-flex align-items-center gap-2">{{ n.label }}<sc-if value="{{ n.hasBadge }}"><span class="badge bg-danger ms-auto" aria-label="{{ n.badgeLabel }}">{{ n.badge }}</span></sc-if></button></sc-if>
+<sc-if value="{{ n.inactive }}"><button type="button" sc-camel-on-click="{{ n.onClick }}" class="nav-link w-100 text-start d-flex align-items-center gap-2">{{ n.label }}<sc-if value="{{ n.hasBadge }}"><span class="badge bg-danger ms-auto" aria-label="{{ n.badgeLabel }}">{{ n.badge }}</span></sc-if></button></sc-if>
+</li>
+</sc-for>
+</ul>
+<div class="mt-auto d-flex align-items-center gap-2 pt-3" style="border-top:1px solid rgba(255,255,255,.25)">
+<span class="rounded-circle bg-white text-primary d-inline-flex align-items-center justify-content-center fw-bold small flex-shrink-0" style="width:34px;height:34px">{{ facultyInitials }}</span>
+<div class="flex-grow-1" style="min-width:0">
+<div class="small fw-semibold text-truncate">{{ facultyName }}</div>
+<div class="d-flex align-items-center gap-2"><span class="badge bg-white text-primary">Faculty</span><button type="button" sc-camel-on-click="{{ signOut }}" class="btn btn-link btn-sm p-0 text-white">Sign out</button></div>
+</div>
+</div>
+</aside>
+</sc-if>
+
+<div class="flex-grow-1 d-flex flex-column" style="min-width:0">
+<sc-if value="{{ showTopbar }}" hint-placeholder-val="{{ false }}">
+<nav class="navbar navbar-expand px-3 px-lg-4 text-white" style="background:#1D4F91">
+<div class="container-fluid gap-3 flex-wrap">
+<button type="button" sc-camel-on-click="{{ goHome }}" class="navbar-brand btn d-flex align-items-center gap-2 border-0 p-0 text-white">
+<span class="bg-white rounded-2 d-inline-flex align-items-center justify-content-center fw-bold" style="width:34px;height:34px;font-size:12px;letter-spacing:-.02em;color:#B42318">R4R</span>
+<span class="fw-bold">eHospital</span>
+</button>
+<ul class="nav nav-pills nav-dark me-auto gap-1">
+<sc-for list="{{ studentNav }}" as="n" hint-placeholder-count="3">
+<li class="nav-item">
+<sc-if value="{{ n.active }}"><button type="button" sc-camel-on-click="{{ n.onClick }}" class="nav-link active">{{ n.label }}</button></sc-if>
+<sc-if value="{{ n.inactive }}"><button type="button" sc-camel-on-click="{{ n.onClick }}" class="nav-link">{{ n.label }}</button></sc-if>
+</li>
+</sc-for>
+</ul>
+<div class="d-flex align-items-center gap-3">
+<span class="badge bg-white text-primary">Student</span>
+<span class="fw-medium">{{ studentName }}</span>
+<button type="button" sc-camel-on-click="{{ signOut }}" class="btn btn-outline-light btn-sm">Sign out</button>
+</div>
+</div>
+</nav>
+</sc-if>
+
+<sc-if value="{{ isLanding }}" hint-placeholder-val="{{ true }}">
+<div class="min-vh-100 d-flex flex-column">
+<header class="d-flex align-items-center gap-2 px-4 px-lg-5 py-4">
+<span class="rounded-2 d-inline-flex align-items-center justify-content-center fw-bold" style="width:36px;height:36px;font-size:12px;letter-spacing:-.02em;color:#FFFFFF;background:#B42318">R4R</span>
+<span class="fs-5 fw-bold">eHospital</span>
+</header>
+<div class="container flex-grow-1 d-flex align-items-center pb-5">
+<div class="row g-5 align-items-center w-100">
+<div class="col-lg-7">
+<div class="small fw-semibold text-uppercase text-primary mb-3" style="letter-spacing:.08em">READY 4 RESIDENCY</div>
+<h1 class="display-4 fw-bold mb-4" style="letter-spacing:-0.025em;text-wrap:balance">Make decisions and take actions as a team.</h1>
+<p class="lead text-secondary mb-0" style="max-width:520px;text-wrap:pretty">eHospital is a core instructional component requiring students to articulate clinical reasoning through frequent prompts related to differential diagnosis, diagnostics, and management decisions.</p>
+</div>
+<div class="col-lg-5">
+<div class="fw-semibold text-secondary mb-3">Sign in to continue</div>
+<div class="d-grid gap-3">
+<button type="button" sc-camel-on-click="{{ chooseStudent }}" class="btn btn-outline-primary btn-lg bg-white text-start d-flex justify-content-between align-items-center p-4">
+<span><span class="d-block fw-semibold text-body">I'm a Student</span><span class="d-block small text-secondary">Work through your rotation prompts</span></span><span>→</span>
+</button>
+<button type="button" sc-camel-on-click="{{ chooseFaculty }}" class="btn btn-primary btn-lg text-start d-flex justify-content-between align-items-center p-4">
+<span><span class="d-block fw-semibold">I'm Faculty</span><span class="d-block small opacity-75">Manage interns, rotations and feedback</span></span><span>→</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isLogin }}" hint-placeholder-val="{{ false }}">
+<div class="min-vh-100 d-flex align-items-center justify-content-center p-4">
+<div class="w-100" style="max-width:400px">
+<button type="button" sc-camel-on-click="{{ goLanding }}" class="btn btn-link text-secondary px-0 mb-3">← Back</button>
+<div class="card">
+<div class="card-body p-4 p-md-5">
+<div class="d-flex align-items-center gap-2 mb-4">
+<span class="rounded-2 d-inline-flex align-items-center justify-content-center fw-bold" style="width:34px;height:34px;font-size:12px;letter-spacing:-.02em;color:#FFFFFF;background:#B42318">R4R</span>
+<span class="fw-bold">eHospital</span>
+</div>
+<h1 class="h4 fw-bold mb-4">{{ loginTitle }}</h1>
+<div class="d-grid"><button type="button" sc-camel-on-click="{{ signIn }}" class="btn btn-cta btn-lg">Use my UNI</button></div>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ inApp }}" hint-placeholder-val="{{ false }}">
+<main class="container-fluid px-4 px-lg-5 py-4 py-lg-5" style="max-width:1180px;margin-left:0">
+
+<sc-if value="{{ hasSoloCrumbs }}">
+<nav aria-label="breadcrumb">
+<ol class="breadcrumb small mb-3">
+<sc-for list="{{ crumbs }}" as="c">
+<sc-if value="{{ c.isLink }}"><li class="breadcrumb-item"><button type="button" sc-camel-on-click="{{ c.onClick }}" class="btn btn-link btn-sm p-0 align-baseline text-decoration-none" style="font-size:inherit">{{ c.label }}</button></li></sc-if>
+<sc-if value="{{ c.isCurrent }}"><li class="breadcrumb-item active" aria-current="page">{{ c.label }}</li></sc-if>
+</sc-for>
+</ol>
+</nav>
+</sc-if>
+
+<sc-if value="{{ hasHeader }}">
+<div class="mb-4">
+<sc-if value="{{ hasCrumbs }}">
+<nav aria-label="breadcrumb">
+<ol class="breadcrumb small mb-3">
+<sc-for list="{{ crumbs }}" as="c">
+<sc-if value="{{ c.isLink }}"><li class="breadcrumb-item"><button type="button" sc-camel-on-click="{{ c.onClick }}" class="btn btn-link btn-sm p-0 align-baseline text-decoration-none" style="font-size:inherit">{{ c.label }}</button></li></sc-if>
+<sc-if value="{{ c.isCurrent }}"><li class="breadcrumb-item active" aria-current="page">{{ c.label }}</li></sc-if>
+</sc-for>
+</ol>
+</nav>
+</sc-if>
+<div class="d-flex align-items-end justify-content-between gap-3 flex-wrap">
+<div style="min-width:0">
+<h1 class="h2 fw-bold mb-1" style="letter-spacing:-0.02em">{{ pageTitle }}</h1>
+<sc-if value="{{ hasSub }}"><p class="text-secondary mb-0">{{ pageSub }}</p></sc-if>
+</div>
+<sc-if value="{{ hasHeaderAction }}"><button type="button" sc-camel-on-click="{{ headerAction }}" class="btn btn-outline-primary">{{ headerActionLabel }}</button></sc-if>
+</div>
+<sc-if value="{{ hasTabs }}">
+<ul class="nav nav-tabs mt-4">
+<sc-for list="{{ tabs }}" as="t">
+<li class="nav-item">
+<sc-if value="{{ t.active }}"><button type="button" sc-camel-on-click="{{ t.onClick }}" class="nav-link active fw-semibold d-flex align-items-center gap-2">{{ t.label }}<span class="badge text-bg-primary">{{ t.count }}</span></button></sc-if>
+<sc-if value="{{ t.inactive }}"><button type="button" sc-camel-on-click="{{ t.onClick }}" class="nav-link d-flex align-items-center gap-2">{{ t.label }}<span class="badge bg-secondary-subtle text-secondary-emphasis">{{ t.count }}</span></button></sc-if>
+</li>
+</sc-for>
+</ul>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isFacultyHome }}">
+<div class="mb-4">
+<div class="text-secondary small mb-1">{{ todayLabel }}</div>
+<h1 class="display-6 fw-bold mb-1">Faculty Dashboard</h1>
+<p class="text-secondary mb-0">Signed in as {{ facultyName }}</p>
+</div>
+<div class="row g-3">
+<sc-for list="{{ homeCards }}" as="h" hint-placeholder-count="3">
+<div class="col-md-4">
+<div class="card h-100" style="background:{{ h.tint }};border-color:{{ h.line }};border-top:4px solid {{ h.bg }}">
+<div class="card-body d-flex flex-column p-4">
+<h2 class="h5 card-title mb-3" style="color:{{ h.bg }}">{{ h.title }}</h2>
+<p class="card-text small mb-0" style="color:#2C3B43">{{ h.desc }}</p>
+</div>
+<div class="card-footer bg-transparent d-flex justify-content-between align-items-center px-4 py-3" style="border-top:1px solid {{ h.line }}">
+<span class="small" style="color:#3A4A53">{{ h.stat }}</span>
+<button type="button" sc-camel-on-click="{{ h.onClick }}" class="btn btn-link btn-sm p-0 stretched-link text-nowrap" style="color:{{ h.bg }}">Open →</button>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+<div class="card mt-4">
+<div class="card-header bg-white d-flex justify-content-between align-items-center gap-2 flex-wrap py-3">
+<div class="d-flex align-items-center gap-2"><h2 class="h6 fw-bold mb-0">Unread replies</h2><sc-if value="{{ hasUnread }}"><span class="badge bg-danger">{{ unreadCount }}</span></sc-if></div>
+<div class="d-flex align-items-center gap-3">
+<sc-if value="{{ hasUnread }}"><button type="button" sc-camel-on-click="{{ markAllRead }}" class="btn btn-link btn-sm p-0 text-secondary">Mark all as read</button></sc-if>
+<button type="button" sc-camel-on-click="{{ goUnread }}" class="btn btn-link btn-sm p-0 fw-semibold text-decoration-none">View all</button>
+</div>
+</div>
+<div class="list-group list-group-flush">
+<sc-for list="{{ unreadPreview }}" as="u" hint-placeholder-count="3">
+<div class="list-group-item d-flex gap-3 align-items-start flex-wrap py-3">
+<span class="rounded-circle bg-primary-subtle text-primary-emphasis d-inline-flex align-items-center justify-content-center fw-bold flex-shrink-0" style="width:36px;height:36px;font-size:12px">{{ u.initials }}</span>
+<div class="flex-grow-1" style="min-width:0;flex-basis:260px">
+<div class="d-flex align-items-center gap-2 flex-wrap"><span class="badge" style="background:#0077C8">New</span><span class="small fw-semibold">{{ u.author }}</span><span class="small text-secondary">{{ u.context }}</span><span class="small text-secondary">· {{ u.time }}</span></div>
+<p class="small mb-1 mt-1" style="text-wrap:pretty">{{ u.snippet }}</p>
+<div class="small text-secondary">{{ u.board }}</div>
+</div>
+<div class="d-flex align-items-center gap-2 flex-shrink-0">
+<button type="button" sc-camel-on-click="{{ u.onView }}" class="btn btn-outline-primary btn-sm">View in discussion</button>
+<button type="button" sc-camel-on-click="{{ u.onMarkRead }}" class="btn btn-link btn-sm text-secondary">Mark as read</button>
+</div>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{ hasMoreUnread }}"><div class="card-footer bg-white py-2"><button type="button" sc-camel-on-click="{{ goUnread }}" class="btn btn-link btn-sm p-0">{{ moreUnreadLabel }}</button></div></sc-if>
+<sc-if value="{{ noUnread }}"><div class="card-body text-center py-4"><div class="fw-semibold mb-1">You’re all caught up</div><div class="small text-secondary">New student replies in discussions will show up here.</div></div></sc-if>
+</div>
+<div class="card mt-4">
+<div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+<h2 class="h6 fw-bold mb-0">Recent feedback</h2>
+<button type="button" sc-camel-on-click="{{ goFeedback }}" class="btn btn-link btn-sm p-0 fw-semibold text-decoration-none">View all</button>
+</div>
+<div class="list-group list-group-flush">
+<sc-for list="{{ recentThreads }}" as="rt" hint-placeholder-count="3">
+<button type="button" sc-camel-on-click="{{ rt.onClick }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start gap-3 py-3">
+<div style="min-width:0"><div class="fw-semibold">{{ rt.title }}</div><div class="small text-secondary">{{ rt.meta }}</div></div>
+<span class="small text-secondary text-nowrap">{{ rt.date }}</span>
+</button>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isStudentHome }}">
+<div style="max-width:820px">
+<div class="text-secondary small mb-1">{{ todayLabel }}</div>
+<h1 class="display-6 fw-bold mb-1">Hi, Marc!</h1>
+<p class="text-secondary mb-4">{{ studentName }} · {{ sTeamName }} · {{ sRotationName }}</p>
+<div class="card mb-4" style="background:#E4ECF7;border-color:#C9D8EE">
+<div class="card-body p-4">
+<div class="small fw-semibold text-uppercase text-primary mb-2" style="letter-spacing:.08em">Continue your rotation</div>
+<h2 class="h4 card-title card-title--accent mb-3">{{ sCurrentTitle }}</h2>
+<p class="small mb-4" style="color:#3A4A53">{{ sCurrentMeta }}</p>
+<div class="progress" role="progressbar" style="height:8px;background:#FFFFFF"><div class="progress-bar" style="width:{{ sProgressPct }}"></div></div>
+<div class="d-flex justify-content-between align-items-center gap-3 flex-wrap mt-3">
+<span class="small" style="color:#3A4A53">{{ sProgressText }}</span>
+<sc-if value="{{ sCanContinue }}"><button type="button" sc-camel-on-click="{{ continueRotation }}" class="btn btn-cta">{{ continueLabel }}</button></sc-if>
+</div>
+</div>
+</div>
+<div class="card mb-4">
+<div class="card-header bg-white d-flex justify-content-between align-items-center gap-2 py-3"><h2 class="h6 fw-bold mb-0">Your teammates</h2><span class="small text-secondary">{{ sTeamName }}</span></div>
+<div class="list-group list-group-flush">
+<sc-for list="{{ sMates }}" as="tm" hint-placeholder-count="3">
+<div class="list-group-item d-flex align-items-center gap-3 py-3">
+<span class="rounded-circle bg-primary-subtle text-primary-emphasis d-inline-flex align-items-center justify-content-center fw-bold small flex-shrink-0" style="width:36px;height:36px">{{ tm.initials }}</span>
+<div class="flex-grow-1" style="min-width:0"><div class="fw-semibold">{{ tm.name }}</div><a href="{{ tm.mailto }}" class="small text-decoration-none">{{ tm.email }}</a></div>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{ sNoMates }}"><div class="card-body text-center text-secondary small py-4">You don’t have any teammates yet.</div></sc-if>
+</div>
+<div class="card">
+<div class="card-header bg-white py-3"><h2 class="h6 fw-bold mb-0">Rotation sequence</h2></div>
+<div class="list-group list-group-flush">
+<sc-for list="{{ sSeq }}" as="q" hint-placeholder-count="4">
+<button type="button" sc-camel-on-click="{{ q.onClick }}" class="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
+<span class="rounded-circle bg-primary-subtle text-primary-emphasis d-inline-flex align-items-center justify-content-center fw-bold small flex-shrink-0" style="width:28px;height:28px">{{ q.num }}</span>
+<div class="flex-grow-1" style="min-width:0"><div class="fw-semibold">{{ q.title }}</div><div class="small text-secondary">{{ q.type }}</div></div>
+<sc-if value="{{ q.done }}"><span class="badge bg-success-subtle text-success-emphasis border border-success-subtle">✓ Completed</span></sc-if>
+<sc-if value="{{ q.current }}"><span class="badge bg-primary-subtle text-primary-emphasis border border-primary-subtle">→ Up next</span></sc-if>
+<sc-if value="{{ q.todo }}"><span class="badge bg-secondary-subtle text-secondary-emphasis border">○ Not started</span></sc-if>
+<sc-if value="{{ q.locked }}"><span class="badge bg-secondary-subtle text-secondary-emphasis border d-inline-flex align-items-center gap-1"><span class="d-inline-flex flex-column align-items-center"><span style="width:5px;height:4px;border:1.5px solid currentColor;border-bottom:none;border-radius:3px 3px 0 0"></span><span style="width:8px;height:6px;border-radius:1px;background:currentColor"></span></span>Locked</span></sc-if>
+</button>
+</sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isStudentRotation }}">
+<div class="d-flex justify-content-between align-items-end gap-3 flex-wrap mb-4">
+<div><div class="small text-secondary mb-1">{{ sRotationName }}</div><h1 class="h2 fw-bold mb-0">Rotation</h1></div>
+<span class="badge text-bg-primary fs-6 fw-semibold">{{ stepLabel }}</span>
+</div>
+<sc-if value="{{ sEmpty }}"><div class="alert alert-light border text-center py-5 mb-0">Your rotation has no prompts yet.</div></sc-if>
+<sc-if value="{{ sAllLocked }}"><div class="alert alert-light border text-center py-5 mb-0">Your rotation is locked. Your faculty will unlock it when it’s time to begin.</div></sc-if>
+<sc-if value="{{ sHasPrompts }}">
+<div class="row g-4 align-items-start">
+<div class="col-lg-4 col-xl-3 sticky-lg-top" style="top:24px">
+<div class="card" style="max-height:calc(100vh - 48px)">
+<div class="card-header bg-white py-3"><div class="fw-semibold small">Prompts</div><div class="small text-secondary">{{ sProgressText }}</div></div>
+<div class="list-group list-group-flush overflow-auto">
+<sc-for list="{{ steps }}" as="st" hint-placeholder-count="4">
+<sc-if value="{{ st.active }}"><button type="button" sc-camel-on-click="{{ st.onClick }}" class="list-group-item list-group-item-action bg-primary-subtle d-flex gap-3 align-items-start py-3">
+<span class="rounded-circle border border-2 border-primary bg-white text-primary d-inline-flex align-items-center justify-content-center fw-bold flex-shrink-0" style="width:26px;height:26px;font-size:12px">{{ st.num }}</span>
+<span style="min-width:0"><span class="d-block small fw-bold text-primary-emphasis">{{ st.title }}</span><span class="d-block small text-secondary">{{ st.typeLabel }}</span></span>
+</button></sc-if>
+<sc-if value="{{ st.done }}"><button type="button" sc-camel-on-click="{{ st.onClick }}" class="list-group-item list-group-item-action d-flex gap-3 align-items-start py-3">
+<span class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center fw-bold flex-shrink-0" style="width:26px;height:26px;font-size:12px">✓</span>
+<span style="min-width:0"><span class="d-block small fw-medium">{{ st.title }}</span><span class="d-block small text-secondary">{{ st.typeLabel }}</span></span>
+</button></sc-if>
+<sc-if value="{{ st.todo }}"><button type="button" sc-camel-on-click="{{ st.onClick }}" class="list-group-item list-group-item-action d-flex gap-3 align-items-start py-3">
+<span class="rounded-circle border bg-white text-secondary d-inline-flex align-items-center justify-content-center fw-semibold flex-shrink-0" style="width:26px;height:26px;font-size:12px">{{ st.num }}</span>
+<span style="min-width:0"><span class="d-block small fw-medium text-secondary">{{ st.title }}</span><span class="d-block small text-secondary">{{ st.typeLabel }}</span></span>
+</button></sc-if>
+<sc-if value="{{ st.locked }}"><div class="list-group-item disabled d-flex gap-3 align-items-start py-3" aria-disabled="true">
+<span class="rounded-circle bg-body-secondary d-inline-flex flex-column align-items-center justify-content-center flex-shrink-0" style="width:26px;height:26px"><span style="width:6px;height:5px;border:1.5px solid #7A8A93;border-bottom:none;border-radius:3px 3px 0 0"></span><span style="width:9px;height:7px;border-radius:1.5px;background:#7A8A93"></span></span>
+<span style="min-width:0"><span class="d-block small fw-medium">{{ st.title }}</span><span class="d-block small">{{ st.typeLabel }}</span></span>
+</div></sc-if>
+</sc-for>
+</div>
+</div>
+</div>
+<div class="col-lg-8 col-xl-9">
+<div class="card">
+<div class="card-body p-4">
+<div class="small fw-semibold text-uppercase text-primary mb-2" style="letter-spacing:.08em">Prompt {{ sOrder }}</div>
+<h2 class="h3 fw-bold mb-3">{{ sTitle }}</h2>
+<p class="fs-6 mb-0" style="line-height:1.65;text-wrap:pretty">{{ sText }}</p>
+</div>
+<div class="card-body p-4 border-top">
+<div class="small fw-semibold text-uppercase text-secondary mb-3" style="letter-spacing:.08em;font-size:12px">{{ mTypeLabel }}</div>
+
+<sc-if value="{{ mFile }}">
+<div class="card"><div class="card-body d-flex align-items-center gap-3 flex-wrap">
+<span class="rounded bg-primary-subtle text-primary-emphasis d-inline-flex align-items-center justify-content-center fw-bold small flex-shrink-0" style="width:48px;height:56px">{{ mExt }}</span>
+<div class="flex-grow-1" style="min-width:200px"><div class="fw-semibold">{{ mTitle }}</div><div class="small text-secondary">{{ mFileName }}</div><div class="small mt-2">{{ mDesc }}</div></div>
+<button type="button" sc-camel-on-click="{{ onDownload }}" class="btn btn-outline-primary">Download</button>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ mUrl }}">
+<div class="card"><div class="card-body d-flex align-items-center gap-3 flex-wrap">
+<div class="flex-grow-1" style="min-width:200px"><div class="fw-semibold">{{ mTitle }}</div><div class="small text-secondary text-break">{{ mHref }}</div><div class="small mt-2">{{ mDesc }}</div></div>
+<a href="{{ mHref }}" target="_blank" rel="noopener" class="btn btn-outline-primary">Open link ↗</a>
+</div></div>
+</sc-if>
+
+<sc-if value="{{ mBoard }}">
+<div class="alert alert-primary mb-3">
+<div class="fw-semibold mb-1">{{ mTitle }}</div>
+<p class="mb-1">{{ mStarter }}</p>
+</div>
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+<span class="fw-semibold">{{ dCount }}</span>
+<div class="d-flex align-items-center gap-2"><span class="small text-secondary">Sort by</span>
+<div class="btn-group btn-group-sm" role="group" aria-label="Sort comments">
+<sc-for list="{{ dSorts }}" as="so">
+<sc-if value="{{ so.active }}"><button type="button" sc-camel-on-click="{{ so.onClick }}" class="btn btn-primary" title="{{ so.hint }}">{{ so.label }}</button></sc-if>
+<sc-if value="{{ so.inactive }}"><button type="button" sc-camel-on-click="{{ so.onClick }}" class="btn btn-outline-secondary" title="{{ so.hint }}">{{ so.label }}</button></sc-if>
+</sc-for>
+</div>
+</div>
+</div>
+<sc-if value="{{ dOpen }}">
+<div class="mb-3">
+<textarea rows="2" value="{{ dDraft }}" sc-camel-on-change="{{ dSetDraft }}" placeholder="Add a comment…" class="form-control mb-2" aria-label="Add a comment"></textarea>
+<div class="d-flex justify-content-end"><button type="button" sc-camel-on-click="{{ dPost }}" class="btn btn-primary btn-sm">Comment</button></div>
+</div>
+</sc-if>
+<sc-if value="{{ dClosed }}"><div class="alert alert-secondary py-2 small mb-3"><span class="fw-bold me-1">ⓘ</span>This board is not open for new comments or votes.</div></sc-if>
+<sc-if value="{{ dFocused }}"><div class="alert alert-light border d-flex justify-content-between align-items-center flex-wrap gap-2 py-2 small mb-2"><span>{{ dFocusLabel }}</span><button type="button" sc-camel-on-click="{{ dUnfocus }}" class="btn btn-link btn-sm p-0">← Back to full discussion</button></div></sc-if>
+<div>
+<sc-for list="{{ dRows }}" as="c" hint-placeholder-count="4">
+<div id="{{ c.anchor }}" class="d-flex rounded {{ c.sepCls }} {{ c.hlCls }}">
+<sc-for list="{{ c.rails }}" as="rl"><button type="button" sc-camel-on-click="{{ rl.onClick }}" title="{{ rl.title }}" aria-label="{{ rl.title }}" class="btn p-0 border-0 rounded-0 flex-shrink-0" style="width:24px;background:linear-gradient(#DCE3E7,#DCE3E7) center/2px 100% no-repeat" style-hover="background:linear-gradient(#1D4F91,#1D4F91) center/2px 100% no-repeat"></button></sc-for>
+<div class="flex-grow-1 py-2" style="min-width:0">
+<sc-if value="{{ c.isComment }}">
+<div class="d-flex align-items-center gap-2" style="min-width:0">
+<button type="button" sc-camel-on-click="{{ c.onToggle }}" aria-label="{{ c.toggleLabel }}" title="{{ c.toggleLabel }}" class="btn btn-light border p-0 d-inline-flex align-items-center justify-content-center flex-shrink-0" style="width:28px;height:28px;font-size:15px;line-height:1">{{ c.toggleGlyph }}</button>
+<span class="rounded-circle bg-primary-subtle text-primary-emphasis d-inline-flex align-items-center justify-content-center fw-bold flex-shrink-0" style="width:28px;height:28px;font-size:12px">{{ c.initials }}</span>
+<span class="small fw-semibold text-nowrap">{{ c.author }}</span>
+<sc-if value="{{ c.isFaculty }}"><span class="badge text-bg-primary">Faculty</span></sc-if>
+<span class="small text-secondary text-nowrap">{{ c.time }}</span>
+<sc-if value="{{ c.isNew }}"><span class="badge" style="background:#0077C8">New</span><button type="button" sc-camel-on-click="{{ c.onMarkRead }}" class="btn btn-link btn-sm p-0 text-secondary text-nowrap">Mark as read</button></sc-if>
+<sc-if value="{{ c.collapsed }}"><span class="small text-secondary text-truncate">· {{ c.summary }}</span></sc-if>
+</div>
+<sc-if value="{{ c.expanded }}">
+<div style="padding-left:36px">
+<p class="small mb-1 mt-1" style="line-height:1.55;text-wrap:pretty">{{ c.text }}</p>
+<div class="d-flex align-items-center gap-1">
+<sc-if value="{{ c.canAct }}">
+<sc-if value="{{ c.liked }}"><button type="button" sc-camel-on-click="{{ c.onLike }}" aria-pressed="true" aria-label="Unlike" class="btn btn-link btn-sm text-primary text-decoration-none fw-semibold d-inline-flex align-items-center gap-1 px-1" style="min-height:32px">♥ Liked</button></sc-if>
+<sc-if value="{{ c.notLiked }}"><button type="button" sc-camel-on-click="{{ c.onLike }}" aria-pressed="false" aria-label="Like" class="btn btn-link btn-sm text-secondary text-decoration-none fw-semibold d-inline-flex align-items-center gap-1 px-1" style="min-height:32px">♡ Like</button></sc-if>
+</sc-if>
+<sc-if value="{{ c.hasLikes }}"><span class="small text-secondary">{{ c.likeLabel }}</span></sc-if>
+<sc-if value="{{ c.canAct }}">
+<button type="button" sc-camel-on-click="{{ c.onReply }}" class="btn btn-link btn-sm text-secondary text-decoration-none fw-semibold ms-1" style="min-height:32px">Reply</button>
+</sc-if>
+</div>
+<sc-if value="{{ c.replying }}">
+<div class="mt-1 mb-2">
+<textarea rows="2" value="{{ c.replyText }}" sc-camel-on-change="{{ c.setReplyText }}" placeholder="{{ c.replyingTo }}" aria-label="{{ c.replyingTo }}" class="form-control form-control-sm mb-2"></textarea>
+<div class="d-flex justify-content-end gap-2">
+<button type="button" sc-camel-on-click="{{ c.cancelReply }}" class="btn btn-outline-secondary btn-sm">Cancel</button>
+<button type="button" sc-camel-on-click="{{ c.submitReply }}" class="btn btn-primary btn-sm">Reply</button>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-if>
+</sc-if>
+<sc-if value="{{ c.isContinue }}"><button type="button" sc-camel-on-click="{{ c.onContinue }}" class="btn btn-link btn-sm px-0 fw-semibold text-decoration-none" style="min-height:32px">Continue this thread → <span class="text-secondary fw-normal">{{ c.moreLabel }}</span></button></sc-if>
+</div>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{ dEmpty }}"><p class="text-secondary small text-center py-4 mb-0">No comments yet. Start the discussion.</p></sc-if>
+</sc-if>
+
+<sc-if value="{{ mQuiz }}">
+<div class="d-flex justify-content-between align-items-baseline gap-2 flex-wrap mb-3"><span class="h5 fw-semibold mb-0">{{ mTitle }}</span><span class="small text-secondary">{{ quizMeta }}</span></div>
+<div class="d-flex flex-column gap-4">
+<sc-for list="{{ qItems }}" as="q" hint-placeholder-count="3">
+<div>
+<div class="fw-semibold mb-2">{{ q.num }}. {{ q.text }}</div>
+<div class="row g-2">
+<sc-for list="{{ q.opts }}" as="o">
+<div class="col-md-6">
+<sc-if value="{{ o.neutral }}"><button type="button" sc-camel-on-click="{{ o.onPick }}" class="btn btn-outline-secondary w-100 text-start d-flex align-items-center gap-2"><span class="badge bg-secondary-subtle text-secondary-emphasis">{{ o.letter }}</span>{{ o.label }}</button></sc-if>
+<sc-if value="{{ o.selected }}"><button type="button" sc-camel-on-click="{{ o.onPick }}" class="btn btn-primary w-100 text-start d-flex align-items-center gap-2"><span class="badge bg-white text-primary">{{ o.letter }}</span>{{ o.label }}</button></sc-if>
+<sc-if value="{{ o.correct }}"><div class="border border-success rounded bg-success-subtle text-success-emphasis fw-semibold px-3 py-2 d-flex align-items-center gap-2"><span class="badge text-bg-success">✓</span>{{ o.label }}</div></sc-if>
+<sc-if value="{{ o.wrong }}"><div class="border border-danger rounded bg-danger-subtle text-danger-emphasis fw-semibold px-3 py-2 d-flex align-items-center gap-2"><span class="badge text-bg-danger">✕</span>{{ o.label }}</div></sc-if>
+<sc-if value="{{ o.locked }}"><div class="border rounded text-secondary px-3 py-2 d-flex align-items-center gap-2"><span class="badge bg-secondary-subtle text-secondary-emphasis">{{ o.letter }}</span>{{ o.label }}</div></sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+<div class="mt-4">
+<sc-if value="{{ quizOpen }}">
+<div class="d-flex align-items-center gap-3 flex-wrap">
+<button type="button" sc-camel-on-click="{{ submitQuiz }}" class="btn btn-primary">Submit quiz</button>
+<sc-if value="{{ hasQuizError }}"><span class="small text-danger fw-medium">{{ quizError }}</span></sc-if>
+</div>
+</sc-if>
+<sc-if value="{{ quizPassed }}"><div class="alert alert-success d-flex justify-content-between align-items-center gap-2 flex-wrap mb-0"><span class="fw-semibold">✓ {{ quizResultText }}</span><button type="button" sc-camel-on-click="{{ retakeQuiz }}" class="btn btn-sm btn-outline-success">Retake</button></div></sc-if>
+<sc-if value="{{ quizFailed }}"><div class="alert alert-danger d-flex justify-content-between align-items-center gap-2 flex-wrap mb-0"><span class="fw-semibold">✕ {{ quizResultText }}</span><button type="button" sc-camel-on-click="{{ retakeQuiz }}" class="btn btn-sm btn-outline-danger">Retake</button></div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ mNone }}"><p class="text-secondary small mb-0">No media is attached to this prompt.</p></sc-if>
+</div>
+<div class="card-footer bg-body-tertiary d-flex align-items-center gap-2 py-3 px-4">
+<sc-if value="{{ hasPrev }}"><button type="button" sc-camel-on-click="{{ onPrev }}" class="btn btn-outline-secondary">← Previous</button></sc-if>
+<span class="ms-auto small text-secondary">{{ stepLabel }}</span>
+<sc-if value="{{ nextOpen }}"><button type="button" sc-camel-on-click="{{ onNext }}" class="btn btn-cta">{{ nextLabel }}</button></sc-if>
+<sc-if value="{{ nextLocked }}"><button type="button" sc-camel-on-click="{{ onNextLocked }}" class="btn btn-secondary" style="opacity:.65;cursor:not-allowed">Next prompt locked</button></sc-if>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+</sc-if>
+
+<sc-if value="{{ isAbout }}">
+<div style="max-width:720px">
+<h1 class="h2 fw-bold mb-3">About eHospital</h1>
+<p class="lead mb-4">eHospital is an education platform for clinical training. Faculty organize interns into teams, build rotations from a sequence of prompts and supporting media, and review the feedback interns share along the way.</p>
+<div class="d-flex flex-column gap-3">
+<div class="card"><div class="card-body p-4">
+<h2 class="h5 card-title card-title--accent text-primary mb-3">Mission</h2>
+<p class="card-text mb-0">Give every intern a structured, well-supported rotation, and give faculty a clear view of how their interns are progressing.</p>
+</div></div>
+<div class="card"><div class="card-body p-4">
+<h2 class="h5 card-title card-title--accent text-primary mb-3">How it works</h2>
+<p class="card-text mb-0">Faculty build a sequence of prompts, each with a file, link, discussion board or quiz attached. Students work through the prompts in order, and faculty review the resulting feedback by thread, intern or keyword.</p>
+</div></div>
+<div class="card"><div class="card-body p-4">
+<h2 class="h5 card-title card-title--accent text-primary mb-3">Contact</h2>
+<p class="card-text mb-0">Questions or access requests: <a href="mailto:bs2886@cumc.columbia.edu">bs2886@cumc.columbia.edu</a></p>
+</div></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCommentsTab }}">
+<div class="card">
+<div class="card-header bg-white d-flex justify-content-between align-items-center gap-2 flex-wrap py-3">
+<div class="d-flex align-items-center gap-2"><h2 class="h6 fw-bold mb-0">Comments</h2><span class="badge bg-secondary-subtle text-secondary-emphasis">{{ fcCount }}</span></div>
+<div class="d-flex align-items-center gap-3 flex-wrap">
+<div class="btn-group btn-group-sm" role="group" aria-label="Filter comments">
+<sc-for list="{{ fcFilters }}" as="ff">
+<sc-if value="{{ ff.active }}"><button type="button" sc-camel-on-click="{{ ff.onClick }}" aria-pressed="true" class="btn btn-primary">{{ ff.label }}</button></sc-if>
+<sc-if value="{{ ff.inactive }}"><button type="button" sc-camel-on-click="{{ ff.onClick }}" aria-pressed="false" class="btn btn-outline-secondary">{{ ff.label }}</button></sc-if>
+</sc-for>
+</div>
+<sc-if value="{{ hasUnread }}"><button type="button" sc-camel-on-click="{{ markAllRead }}" class="btn btn-outline-primary btn-sm">Mark all as read</button></sc-if>
+</div>
+</div>
+<div class="list-group list-group-flush">
+<sc-for list="{{ fcRows }}" as="ua" hint-placeholder-count="3">
+<div class="list-group-item d-flex gap-3 align-items-start flex-wrap py-3">
+<span class="rounded-circle bg-primary-subtle text-primary-emphasis d-inline-flex align-items-center justify-content-center fw-bold flex-shrink-0" style="width:36px;height:36px;font-size:12px">{{ ua.initials }}</span>
+<div class="flex-grow-1" style="min-width:0;flex-basis:260px">
+<div class="d-flex align-items-center gap-2 flex-wrap"><sc-if value="{{ ua.isNew }}"><span class="badge" style="background:#0077C8">New</span></sc-if><span class="small fw-semibold">{{ ua.author }}</span><span class="small text-secondary">{{ ua.context }}</span><span class="small text-secondary">· {{ ua.time }}</span></div>
+<p class="small mb-1 mt-1" style="text-wrap:pretty">{{ ua.snippet }}</p>
+<div class="small text-secondary">{{ ua.board }}</div>
+</div>
+<div class="d-flex align-items-center gap-2 flex-shrink-0">
+<button type="button" sc-camel-on-click="{{ ua.onView }}" class="btn btn-outline-primary btn-sm">View in discussion</button>
+<sc-if value="{{ ua.isNew }}"><button type="button" sc-camel-on-click="{{ ua.onMarkRead }}" class="btn btn-link btn-sm text-secondary">Mark as read</button></sc-if>
+</div>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{ fcEmptyUnread }}"><div class="card-body text-center py-4"><div class="fw-semibold mb-1">You’re all caught up</div><div class="small text-secondary">New student comments and replies will show up here.</div></div></sc-if>
+<sc-if value="{{ fcEmptyAll }}"><div class="card-body text-center text-secondary py-4">No comments yet.</div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isListPage }}">
+<div class="d-flex flex-column gap-4">
+<sc-for list="{{ lists }}" as="l" hint-placeholder-count="1">
+<div class="card">
+<div class="card-header bg-white d-flex justify-content-between align-items-center gap-2 py-3">
+<div class="d-flex align-items-center gap-2"><h2 class="h6 fw-bold mb-0">{{ l.title }}</h2><span class="badge bg-secondary-subtle text-secondary-emphasis">{{ l.count }}</span></div>
+<sc-if value="{{ l.hasAdd }}"><button type="button" sc-camel-on-click="{{ l.onAdd }}" class="btn btn-cta">+ {{ l.addLabel }}</button></sc-if>
+</div>
+<div class="table-responsive">
+<sc-raw-table class="table table-hover align-middle mb-0">
+<sc-raw-thead class="table-light"><sc-raw-tr>
+<sc-for list="{{ l.cols }}" as="col"><sc-raw-th scope="col" class="small text-uppercase text-secondary fw-semibold text-nowrap px-3" style="font-size:12px;letter-spacing:.06em">{{ col }}</sc-raw-th></sc-for>
+</sc-raw-tr></sc-raw-thead>
+<sc-raw-tbody>
+<sc-for list="{{ l.rows }}" as="row" hint-placeholder-count="4">
+<sc-raw-tr sc-camel-on-click="{{ row.onClick }}" style="cursor:pointer">
+<sc-for list="{{ row.cells }}" as="cell"><sc-raw-td class="px-3 py-3">
+<sc-if value="{{ cell.strong }}"><span class="fw-semibold">{{ cell.text }}</span></sc-if>
+<sc-if value="{{ cell.plain }}"><span>{{ cell.text }}</span></sc-if>
+</sc-raw-td></sc-for>
+</sc-raw-tr>
+</sc-for>
+</sc-raw-tbody>
+</sc-raw-table>
+</div>
+<sc-if value="{{ l.isEmpty }}"><div class="card-body text-center text-secondary py-5">{{ l.emptyText }}</div></sc-if>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ isForm }}">
+<div class="card" style="max-width:760px">
+<div class="card-body p-4">
+<sc-for list="{{ formFields }}" as="f" hint-placeholder-count="4">
+<div class="mb-4">
+<label class="form-label fw-semibold small">{{ f.label }}<sc-if value="{{ f.required }}"><span class="text-danger"> *</span></sc-if></label>
+<sc-if value="{{ f.isInput }}"><input type="{{ f.inputType }}" value="{{ f.value }}" sc-camel-on-change="{{ f.onChange }}" placeholder="{{ f.placeholder }}" class="form-control"></sc-if>
+<sc-if value="{{ f.isTextarea }}"><textarea rows="4" value="{{ f.value }}" sc-camel-on-change="{{ f.onChange }}" placeholder="{{ f.placeholder }}" class="form-control"></textarea></sc-if>
+<sc-if value="{{ f.isSelect }}"><sc-raw-select value="{{ f.value }}" sc-camel-on-change="{{ f.onChange }}" class="form-select"><option value="">Select…</option><sc-for list="{{ f.options }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select></sc-if>
+<sc-if value="{{ f.isMediaPick }}"><div class="row g-2">
+<div class="col-sm-6"><sc-raw-select value="{{ f.typeValue }}" sc-camel-on-change="{{ f.onType }}" class="form-select"><option value="">No media</option><sc-for list="{{ f.typeOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select></div>
+<sc-if value="{{ f.hasType }}"><div class="col-sm-6"><sc-raw-select value="{{ f.itemValue }}" sc-camel-on-change="{{ f.onItem }}" class="form-select"><option value="">Select item…</option><sc-for list="{{ f.itemOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select></div></sc-if>
+</div></sc-if>
+<sc-if value="{{ f.isQuestions }}"><div class="d-flex flex-column gap-3">
+<sc-for list="{{ f.qs }}" as="q">
+<div class="card bg-body-tertiary"><div class="card-body d-flex flex-column gap-2">
+<div class="d-flex justify-content-between align-items-center"><span class="small fw-bold text-uppercase text-secondary" style="font-size:12px;letter-spacing:.06em">Question {{ q.num }}</span><sc-if value="{{ q.canRemove }}"><button type="button" sc-camel-on-click="{{ q.onRemove }}" class="btn btn-link btn-sm text-danger p-0">Remove</button></sc-if></div>
+<input value="{{ q.text }}" sc-camel-on-change="{{ q.onText }}" placeholder="Question text" class="form-control">
+<sc-for list="{{ q.opts }}" as="o"><div class="input-group input-group-sm">
+<sc-if value="{{ o.isCorrect }}"><button type="button" sc-camel-on-click="{{ o.onMark }}" title="Correct answer" class="btn btn-success" style="width:38px">✓</button></sc-if>
+<sc-if value="{{ o.notCorrect }}"><button type="button" sc-camel-on-click="{{ o.onMark }}" title="Mark as correct answer" class="btn btn-outline-secondary bg-white" style="width:38px">{{ o.letter }}</button></sc-if>
+<input value="{{ o.value }}" sc-camel-on-change="{{ o.onChange }}" placeholder="Option {{ o.letter }}" class="form-control">
+</div></sc-for>
+</div></div>
+</sc-for>
+<button type="button" sc-camel-on-click="{{ f.onAddQ }}" class="btn btn-outline-primary" style="border-style:dashed">+ Add question</button>
+</div></sc-if>
+<sc-if value="{{ f.isMulti }}"><div class="d-flex flex-wrap gap-2">
+<sc-for list="{{ f.chips }}" as="o">
+<sc-if value="{{ o.selected }}"><button type="button" sc-camel-on-click="{{ o.onToggle }}" class="btn btn-sm btn-primary">✓ {{ o.label }}</button></sc-if>
+<sc-if value="{{ o.unselected }}"><button type="button" sc-camel-on-click="{{ o.onToggle }}" class="btn btn-sm btn-outline-secondary">{{ o.label }}</button></sc-if>
+</sc-for>
+</div></sc-if>
+<sc-if value="{{ f.isFile }}">
+<sc-if value="{{ f.hasFile }}"><div class="input-group"><span class="input-group-text fw-bold small bg-primary-subtle text-primary-emphasis">{{ f.ext }}</span><span class="form-control text-truncate">{{ f.value }}</span><button type="button" sc-camel-on-click="{{ f.onPick }}" class="btn btn-outline-primary">Replace</button></div></sc-if>
+<sc-if value="{{ f.noFile }}"><button type="button" sc-camel-on-click="{{ f.onPick }}" class="btn btn-light border w-100 py-4 text-secondary" style="border-style:dashed !important">Click to choose a file<span class="d-block small mt-1">PDF, DOCX, PPTX, PNG or JPG up to 25 MB</span></button></sc-if>
+</sc-if>
+<sc-if value="{{ f.isToggle }}"><div class="form-check form-switch">
+<input class="form-check-input" type="checkbox" role="switch" id="field-switch" checked="{{ f.on }}" sc-camel-on-change="{{ f.onToggle }}">
+<label class="form-check-label" for="field-switch">{{ f.toggleText }}</label>
+</div></sc-if>
+<sc-if value="{{ f.hasHint }}"><div class="form-text">{{ f.hint }}</div></sc-if>
+<sc-if value="{{ f.hasError }}"><div class="invalid-feedback d-flex align-items-center gap-1 fw-medium"><span class="rounded-circle bg-danger text-white d-inline-flex align-items-center justify-content-center fw-bold flex-shrink-0" style="width:16px;height:16px;font-size:12px">!</span>{{ f.error }}</div></sc-if>
+</div>
+</sc-for>
+</div>
+<div class="card-footer bg-body-tertiary d-flex align-items-center gap-2 py-3 px-4">
+<sc-if value="{{ isEdit }}"><button type="button" sc-camel-on-click="{{ askDelete }}" class="btn btn-outline-danger">Delete {{ entLower }}</button></sc-if>
+<div class="ms-auto d-flex gap-2">
+<button type="button" sc-camel-on-click="{{ cancelForm }}" class="btn btn-outline-secondary">Cancel</button>
+<button type="button" sc-camel-on-click="{{ saveForm }}" class="btn btn-cta">{{ saveLabel }}</button>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isView }}">
+<div class="d-flex flex-column gap-4" style="max-width:800px">
+<sc-if value="{{ showViewRows }}">
+<div class="card">
+<ul class="list-group list-group-flush">
+<sc-for list="{{ viewRows }}" as="v" hint-placeholder-count="4">
+<li class="list-group-item py-3"><div class="row g-2">
+<div class="col-sm-4 small fw-semibold text-secondary">{{ v.label }}</div>
+<div class="col-sm-8 text-break" style="white-space:pre-wrap">{{ v.value }}</div>
+</div></li>
+</sc-for>
+</ul>
+</div>
+</sc-if>
+<sc-for list="{{ viewSections }}" as="vs">
+<div class="card">
+<div class="card-header bg-white d-flex align-items-center gap-2 py-3"><h2 class="h6 fw-bold mb-0">{{ vs.title }}</h2><span class="small text-secondary">{{ vs.count }}</span></div>
+<div class="list-group list-group-flush">
+<sc-for list="{{ vs.items }}" as="it">
+<sc-if value="{{ it.isLink }}"><button type="button" sc-camel-on-click="{{ it.onClick }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center gap-3 py-3"><div style="min-width:0"><div class="fw-semibold">{{ it.title }}</div><div class="small text-secondary">{{ it.meta }}</div></div><span class="badge bg-secondary-subtle text-secondary-emphasis text-nowrap">{{ it.tag }}</span></button></sc-if>
+<sc-if value="{{ it.isStatic }}"><div class="list-group-item d-flex justify-content-between align-items-start gap-3 py-3"><div style="min-width:0"><div class="fw-semibold">{{ it.title }}</div><div class="small text-secondary">{{ it.meta }}</div></div><span class="small text-secondary text-nowrap">{{ it.tag }}</span></div></sc-if>
+</sc-for>
+</div>
+<sc-if value="{{ vs.isEmpty }}"><div class="card-body text-center text-secondary py-4">{{ vs.empty }}</div></sc-if>
+</div>
+</sc-for>
+<sc-if value="{{ dShowView }}">
+<div class="card">
+<div class="card-body p-4">
+<div class="small fw-semibold text-uppercase text-secondary mb-3" style="letter-spacing:.08em;font-size:12px">Discussion Board</div>
+<div class="alert alert-primary mb-3">
+<div class="fw-semibold mb-1">{{ dBoardTitle }}</div>
+<p class="mb-1">{{ dBoardStarter }}</p>
+</div>
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+<span class="fw-semibold">{{ dCount }}</span>
+<div class="d-flex align-items-center gap-2"><span class="small text-secondary">Sort by</span>
+<div class="btn-group btn-group-sm" role="group" aria-label="Sort comments">
+<sc-for list="{{ dSorts }}" as="so">
+<sc-if value="{{ so.active }}"><button type="button" sc-camel-on-click="{{ so.onClick }}" class="btn btn-primary" title="{{ so.hint }}">{{ so.label }}</button></sc-if>
+<sc-if value="{{ so.inactive }}"><button type="button" sc-camel-on-click="{{ so.onClick }}" class="btn btn-outline-secondary" title="{{ so.hint }}">{{ so.label }}</button></sc-if>
+</sc-for>
+</div>
+</div>
+</div>
+<sc-if value="{{ dOpen }}">
+<div class="mb-3">
+<textarea rows="2" value="{{ dDraft }}" sc-camel-on-change="{{ dSetDraft }}" placeholder="Add a comment…" class="form-control mb-2" aria-label="Add a comment"></textarea>
+<div class="d-flex justify-content-end"><button type="button" sc-camel-on-click="{{ dPost }}" class="btn btn-primary btn-sm">Comment</button></div>
+</div>
+</sc-if>
+<sc-if value="{{ dClosed }}"><div class="alert alert-secondary py-2 small mb-3"><span class="fw-bold me-1">ⓘ</span>This board is not open for new comments or votes.</div></sc-if>
+<sc-if value="{{ dFocused }}"><div class="alert alert-light border d-flex justify-content-between align-items-center flex-wrap gap-2 py-2 small mb-2"><span>{{ dFocusLabel }}</span><button type="button" sc-camel-on-click="{{ dUnfocus }}" class="btn btn-link btn-sm p-0">← Back to full discussion</button></div></sc-if>
+<div>
+<sc-for list="{{ dRows }}" as="c" hint-placeholder-count="4">
+<div id="{{ c.anchor }}" class="d-flex rounded {{ c.sepCls }} {{ c.hlCls }}">
+<sc-for list="{{ c.rails }}" as="rl"><button type="button" sc-camel-on-click="{{ rl.onClick }}" title="{{ rl.title }}" aria-label="{{ rl.title }}" class="btn p-0 border-0 rounded-0 flex-shrink-0" style="width:24px;background:linear-gradient(#DCE3E7,#DCE3E7) center/2px 100% no-repeat" style-hover="background:linear-gradient(#1D4F91,#1D4F91) center/2px 100% no-repeat"></button></sc-for>
+<div class="flex-grow-1 py-2" style="min-width:0">
+<sc-if value="{{ c.isComment }}">
+<div class="d-flex align-items-center gap-2" style="min-width:0">
+<button type="button" sc-camel-on-click="{{ c.onToggle }}" aria-label="{{ c.toggleLabel }}" title="{{ c.toggleLabel }}" class="btn btn-light border p-0 d-inline-flex align-items-center justify-content-center flex-shrink-0" style="width:28px;height:28px;font-size:15px;line-height:1">{{ c.toggleGlyph }}</button>
+<span class="rounded-circle bg-primary-subtle text-primary-emphasis d-inline-flex align-items-center justify-content-center fw-bold flex-shrink-0" style="width:28px;height:28px;font-size:12px">{{ c.initials }}</span>
+<span class="small fw-semibold text-nowrap">{{ c.author }}</span>
+<sc-if value="{{ c.isFaculty }}"><span class="badge text-bg-primary">Faculty</span></sc-if>
+<span class="small text-secondary text-nowrap">{{ c.time }}</span>
+<sc-if value="{{ c.isNew }}"><span class="badge" style="background:#0077C8">New</span><button type="button" sc-camel-on-click="{{ c.onMarkRead }}" class="btn btn-link btn-sm p-0 text-secondary text-nowrap">Mark as read</button></sc-if>
+<sc-if value="{{ c.collapsed }}"><span class="small text-secondary text-truncate">· {{ c.summary }}</span></sc-if>
+</div>
+<sc-if value="{{ c.expanded }}">
+<div style="padding-left:36px">
+<p class="small mb-1 mt-1" style="line-height:1.55;text-wrap:pretty">{{ c.text }}</p>
+<div class="d-flex align-items-center gap-1">
+<sc-if value="{{ c.canAct }}">
+<sc-if value="{{ c.liked }}"><button type="button" sc-camel-on-click="{{ c.onLike }}" aria-pressed="true" aria-label="Unlike" class="btn btn-link btn-sm text-primary text-decoration-none fw-semibold d-inline-flex align-items-center gap-1 px-1" style="min-height:32px">♥ Liked</button></sc-if>
+<sc-if value="{{ c.notLiked }}"><button type="button" sc-camel-on-click="{{ c.onLike }}" aria-pressed="false" aria-label="Like" class="btn btn-link btn-sm text-secondary text-decoration-none fw-semibold d-inline-flex align-items-center gap-1 px-1" style="min-height:32px">♡ Like</button></sc-if>
+</sc-if>
+<sc-if value="{{ c.hasLikes }}"><span class="small text-secondary">{{ c.likeLabel }}</span></sc-if>
+<sc-if value="{{ c.canAct }}">
+<button type="button" sc-camel-on-click="{{ c.onReply }}" class="btn btn-link btn-sm text-secondary text-decoration-none fw-semibold ms-1" style="min-height:32px">Reply</button>
+</sc-if>
+</div>
+<sc-if value="{{ c.replying }}">
+<div class="mt-1 mb-2">
+<textarea rows="2" value="{{ c.replyText }}" sc-camel-on-change="{{ c.setReplyText }}" placeholder="{{ c.replyingTo }}" aria-label="{{ c.replyingTo }}" class="form-control form-control-sm mb-2"></textarea>
+<div class="d-flex justify-content-end gap-2">
+<button type="button" sc-camel-on-click="{{ c.cancelReply }}" class="btn btn-outline-secondary btn-sm">Cancel</button>
+<button type="button" sc-camel-on-click="{{ c.submitReply }}" class="btn btn-primary btn-sm">Reply</button>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-if>
+</sc-if>
+<sc-if value="{{ c.isContinue }}"><button type="button" sc-camel-on-click="{{ c.onContinue }}" class="btn btn-link btn-sm px-0 fw-semibold text-decoration-none" style="min-height:32px">Continue this thread → <span class="text-secondary fw-normal">{{ c.moreLabel }}</span></button></sc-if>
+</div>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{ dEmpty }}"><p class="text-secondary small text-center py-4 mb-0">No comments yet. Start the discussion.</p></sc-if>
+</div>
+</div>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isThread }}">
+<div style="max-width:800px">
+<div class="d-flex flex-wrap align-items-center gap-3 small text-secondary mb-4">
+<span>Intern: <button type="button" sc-camel-on-click="{{ threadInternClick }}" class="btn btn-link btn-sm p-0 align-baseline fw-semibold">{{ threadIntern }}</button></span>
+<span>Prompt: <button type="button" sc-camel-on-click="{{ threadPromptClick }}" class="btn btn-link btn-sm p-0 align-baseline fw-semibold">{{ threadPrompt }}</button></span>
+<sc-if value="{{ threadHasBoard }}"><span>Discussion board: <button type="button" sc-camel-on-click="{{ threadBoardClick }}" class="btn btn-link btn-sm p-0 align-baseline fw-semibold">{{ threadBoard }}</button></span></sc-if>
+<span>{{ threadDate }}</span>
+<div class="d-flex gap-1 flex-wrap">
+<sc-for list="{{ threadKeywords }}" as="k"><button type="button" sc-camel-on-click="{{ k.onClick }}" class="btn btn-sm bg-primary-subtle text-primary-emphasis border border-primary-subtle py-0">{{ k.word }}</button></sc-for>
+</div>
+</div>
+<div class="d-flex flex-column gap-3">
+<sc-for list="{{ threadMessages }}" as="m" hint-placeholder-count="3">
+<div class="card"><div class="card-body d-flex gap-3">
+<span class="rounded-circle bg-primary-subtle text-primary-emphasis d-inline-flex align-items-center justify-content-center fw-bold small flex-shrink-0" style="width:38px;height:38px">{{ m.initials }}</span>
+<div class="flex-grow-1" style="min-width:0">
+<div class="d-flex align-items-center flex-wrap gap-2 mb-1"><span class="fw-semibold">{{ m.author }}</span><span class="badge bg-secondary-subtle text-secondary-emphasis text-uppercase">{{ m.role }}</span><span class="small text-secondary ms-auto">{{ m.time }}</span></div>
+<p class="mb-0" style="text-wrap:pretty">{{ m.text }}</p>
+</div>
+</div></div>
+</sc-for>
+</div>
+<sc-if value="{{ threadHasBoard }}"><div class="mt-4"><button type="button" sc-camel-on-click="{{ threadBoardClick }}" class="btn btn-outline-primary">Open the original discussion board →</button></div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isFbDetail }}">
+<div style="max-width:800px">
+<div class="row g-3 mb-4">
+<sc-for list="{{ fbStats }}" as="st" hint-placeholder-count="3">
+<div class="col-sm-4"><div class="card h-100"><div class="card-body"><div class="small fw-semibold text-secondary mb-1">{{ st.label }}</div><div class="h4 fw-bold mb-0">{{ st.value }}</div></div></div></div>
+</sc-for>
+</div>
+<div class="card">
+<div class="card-header bg-white py-3"><h2 class="h6 fw-bold mb-0">Related comments</h2></div>
+<div class="list-group list-group-flush">
+<sc-for list="{{ fbThreads }}" as="ft" hint-placeholder-count="2">
+<button type="button" sc-camel-on-click="{{ ft.onClick }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start gap-3 py-3">
+<div style="min-width:0"><div class="fw-semibold">{{ ft.title }}</div><div class="small text-secondary">{{ ft.meta }}</div></div>
+<span class="small text-secondary text-nowrap">{{ ft.date }}</span>
+</button>
+</sc-for>
+</div>
+<sc-if value="{{ fbNoThreads }}"><div class="card-body text-center text-secondary py-4">No comments yet.</div></sc-if>
+</div>
+</div>
+</sc-if>
+
+</main>
+</sc-if>
+</div>
+</div>
+
+<sc-if value="{{ confirmOpen }}" hint-placeholder-val="{{ false }}">
+<div class="modal-backdrop fade show"></div>
+<div class="modal fade show d-block" tabindex="-1" role="dialog" sc-camel-on-click="{{ cancelDelete }}">
+<div class="modal-dialog modal-dialog-centered" sc-camel-on-click="{{ stop }}">
+<div class="modal-content">
+<div class="modal-header"><h2 class="modal-title h5 fw-bold">{{ confirmTitle }}</h2><button type="button" class="btn-close" aria-label="Close" sc-camel-on-click="{{ cancelDelete }}"></button></div>
+<div class="modal-body"><p class="mb-0">{{ confirmText }}</p></div>
+<div class="modal-footer">
+<button type="button" sc-camel-on-click="{{ cancelDelete }}" class="btn btn-outline-secondary">Cancel</button>
+<button type="button" sc-camel-on-click="{{ confirmDelete }}" class="btn btn-danger">Delete</button>
+</div>
+</div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+<div class="toast show align-items-center text-bg-dark border-0 position-fixed bottom-0 start-50 translate-middle-x mb-4" role="status" style="z-index:1090;width:auto">
+<div class="toast-body fw-medium px-3">{{ toast }}</div>
+</div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;facultyName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Dr. Trudi Cloyd&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+const KEY = 'ehospital-proto-v7';
+const TODAY = '2026-10-12';
+const STUDENT_ID = 'i1';
+const LEGACY_ROT = {r1:'fa1',r2:'fa2'};
+const rotLabel = f => 'Dr. '+f.name.trim().replace(/^Dr\.?\s+/,'').split(/\s+/).pop()+"'s Rotation";
+const rotOptions = d => (d.faculty||[]).map(f=>({value:f.id,label:rotLabel(f)}));
+const STATUS = ['Active','Inactive'].map(v=>({value:v,label:v}));
+const FACULTY_STATUS = ['Faculty','Guest'].map(v=>({value:v,label:v}));
+const SAMPLE_FILES = ['sepsis-bundle-checklist.pdf','ipass-handoff-card.pdf','ecg-interpretation-basics.pptx','discharge-summary-example.docx','chest-xray-pneumonia.png','12-lead-ecg-stemi.jpg'];
+const MEDIA_TABS = [['file','Static Media'],['url','URLs'],['board','Discussion Boards'],['quiz','Quizzes']];
+const MEDIA_TYPES = [{value:'file',label:'Static Media'},{value:'url',label:'URL'},{value:'board',label:'Discussion Board'},{value:'quiz',label:'Quiz'}];
+const MEDIA_COLL = {file:'files',url:'urls',board:'boards',quiz:'quizzes'};
+const ROT_TABS = [['prompt','Prompt Sequence'],['file','Static Media'],['url','URLs'],['board','Discussion Boards'],['quiz','Quizzes']];
+const MEMBER_TABS = [['team','Teams'],['intern','Interns'],['faculty','Faculty']];
+const unreadPosts = d => { const read=new Set(d.readPosts||[]), out=[]; (d.boards||[]).forEach(b=>{ const ps=b.posts||[]; ps.forEach(c=>{ if(c.role==='Faculty'||read.has(c.id)) return; if(ps.some(x=>x.parent===c.id&&x.role==='Faculty')) return; out.push({b,c,parent:c.parent?ps.find(x=>x.id===c.parent):null}); }); }); return out.sort((x,y)=>Date.parse(y.c.ts)-Date.parse(x.c.ts)); };
+const MERGED_POSTS = {b1:[
+      {id:'f1',parent:null,author:"Marc Raymond",role:'Intern',ts:'2026-10-09T22:42:00',up:2,down:0,text:"My patient's BP dropped to 88/50 overnight. I gave a fluid bolus but wasn't sure whether to call rapid response or just page my senior.",kw:["k1","k5"]},
+      {id:'f2',parent:'f1',author:"Dr. Trudi Cloyd",role:'Faculty',ts:'2026-10-10T08:15:00',up:4,down:0,text:"Acting quickly was right. With new hypotension that doesn't respond to the first bolus, calling rapid response is appropriate. Paging your senior at the same time is fine."},
+      {id:'f3',parent:'f2',author:"Marc Raymond",role:'Intern',ts:'2026-10-10T09:02:00',up:1,down:0,text:"Thanks. I'll review the criteria before my next night shift."},
+      {id:'f4',parent:null,author:"Priya Shah",role:'Intern',ts:'2026-10-07T19:55:00',up:3,down:0,text:"Evening sign-out was rushed and I missed a pending lactate on one patient. Can we standardize what gets covered?",kw:["k2","k5"]},
+      {id:'f5',parent:'f4',author:"Dr. Trudi Cloyd",role:'Faculty',ts:'2026-10-08T08:05:00',up:2,down:0,text:"Agreed. We'll use a structured handoff starting next week. Please flag pending labs explicitly in the to-do column."},
+      {id:'f6',parent:null,author:"Daniel Kim",role:'Intern',ts:'2026-10-06T15:22:00',up:2,down:0,text:"My patient met two SIRS criteria but looked well, so I held off on cultures. Was that reasonable?",kw:["k3","k1"]},
+      {id:'f7',parent:'f6',author:"Dr. Trudi Cloyd",role:'Faculty',ts:'2026-10-06T17:00:00',up:3,down:0,text:"Let's discuss it at rounds. Check a lactate and look at the full picture. When in doubt, draw cultures before antibiotics."},
+      {id:'f10',parent:null,author:"Aisha Rahman",role:'Intern',ts:'2026-10-05T16:48:00',up:1,down:0,text:"I missed the quiz question on shockable rhythms. Could we review PEA management at the next teaching session?",kw:["k5"]},
+      {id:'f11',parent:'f10',author:"Dr. Trudi Cloyd",role:'Faculty',ts:'2026-10-06T09:12:00',up:2,down:0,text:"Good idea. I'll add it to Thursday's session. Focus on the reversible causes."}],
+  b2:[
+      {id:'f8',parent:null,author:"James Okafor",role:'Intern',ts:'2026-10-08T18:10:00',up:3,down:0,text:"My admission H&Ps take over an hour each. Is there a way to keep the assessment shorter without missing things?",kw:["k4"]},
+      {id:'f9',parent:'f8',author:"Dr. Trudi Cloyd",role:'Faculty',ts:'2026-10-09T07:40:00',up:2,down:0,text:"Lead with the problem list and keep each item to one or two lines. The H&P template attached to the ED Physician Note prompt is a good guide."}]};
+const DEMO_UNREAD = {
+  b1:[{id:'d1',parent:'c2',author:"Olivia Bennett",role:'Intern',ts:'2026-10-19T22:14:00',up:0,down:0,text:"I had the same question on my last night shift. Is there a rule of thumb for when a page is enough?",kw:["k1"]},
+    {id:'d2',parent:'f5',author:"Priya Shah",role:'Intern',ts:'2026-10-20T18:40:00',up:1,down:0,text:"Thanks. Will the structured handoff template be posted here, or attached to a prompt?",kw:["k2"]},
+    {id:'d3',parent:null,author:"Noah Adeyemi",role:'Intern',ts:'2026-10-20T23:05:00',up:2,down:0,text:"Had a patient with new confusion and a lactate of 3.1 at 3 AM. I called rapid response right away and they started the sepsis bundle. It felt early, but it was the right call.",kw:["k1","k3"]}],
+  b2:[{id:'d4',parent:'f9',author:"James Okafor",role:'Intern',ts:'2026-10-20T17:30:00',up:1,down:0,text:"Tried leading with the problem list this week. My H&Ps are down to about 40 minutes.",kw:["k4"]},
+    {id:'d5',parent:null,author:"Grace Liu",role:'Intern',ts:'2026-10-21T08:12:00',up:0,down:0,text:"Sharing a de-identified progress note for a COPD exacerbation. I'd like feedback on how I wrote the plan.",kw:["k4"]}],
+  b3:[{id:'d6',parent:'w2',author:"Sofia Rossi",role:'Intern',ts:'2026-10-19T16:05:00',up:2,down:0,text:"Agreed. The smart phrases for the review of systems saved me a lot of documentation time.",kw:["k4"]},
+    {id:'d7',parent:null,author:"Ethan Nakamura",role:'Intern',ts:'2026-10-20T12:20:00',up:1,down:0,text:"I was surprised how much of the day is communication with nurses and families, not just writing orders.",kw:["k5"]}]};
+const SEED_READ = ['c3','c7','c8','c9','c10','f3'];
+const FB_TABS = [['comments','Comments'],['interns','Interns'],['keywords','Keywords']];
+const allComments = d => { const out=[]; (d.boards||[]).forEach(b=>{ const ps=b.posts||[]; ps.forEach(c=>{ if(c.role==='Faculty') return; out.push({b,c,parent:c.parent?ps.find(x=>x.id===c.parent):null}); }); }); return out.sort((x,y)=>Date.parse(y.c.ts)-Date.parse(x.c.ts)); };
+const kwMatch = (k,c) => (c.kw||[]).includes(k.id) || (c.text||'').toLowerCase().includes(k.word.toLowerCase());
+const FACULTY = 'Dr. Anika Patel';
+const LETTERS = 'ABCDEFGH';
+
+const SEED = {
+  teams: [
+    {id:'t1',name:'Team 1',description:'Inpatient cardiology, step-down unit and CCU consults.',rotation:'fa1'},
+    {id:'t2',name:'Team 2',description:'Emergency department, triage and stabilization.',rotation:'fa1'},
+    {id:'t3',name:'Team 3',description:'General pediatrics ward and newborn nursery.',rotation:'fa1'},
+    {id:'t4',name:'Team 4',description:'General medicine wards, admissions and discharge planning.',rotation:'fa1'},
+    {id:'t5',name:'Team 5',description:'Medical ICU.',rotation:'fa1'},
+    {id:'t6',name:'Team 6',description:'Pulmonology consult service.',rotation:'fa1'},
+    {id:'t7',name:'Team 7',description:'General surgery, pre- and post-operative care.',rotation:'fa2'},
+    {id:'t8',name:'Team 8',description:'Neurology ward and stroke unit.',rotation:'fa2'},
+    {id:'t9',name:'Team 9',description:'Oncology and infusion center.',rotation:'fa2'},
+    {id:'t10',name:'Team 10',description:'Nephrology and dialysis unit.',rotation:'fa2'},
+    {id:'t11',name:'Team 11',description:'Obstetrics and labor & delivery.',rotation:'fa2'},
+    {id:'t12',name:'Team 12',description:'Geriatrics and palliative care.',rotation:'fa2'}
+  ],
+  faculty: [
+    {id:'fa1',name:'Trudi Cloyd',email:'t.cloyd@ehospital.edu',status:'Faculty'},
+    {id:'fa2',name:'Briana Short',email:'b.short@ehospital.edu',status:'Faculty'}
+  ],
+  interns: [
+    {id:'i1',name:"Marc Raymond",email:'m.raymond@ehospital.edu',team:'t1',start:'2026-07-01',status:'Active',progress:0},
+    {id:'i2',name:"James Okafor",email:'j.okafor@ehospital.edu',team:'t1',start:'2026-07-01',status:'Active',progress:2},
+    {id:'i3',name:"Priya Shah",email:'p.shah@ehospital.edu',team:'t1',start:'2026-09-01',status:'Active',progress:4},
+    {id:'i4',name:"Daniel Kim",email:'d.kim@ehospital.edu',team:'t1',start:'2026-07-01',status:'Active',progress:1},
+    {id:'i5',name:"Aisha Rahman",email:'a.rahman@ehospital.edu',team:'t2',start:'2026-07-01',status:'Active',progress:3},
+    {id:'i6',name:"Lucas Moreau",email:'l.moreau@ehospital.edu',team:'t2',start:'2026-09-01',status:'Inactive',progress:0},
+    {id:'i7',name:"Hannah Lee",email:'h.lee@ehospital.edu',team:'t2',start:'2026-07-01',status:'Active',progress:2},
+    {id:'i8',name:"Samuel Ortiz",email:'s.ortiz@ehospital.edu',team:'t2',start:'2026-07-01',status:'Active',progress:4},
+    {id:'i9',name:"Olivia Bennett",email:'o.bennett@ehospital.edu',team:'t3',start:'2026-09-01',status:'Active',progress:1},
+    {id:'i10',name:"Ethan Nakamura",email:'e.nakamura@ehospital.edu',team:'t3',start:'2026-07-01',status:'Active',progress:3},
+    {id:'i11',name:"Sofia Rossi",email:'s.rossi@ehospital.edu',team:'t3',start:'2026-07-01',status:'Active',progress:0},
+    {id:'i12',name:"Noah Adeyemi",email:'n.adeyemi@ehospital.edu',team:'t3',start:'2026-09-01',status:'Active',progress:2},
+    {id:'i13',name:"Chloe Dubois",email:'c.dubois@ehospital.edu',team:'t4',start:'2026-07-01',status:'Active',progress:4},
+    {id:'i14',name:"Mateo Fernández",email:'m.fernandez@ehospital.edu',team:'t4',start:'2026-07-01',status:'Active',progress:1},
+    {id:'i15',name:"Grace Liu",email:'g.liu@ehospital.edu',team:'t4',start:'2026-09-01',status:'Active',progress:3},
+    {id:'i16',name:"Omar Haddad",email:'o.haddad@ehospital.edu',team:'t4',start:'2026-07-01',status:'Active',progress:0},
+    {id:'i17',name:"Emily Carter",email:'e.carter@ehospital.edu',team:'t5',start:'2026-07-01',status:'Active',progress:2},
+    {id:'i18',name:"Ravi Patel",email:'r.patel@ehospital.edu',team:'t5',start:'2026-09-01',status:'Active',progress:4},
+    {id:'i19',name:"Isabella Moretti",email:'i.moretti@ehospital.edu',team:'t5',start:'2026-07-01',status:'Active',progress:1},
+    {id:'i20',name:"Kwame Mensah",email:'k.mensah@ehospital.edu',team:'t5',start:'2026-07-01',status:'Active',progress:3},
+    {id:'i21',name:"Zoe Kowalski",email:'z.kowalski@ehospital.edu',team:'t6',start:'2026-09-01',status:'Active',progress:0},
+    {id:'i22',name:"Diego Herrera",email:'d.herrera@ehospital.edu',team:'t6',start:'2026-07-01',status:'Active',progress:2},
+    {id:'i23',name:"Leah Goldberg",email:'l.goldberg@ehospital.edu',team:'t6',start:'2026-07-01',status:'Active',progress:4},
+    {id:'i24',name:"Yusuf Demir",email:'y.demir@ehospital.edu',team:'t6',start:'2026-09-01',status:'Active',progress:1},
+    {id:'i25',name:"Ava Thompson",email:'a.thompson@ehospital.edu',team:'t7',start:'2026-07-01',status:'Active',progress:3},
+    {id:'i26',name:"Hiroshi Tanaka",email:'h.tanaka@ehospital.edu',team:'t7',start:'2026-07-01',status:'Active',progress:0},
+    {id:'i27',name:"Nadia Petrova",email:'n.petrova@ehospital.edu',team:'t7',start:'2026-09-01',status:'Active',progress:2},
+    {id:'i28',name:"Elijah Brooks",email:'e.brooks@ehospital.edu',team:'t7',start:'2026-07-01',status:'Active',progress:4},
+    {id:'i29',name:"Camila Vargas",email:'c.vargas@ehospital.edu',team:'t8',start:'2026-07-01',status:'Inactive',progress:1},
+    {id:'i30',name:"Tariq Siddiqui",email:'t.siddiqui@ehospital.edu',team:'t8',start:'2026-09-01',status:'Active',progress:3},
+    {id:'i31',name:"Mia Johansson",email:'m.johansson@ehospital.edu',team:'t8',start:'2026-07-01',status:'Active',progress:0},
+    {id:'i32',name:"Andre Williams",email:'a.williams@ehospital.edu',team:'t8',start:'2026-07-01',status:'Active',progress:2},
+    {id:'i33',name:"Fatima Al-Sayed",email:'f.alsayed@ehospital.edu',team:'t9',start:'2026-09-01',status:'Active',progress:4},
+    {id:'i34',name:"Benjamin Cohen",email:'b.cohen@ehospital.edu',team:'t9',start:'2026-07-01',status:'Active',progress:1},
+    {id:'i35',name:"Lucia Romero",email:'l.romero@ehospital.edu',team:'t9',start:'2026-07-01',status:'Active',progress:3},
+    {id:'i36',name:"Kenji Watanabe",email:'k.watanabe@ehospital.edu',team:'t9',start:'2026-09-01',status:'Active',progress:0},
+    {id:'i37',name:"Amara Obi",email:'a.obi@ehospital.edu',team:'t10',start:'2026-07-01',status:'Active',progress:2},
+    {id:'i38',name:"Ryan O’Connell",email:'r.oconnell@ehospital.edu',team:'t10',start:'2026-07-01',status:'Active',progress:4},
+    {id:'i39',name:"Elena Popescu",email:'e.popescu@ehospital.edu',team:'t10',start:'2026-09-01',status:'Active',progress:1},
+    {id:'i40',name:"Jamal Robinson",email:'j.robinson@ehospital.edu',team:'t10',start:'2026-07-01',status:'Active',progress:3},
+    {id:'i41',name:"Ingrid Larsen",email:'i.larsen@ehospital.edu',team:'t11',start:'2026-07-01',status:'Active',progress:0},
+    {id:'i42',name:"Arjun Mehta",email:'a.mehta@ehospital.edu',team:'t11',start:'2026-09-01',status:'Active',progress:2},
+    {id:'i43',name:"Sarah Mitchell",email:'s.mitchell@ehospital.edu',team:'t11',start:'2026-07-01',status:'Active',progress:4},
+    {id:'i44',name:"Tomás Silva",email:'t.silva@ehospital.edu',team:'t11',start:'2026-07-01',status:'Active',progress:1},
+    {id:'i45',name:"Mei Chen",email:'m.chen@ehospital.edu',team:'t12',start:'2026-09-01',status:'Active',progress:3},
+    {id:'i46',name:"David Abrams",email:'d.abrams@ehospital.edu',team:'t12',start:'2026-07-01',status:'Active',progress:0},
+    {id:'i47',name:"Naomi Fischer",email:'n.fischer@ehospital.edu',team:'t12',start:'2026-07-01',status:'Active',progress:2},
+    {id:'i48',name:"Kofi Asante",email:'k.asante@ehospital.edu',team:'t12',start:'2026-09-01',status:'Active',progress:4}
+  ],
+  prompts: [
+    {id:'p1',order:1,title:"Chief Complaint",text:'',mediaType:'',mediaId:''},
+    {id:'p2',order:2,title:"Triage",text:'',mediaType:'',mediaId:''},
+    {id:'p3',order:3,title:"ED Nursing Assessment",text:'',mediaType:'',mediaId:''},
+    {id:'p4',order:4,title:"ED Physician Note",text:'',mediaType:'file',mediaId:'f1'},
+    {id:'p5',order:5,title:"Rounds 1",text:'',mediaType:'',mediaId:''},
+    {id:'p6',order:6,title:"Diagnostic Consideration",text:'',mediaType:'',mediaId:''},
+    {id:'p7',order:7,title:"CXR Interpretation",text:'',mediaType:'',mediaId:''},
+    {id:'p8',order:8,title:"Radiology Report",text:'',mediaType:'',mediaId:''},
+    {id:'p9',order:9,title:"Update",text:'',mediaType:'',mediaId:''},
+    {id:'p10',order:10,title:"Rounds 2",text:'',mediaType:'',mediaId:''},
+    {id:'p11',order:11,title:"Wrapping Up",text:'',mediaType:'',mediaId:''},
+    {id:'p12',order:12,title:"Revisiting Rounds",text:'',mediaType:'',mediaId:''},
+    {id:'p13',order:13,title:"CT Interpretation",text:'',mediaType:'',mediaId:''},
+    {id:'p14',order:14,title:"Radiology Report",text:'',mediaType:'',mediaId:''},
+    {id:'p15',order:15,title:"ED Psychiatrist Evaluation",text:'',mediaType:'',mediaId:''},
+    {id:'p16',order:16,title:"Primary Team Evaluation",text:'',mediaType:'',mediaId:''},
+    {id:'p17',order:17,title:"Labs",text:'',mediaType:'',mediaId:''},
+    {id:'p18',order:18,title:"Rounds 3",text:'',mediaType:'',mediaId:''},
+    {id:'p19',order:19,title:"Admission Order Set",text:'',mediaType:'url',mediaId:'u3'},
+    {id:'p20',order:20,title:"Transfer to the Floor",text:'',mediaType:'',mediaId:''},
+    {id:'p21',order:21,title:"Attending Question Set 1",text:'',mediaType:'quiz',mediaId:'q1'},
+    {id:'p22',order:22,title:"Post a Resource",text:'',mediaType:'',mediaId:''},
+    {id:'p23',order:23,title:"The Next Day",text:'',mediaType:'',mediaId:''},
+    {id:'p24',order:24,title:"Attending Question Set 2",text:'',mediaType:'quiz',mediaId:'q2'},
+    {id:'p25',order:25,title:"Paged by RN",text:'',mediaType:'board',mediaId:'b1'},
+    {id:'p26',order:26,title:"Cross-Cover Question",text:'',mediaType:'',mediaId:''},
+    {id:'p27',order:27,title:"Hospital Course Continued",text:'',mediaType:'',mediaId:''},
+    {id:'p28',order:28,title:"Discharge",text:'',mediaType:'file',mediaId:'f3'}
+  ],
+  files: [
+    {id:'f1',title:'Admission H&P template',file:'admission-hp-template.docx',description:'Structured template for history, exam, assessment and plan.'},
+    {id:'f2',title:'ACLS algorithm quick reference',file:'acls-algorithms-2025.pdf',description:'One-page summary of adult cardiac arrest and bradycardia algorithms.'},
+    {id:'f3',title:'Discharge med rec checklist',file:'med-rec-checklist.pdf',description:'Step-by-step checklist used on the medicine wards.'}
+  ],
+  urls: [
+    {id:'u1',title:'Rapid response activation criteria',url:'https://intranet.ehospital.edu/policies/rapid-response',description:'Hospital policy on when and how to call the rapid response team.'},
+    {id:'u2',title:'SPIKES protocol overview',url:'https://intranet.ehospital.edu/learning/spikes',description:'Six-step framework for delivering difficult news.'},
+    {id:'u3',title:'Admission order set guide',url:'https://intranet.ehospital.edu/ehr/admission-orders',description:'How to use the standard admission order sets in the EHR.'}
+  ],
+  boards: [
+    {id:'b1',title:'Overnight escalation: what would you do?',starter:"Describe a time a patient's condition changed during a shift. What did you notice first, and when did you decide to escalate?",posts:[
+      {id:'c1',parent:null,author:"James Okafor",role:'Intern',ts:'2026-10-09T19:12:00',up:9,down:0,text:"A post-op patient became tachycardic and confused around 2 AM. I checked vitals and a glucose, then paged my senior when the heart rate stayed above 120."},
+      {id:'c2',parent:'c1',author:"Dr. Trudi Cloyd",role:'Faculty',ts:'2026-10-10T07:30:00',up:7,down:0,text:"Good call checking a glucose first. What made you decide to page rather than call rapid response?"},
+      {id:'c3',parent:'c2',author:"James Okafor",role:'Intern',ts:'2026-10-10T08:05:00',up:4,down:0,text:"His blood pressure was still normal and he was answering questions, so I thought a page was enough."},
+      {id:'c4',parent:'c3',author:"Hannah Lee",role:'Intern',ts:'2026-10-10T09:20:00',up:3,down:0,text:"We were taught that new confusion on its own meets rapid response criteria here. Is that right?"},
+      {id:'c5',parent:'c4',author:"Dr. Trudi Cloyd",role:'Faculty',ts:'2026-10-10T10:02:00',up:5,down:0,text:"Yes. An acute change in mental status is one of the criteria. You can always call, and the team can stand down if things look stable."},
+      {id:'c6',parent:'c5',author:"James Okafor",role:'Intern',ts:'2026-10-10T10:40:00',up:2,down:0,text:"That's helpful. I didn't know calling and then cancelling was acceptable."},
+      {id:'c7',parent:'c1',author:"Daniel Kim",role:'Intern',ts:'2026-10-10T12:15:00',up:1,down:0,text:"Did the tachycardia turn out to be a bleed?"},
+      {id:'c8',parent:'c7',author:"James Okafor",role:'Intern',ts:'2026-10-10T13:00:00',up:2,down:0,text:"Pulmonary embolism, actually. CT angiogram confirmed it that morning."},
+      {id:'c9',parent:null,author:"Priya Shah",role:'Intern',ts:'2026-10-10T11:30:00',up:6,down:1,text:"In the ED, a patient on the board for chest pain dropped their pressure while waiting. The nurse flagged it first. I called the attending right away and we moved them to a resus bay."},
+      {id:'c10',parent:'c9',author:"Aisha Rahman",role:'Intern',ts:'2026-10-11T09:10:00',up:2,down:0,text:"How long had they been waiting before the drop?"},
+      {id:'c11',parent:'c10',author:"Priya Shah",role:'Intern',ts:'2026-10-11T10:25:00',up:1,down:0,text:"About forty minutes. Their triage vitals had been normal."},
+      {id:'c12',parent:null,author:"Hannah Lee",role:'Intern',ts:'2026-10-11T20:45:00',up:1,down:0,text:"Mine was a sepsis case: fever and rigors right at shift change. I wasn't sure whether the day or night team owned the escalation."}]},
+    {id:'b2',title:'Progress note peer review',starter:'Post a de-identified progress note and give feedback on one colleague’s note.',posts:[]},
+    {id:'b3',title:'Week 1 reflections',starter:'What surprised you most about your first week on the wards?',posts:[
+      {id:'w1',parent:null,author:"Aisha Rahman",role:'Intern',ts:'2026-09-03T18:20:00',up:4,down:0,text:"How much of the day goes to documentation rather than seeing patients."},
+      {id:'w2',parent:'w1',author:"Dr. Trudi Cloyd",role:'Faculty',ts:'2026-09-04T07:45:00',up:3,down:0,text:"That's common in the first weeks. It gets faster once the templates feel familiar."}]}
+  ],
+  readPosts: SEED_READ,
+  quizzes: [
+    {id:'q1',title:'Cardiac arrest algorithms',passing:80,questions:[
+      {text:'Which drug is given first in pulseless VT/VF after the second shock?',options:['Atropine 1 mg IV','Epinephrine 1 mg IV','Adenosine 6 mg IV','Calcium chloride 1 g IV'],correct:1},
+      {text:'What is the recommended compression depth for adults?',options:['About 1 inch (2.5 cm)','At least 2 inches (5 cm)','At least 3 inches (7.5 cm)','Depth is not specified'],correct:1},
+      {text:'Which rhythm is not shockable?',options:['Ventricular fibrillation','Pulseless ventricular tachycardia','Pulseless electrical activity','Polymorphic VT without a pulse'],correct:2},
+      {text:'What is the target chest compression rate?',options:['60–80 per minute','80–100 per minute','100–120 per minute','130–150 per minute'],correct:2}]},
+    {id:'q2',title:'Medication safety basics',passing:70,questions:[
+      {text:'Which of these is a high-alert medication?',options:['Acetaminophen','Insulin','Docusate','Loratadine'],correct:1},
+      {text:'Which drug usually needs a dose adjustment in renal impairment?',options:['Enoxaparin','Ondansetron','Pantoprazole','Ceftriaxone'],correct:0}]}
+  ],
+  keywords: [
+    {id:'k1',word:'escalation'},{id:'k2',word:'handoff'},{id:'k3',word:'sepsis'},
+    {id:'k4',word:'documentation'},{id:'k5',word:'communication'}
+  ]
+};
+
+function fmtDate(s){ if(!s) return '—'; const d=new Date(s+'T00:00:00'); return isNaN(d)?s:d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}); }
+const uid = p => p + Math.random().toString(36).slice(2,8);
+const initials = n => n.replace(/^Dr\.?\s+/,'').split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+const sortedPrompts = d => [...d.prompts].sort((a,b)=>a.order-b.order);
+const rotName = (d,id) => { const f=(d.faculty||[]).find(x=>x.id===(LEGACY_ROT[id]||id)); return f?rotLabel(f):'—'; };
+const teamName = (d,id) => { const t=d.teams.find(x=>x.id===id); return t?t.name:'—'; };
+const promptName = (d,id) => { const p=d.prompts.find(x=>x.id===id); return p?p.title:'—'; };
+const mediaTypeLabel = t => (MEDIA_TYPES.find(m=>m.value===t)||{label:'No media'}).label;
+const mediaItem = (d,p) => p&&p.mediaType ? d[MEDIA_COLL[p.mediaType]].find(x=>x.id===p.mediaId) : null;
+const mediaLabel = (d,p) => { if(!p.mediaType) return 'None'; const m=mediaItem(d,p); return mediaTypeLabel(p.mediaType)+(m?' · '+m.title:''); };
+const boardStatus = b => 'Open';
+const blankQ = () => ({text:'',options:['','','',''],correct:0});
+const THREAD_BOARD = {h1:'b1',h2:'b2',h3:'b1',h4:'b1',h5:'b2'};
+const fmtTs = ts => { const d=new Date(ts); return isNaN(d)?'':d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}); };
+const snippet = t => t.length>70?t.slice(0,70).trim()+'…':t;
+const nowLabel = () => new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+
+const ENT = {
+  team:{coll:'teams',label:'Team',plural:'Teams',nameKey:'name',
+    fields:d=>[{key:'name',label:'Team name',type:'text',required:true,placeholder:'e.g. Team 5'},
+      {key:'description',label:'Description',type:'textarea'},
+      {key:'rotation',label:'Rotation',type:'select',options:rotOptions(d)},
+      {key:'members',label:'Members',type:'multi',viewHide:true,options:d.interns.map(i=>({value:i.id,label:i.name})),hint:'An intern belongs to one team. Selecting an intern moves them here.'}],
+    cols:['Name','Rotation','Members'], cells:(t,d)=>[t.name,rotName(d,t.rotation),String(d.interns.filter(i=>i.team===t.id).length)],
+    defaults:d=>{ let n=d.teams.length+1; while(d.teams.some(t=>t.name==='Team '+n)) n++; return {name:'Team '+n,rotation:(d.faculty[0]||{}).id||'',members:[]}; },
+    sections:(t,d)=>[{title:'Members',empty:'No members yet.',items:d.interns.filter(i=>i.team===t.id).map(i=>({title:i.name,meta:i.email,tag:'',route:{page:'view',ent:'intern',id:i.id}}))}]},
+  faculty:{coll:'faculty',label:'Faculty Member',plural:'Faculty',nameKey:'name',
+    fields:()=>[{key:'name',label:'Full name',type:'text',required:true,placeholder:'e.g. Trudi Cloyd'},
+      {key:'email',label:'Email',type:'email',required:true,placeholder:'name@ehospital.edu'},
+      {key:'status',label:'Status',type:'select',options:FACULTY_STATUS}],
+    cols:['Name','Email','Rotation','Status'], cells:f=>[f.name,f.email,rotLabel(f),f.status],
+    defaults:()=>({status:'Faculty'})},
+  intern:{coll:'interns',label:'Intern',plural:'Interns',nameKey:'name',
+    fields:d=>[{key:'name',label:'Full name',type:'text',required:true,placeholder:'e.g. Marc Raymond'},
+      {key:'email',label:'Email',type:'email',required:true,placeholder:'name@ehospital.edu'},
+      {key:'team',label:'Team',type:'select',options:d.teams.map(t=>({value:t.id,label:t.name}))}],
+    cols:['Name','Team','Email'], cells:(i,d)=>[i.name,teamName(d,i.team),i.email],
+    defaults:()=>({}),
+    sections:(i,d)=>{ const ps=sortedPrompts(d), prog=Math.min(i.progress||0,ps.length);
+      return [{title:'Rotation progress',count:prog+' of '+ps.length+' completed',empty:'No prompts in the sequence.',
+        items:ps.map((p,idx)=>({title:p.order+'. '+p.title,meta:mediaTypeLabel(p.mediaType),tag:idx<prog?'Completed':idx===prog?'Current':'Not started',route:{page:'view',ent:'prompt',id:p.id}}))}]; }},
+  prompt:{coll:'prompts',label:'Prompt',plural:'Prompts',nameKey:'title',strong:1,
+    fields:d=>[{key:'title',label:'Title',type:'text',required:true},
+      {key:'text',label:'Prompt text',type:'textarea',required:true,placeholder:'What should interns do or answer?'},
+      {key:'order',label:'Order in sequence',type:'number'},
+      {key:'media',label:'Attached media',type:'media'},
+      {key:'locked',label:'Student access',type:'toggle',onLabel:'Locked',offLabel:'Unlocked',hint:'When locked, students can’t open this prompt or any prompt after it.'}],
+    cols:['#','Title','Attached media','Access'], cells:(p,d)=>[String(p.order),p.title,mediaLabel(d,p),p.locked?'Locked':'Open'],
+    defaults:d=>({order:String(Math.max(0,...d.prompts.map(p=>p.order))+1),mediaType:'',mediaId:'',locked:false})},
+  file:{coll:'files',label:'File',plural:'Static Media',nameKey:'title',
+    fields:()=>[{key:'title',label:'Title',type:'text',required:true},{key:'file',label:'File',type:'file',required:true},{key:'description',label:'Description',type:'textarea'}],
+    cols:['Title','File'], cells:f=>[f.title,f.file], defaults:()=>({})},
+  url:{coll:'urls',label:'URL',plural:'URLs',nameKey:'title',
+    fields:()=>[{key:'title',label:'Title',type:'text',required:true},{key:'url',label:'URL',type:'url',required:true,placeholder:'https://'},{key:'description',label:'Description',type:'textarea'}],
+    cols:['Title','URL'], cells:u=>[u.title,u.url.replace(/^https?:\/\//,'')], defaults:()=>({url:'https://'})},
+  board:{coll:'boards',label:'Discussion Board',plural:'Discussion Boards',nameKey:'title',
+    fields:()=>[{key:'title',label:'Title',type:'text',required:true},{key:'starter',label:'Starter question',type:'textarea',required:true}],
+    cols:['Title','Comments'], cells:b=>[b.title,String((b.posts||[]).length)],
+    defaults:()=>({posts:[]}),
+    sections:()=>[]},
+  quiz:{coll:'quizzes',label:'Quiz',plural:'Quizzes',nameKey:'title',
+    fields:()=>[{key:'title',label:'Title',type:'text',required:true},{key:'passing',label:'Passing score (%)',type:'number'},
+      {key:'questions',label:'Questions',type:'questions',required:true,viewHide:true,hint:'Click a letter to mark the correct answer.'}],
+    cols:['Title','Questions','Passing score'], cells:q=>[q.title,String((q.questions||[]).length),q.passing+'%'],
+    defaults:()=>({passing:'80',questions:[blankQ()]}),
+    sections:q=>[{title:'Questions',empty:'No questions yet.',items:(q.questions||[]).map((x,i)=>({title:(i+1)+'. '+x.text,meta:'Answer: '+LETTERS[x.correct]+'. '+(x.options[x.correct]||''),tag:x.options.filter(Boolean).length+' options'}))}]}
+};
+const listRoute = k => (k==='team'||k==='intern'||k==='faculty') ? {page:'interns',tab:k} : {page:'rotation',tab:k};
+const baseCrumbs = k => {
+  if (k==='team') return [['Members',{page:'interns',tab:'team'}],['Teams',{page:'interns',tab:'team'}]];
+  if (k==='intern') return [['Members',{page:'interns',tab:'team'}],['Interns',{page:'interns',tab:'intern'}]];
+  if (k==='faculty') return [['Members',{page:'interns',tab:'team'}],['Faculty',{page:'interns',tab:'faculty'}]];
+  return [['Rotation',{page:'rotation',tab:'prompt'}],[ROT_TABS.find(t=>t[0]===k)[1],{page:'rotation',tab:k}]];
+};
+
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    let saved=null; try{ saved=JSON.parse(localStorage.getItem(KEY)); }catch(e){}
+    let collapsed={}; try{ collapsed=JSON.parse(sessionStorage.getItem(KEY+'-collapsed'))||{}; }catch(e){}
+    if(saved&&saved.data&&saved.data.boards) saved.data.boards=saved.data.boards.map(b=>{ const ps=b.posts||[]; if(ps.every(x=>x.id&&x.ts)) return b; const sb=SEED.boards.find(x=>x.id===b.id); return {...b,posts:sb?sb.posts:ps.map((x,i)=>({id:'m'+b.id+i,parent:null,author:x.author,role:'Intern',ts:TODAY+'T12:00:00',text:x.text,up:0,down:0}))}; });
+    if(saved&&saved.data&&saved.data.faculty) saved.data.faculty=saved.data.faculty.map(f=>{ let n=f.name.replace(/^Dr\.?\s+/,''); if(f.status!=='Faculty'&&f.status!=='Guest') f={...f,status:'Faculty'}; if(f.id==='fa2'&&n==='Short') return {...f,name:'Briana Short',email:f.email==='short@ehospital.edu'?'b.short@ehospital.edu':f.email}; return {...f,name:n}; });
+    if(saved&&saved.data&&saved.data.teams) saved.data.teams=saved.data.teams.map(t=>LEGACY_ROT[t.rotation]?{...t,rotation:LEGACY_ROT[t.rotation]}:t);
+    if(saved&&saved.data&&!saved.data.readPosts) saved.data.readPosts=SEED_READ;
+    const mergeIn=data=>({...data,readPosts:[...new Set([...(data.readPosts||[]),'f3'])],boards:(data.boards||[]).map(b=>{ const add=[...(MERGED_POSTS[b.id]||[]),...(DEMO_UNREAD[b.id]||[])].filter(x=>!(b.posts||[]).some(y=>y.id===x.id)); return add.length?{...b,posts:[...(b.posts||[]),...add]}:b; })});
+    if(saved&&saved.data&&!saved.commentsMerged){ saved.data=mergeIn(saved.data); saved.commentsMerged=1; }
+    if(saved&&saved.data&&!saved.demoUnread){ const ids=new Set(Object.values(DEMO_UNREAD).flat().map(x=>x.id)); saved.data=mergeIn({...saved.data,readPosts:(saved.data.readPosts||[]).filter(x=>!ids.has(x))}); saved.demoUnread=1; }
+    if(saved&&saved.journeyReset!==1){ if(saved.data&&saved.data.interns) saved.data.interns=saved.data.interns.map(i=>i.id===STUDENT_ID?{...i,progress:0}:i); saved.step=0; saved.quiz={}; saved.journeyReset=1; }
+    if(saved&&saved.draft&&LEGACY_ROT[saved.draft.rotation]) saved.draft={...saved.draft,rotation:LEGACY_ROT[saved.draft.rotation]};
+    this.state = Object.assign({journeyReset:1,commentsMerged:1,demoUnread:1,role:null,route:{page:'landing'},data:mergeIn(SEED),draft:null,errors:{},confirm:false,toast:null,loginRole:null,login:{email:'',password:''},step:0,quiz:{},reply:'',quizError:'',votes:{},dSort:'oldest',dDraft:'',replyTo:null,replyDraft:'',dFocus:null,hl:null,scrollTo:null}, saved||{}, {collapsed,scrollTo:null});
+  }
+  componentDidUpdate(){
+    const {role,route,data,draft,loginRole,step,quiz,votes,dSort,collapsed,journeyReset,commentsMerged,demoUnread}=this.state;
+    try{ localStorage.setItem(KEY, JSON.stringify({role,route,data,draft,loginRole,step,quiz,votes,dSort,journeyReset,commentsMerged,demoUnread})); sessionStorage.setItem(KEY+'-collapsed', JSON.stringify(collapsed||{})); }catch(e){}
+    if(this.state.scrollTo){ const id=this.state.scrollTo; this.setState({scrollTo:null}); setTimeout(()=>{ const el=document.getElementById('cm-'+id); if(el) window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-120,behavior:'smooth'}); },80); }
+  }
+  go(route){ this.setState({route,errors:{},confirm:false,draft:null,quizError:'',replyTo:null,dFocus:null,hl:null}); window.scrollTo(0,0); }
+  flash(msg){ this.setState({toast:msg}); clearTimeout(this._t); this._t=setTimeout(()=>this.setState({toast:null}),2600); }
+  withVirtual(k,item){ const d=this.state.data; const o={...item}; if(k==='team') o.members=d.interns.filter(i=>i.team===item.id).map(i=>i.id);
+    if(k==='quiz') o.questions=JSON.parse(JSON.stringify(item.questions||[]));
+    for(const key in o) if(typeof o[key]==='number') o[key]=String(o[key]); return o; }
+  openAdd(k){ this.setState({route:{page:'add',ent:k},draft:ENT[k].defaults(this.state.data),errors:{},confirm:false}); window.scrollTo(0,0); }
+  openEdit(k,id){ const it=this.state.data[ENT[k].coll].find(x=>x.id===id); this.setState({route:{page:'edit',ent:k,id},draft:this.withVirtual(k,it),errors:{},confirm:false}); window.scrollTo(0,0); }
+  setDraft(obj,errKey){ this.setState(s=>({draft:{...s.draft,...obj},errors:{...s.errors,[errKey]:null}})); }
+  updateQs(fn){ this.setState(s=>({draft:{...s.draft,questions:fn(s.draft.questions.map(q=>({...q,options:[...q.options]})))},errors:{...s.errors,questions:null}})); }
+  save(){
+    const {route,draft,data}=this.state, k=route.ent, e=ENT[k], errors={};
+    e.fields(data).forEach(f=>{ if(f.type==='questions'||f.type==='media') return; const v=draft[f.key]; if(f.required && (!v || !String(v).trim() || v==='https://')) errors[f.key]=f.label+' is required.'; });
+    if(k==='intern' && draft.email && !/^\S+@\S+\.\S+$/.test(draft.email)) errors.email='Enter a valid email address.';
+    if(k==='url' && draft.url && draft.url!=='https://' && !/^https?:\/\/\S+\.\S+/.test(draft.url)) errors.url='Enter a full URL starting with https://';
+    if(k==='prompt' && draft.mediaType && !draft.mediaId) errors.media='Choose which item to attach.';
+    if(k==='quiz'){
+      if(draft.passing!=='' && (Number(draft.passing)<0||Number(draft.passing)>100)) errors.passing='Passing score must be between 0 and 100.';
+      const qs=draft.questions||[];
+      if(!qs.length) errors.questions='Add at least one question.';
+      else if(qs.some(q=>!q.text.trim()||q.options.filter(o=>o.trim()).length<2||!q.options[q.correct].trim())) errors.questions='Each question needs text, at least two options, and a correct answer.';
+    }
+    if(Object.keys(errors).length){ this.setState({errors}); return; }
+    const rec={...draft}; ['order','passing'].forEach(n=>{ if(n in rec) rec[n]=Number(rec[n])||0; });
+    if(k==='quiz') rec.questions=rec.questions.map(q=>({text:q.text.trim(),options:q.options.map(o=>o.trim()),correct:q.correct}));
+    const members=rec.members; delete rec.members;
+    const isNew=route.page==='add'; const id=isNew?uid(k[0]):route.id; rec.id=id;
+    if(isNew && k==='intern') rec.progress=0;
+    let coll=[...data[e.coll]]; coll=isNew?[...coll,rec]:coll.map(x=>x.id===id?{...x,...rec}:x);
+    let nd={...data,[e.coll]:coll};
+    if(k==='team') nd.interns=nd.interns.map(i=>members.includes(i.id)?{...i,team:id}:(i.team===id?{...i,team:''}:i));
+    this.setState({data:nd});
+    if(isNew){ this.go(listRoute(k)); this.flash(e.label+' added'); } else { this.go({page:'view',ent:k,id}); this.flash('Changes saved'); }
+  }
+  remove(){
+    const {route,data}=this.state, k=route.ent, e=ENT[k];
+    let nd={...data,[e.coll]:data[e.coll].filter(x=>x.id!==route.id)};
+    if(k==='team') nd.interns=nd.interns.map(i=>i.team===route.id?{...i,team:''}:i);
+    if(k==='faculty') nd.teams=nd.teams.map(t=>t.rotation===route.id?{...t,rotation:''}:t);
+    if(MEDIA_COLL[k]) nd.prompts=nd.prompts.map(p=>p.mediaType===k&&p.mediaId===route.id?{...p,mediaType:'',mediaId:''}:p);
+    this.setState({data:nd}); this.go(listRoute(k)); this.flash(e.label+' deleted');
+  }
+  toggleColl(id){ this.setState(s=>({collapsed:{...s.collapsed,[id]:!(s.collapsed||{})[id]},replyTo:null})); }
+  vote(id){ this.setState(s=>{ const v={...s.votes}; v[id]=v[id]===1?0:1; return {votes:v}; }); }
+  addComment(boardId,parent,text,who){ const t=(text||'').trim(); if(!t) return false;
+    const c={id:uid('c'),parent,author:who.name,role:who.role,ts:new Date().toISOString(),up:0,down:0,text:t};
+    this.setState(s=>({data:{...s.data,readPosts:(who.role==='Faculty'&&parent)?[...(s.data.readPosts||[]),parent]:s.data.readPosts,boards:s.data.boards.map(b=>b.id===boardId?{...b,posts:[...(b.posts||[]),c]}:b)},replyTo:null,replyDraft:'',collapsed:parent?{...s.collapsed,[parent]:false}:s.collapsed}));
+    this.flash(parent?'Reply posted':'Comment posted'); return true; }
+  markRead(ids){ if(!ids.length) return; this.setState(s=>({data:{...s.data,readPosts:[...new Set([...(s.data.readPosts||[]),...ids])]}})); this.flash(ids.length>1?'All replies marked as read':'Marked as read'); }
+  openPost(boardId,postId){ const b=this.state.data.boards.find(x=>x.id===boardId); const byId={}; ((b&&b.posts)||[]).forEach(c=>byId[c.id]=c);
+    const coll={...(this.state.collapsed||{})}; let x=byId[postId]; while(x){ coll[x.id]=false; x=byId[x.parent]; }
+    this.go({page:'view',ent:'board',id:boardId}); this.setState({collapsed:coll,hl:postId,scrollTo:postId}); }
+  discussion(b,who){
+    const unreadIds=who.role==='Faculty'?new Set(unreadPosts(this.state.data).map(x=>x.c.id)):new Set();
+    const s=this.state, all=b.posts||[], open=boardStatus(b)==='Open', votes=s.votes||{}, coll=s.collapsed||{}, sort=(s.dSort==='new'?'new':'oldest');
+    const focus=s.dFocus&&s.dFocus.board===b.id?s.dFocus.id:null;
+    const kids={}; all.forEach(c=>{ const k=c.parent||'root'; (kids[k]=kids[k]||[]).push(c); });
+    const likes=c=>(c.up||0)+(votes[c.id]===1?1:0);
+    const hours=c=>Math.max(0,(Date.now()-Date.parse(c.ts))/36e5);
+    const key={oldest:c=>-Date.parse(c.ts),new:c=>Date.parse(c.ts)}[sort]||(c=>-Date.parse(c.ts));
+    const sorted=l=>[...(l||[])].sort((x,y)=>key(y)-key(x));
+    const count=id=>(kids[id]||[]).reduce((n,c)=>n+1+count(c.id),0);
+    const MAXD=4, rows=[];
+    const rail=a=>({title:'Collapse '+a.author+'’s thread',onClick:()=>this.toggleColl(a.id)});
+    const walk=(c,depth,anc)=>{
+      const v=votes[c.id]||0, isColl=!!coll[c.id], n=count(c.id);
+      rows.push({isComment:true,isContinue:false,anchor:'cm-'+c.id,hlCls:s.hl===c.id?'bg-warning-subtle':'',isNew:unreadIds.has(c.id),onMarkRead:()=>this.markRead([c.id]),sepCls:depth===0&&rows.length?'border-top mt-2 pt-1':'',rails:anc.slice(-MAXD).map(rail),
+        author:c.author,initials:initials(c.author),isFaculty:c.role==='Faculty',time:fmtTs(c.ts),text:c.text,
+        collapsed:isColl,expanded:!isColl,toggleGlyph:isColl?'+':'−',toggleLabel:(isColl?'Expand':'Collapse')+' '+c.author+'’s comment',onToggle:()=>this.toggleColl(c.id),
+        summary:(n?n+(n===1?' reply':' replies')+' · ':'')+snippet(c.text),
+        canAct:open,liked:v===1,notLiked:v!==1,hasLikes:likes(c)>0,likeLabel:likes(c)+(likes(c)===1?' like':' likes'),
+        onLike:()=>this.vote(c.id),onReply:()=>this.setState({replyTo:c.id,replyDraft:''}),
+        replying:open&&s.replyTo===c.id,replyingTo:'Reply to '+c.author+'…',replyText:s.replyDraft||'',setReplyText:e=>this.setState({replyDraft:e.target.value}),
+        submitReply:()=>this.addComment(b.id,c.id,this.state.replyDraft,who),cancelReply:()=>this.setState({replyTo:null})});
+      if(isColl) return;
+      const ch=sorted(kids[c.id]); if(!ch.length) return;
+      ch.forEach(x=>walk(x,depth+1,[...anc,c]));
+    };
+    const fc=focus?all.find(c=>c.id===focus):null;
+    (fc?[fc]:sorted(kids.root)).forEach(c=>walk(c,0,[]));
+    return {dCount:all.length+(all.length===1?' comment':' comments'),
+      dSorts:[['oldest','Oldest','Oldest first'],['new','Newest','Most recent first']].map(([k,l,hint])=>({label:l,hint,active:sort===k,inactive:sort!==k,onClick:()=>this.setState({dSort:k})})),
+      dOpen:open,dClosed:!open,dDraft:s.dDraft||'',dSetDraft:e=>this.setState({dDraft:e.target.value}),
+      dPost:()=>{ if(this.addComment(b.id,null,this.state.dDraft,who)) this.setState({dDraft:''}); },
+      dFocused:!!fc,dFocusLabel:fc?'Continuing a thread from '+fc.author:'',dUnfocus:()=>this.setState({dFocus:null}),
+      dRows:rows,dEmpty:!all.length};
+  }
+  setStudentProgress(n){ this.setState(s=>({data:{...s.data,interns:s.data.interns.map(i=>i.id===STUDENT_ID?{...i,progress:Math.max(i.progress||0,n)}:i)}})); }
+  quizState(id){ return (this.state.quiz||{})[id]||{answers:{},submitted:false}; }
+  setQuiz(id,v){ this.setState(s=>({quiz:{...s.quiz,[id]:v},quizError:''})); }
+  renderVals(){
+    const s=this.state, d=s.data, facultyName=this.props.facultyName||FACULTY;
+    let r=s.route, p=r.page;
+    const ent=r.ent?ENT[r.ent]:null;
+    const item=ent&&r.id?d[ent.coll].find(x=>x.id===r.id):null;
+    if((p==='view'||p==='edit')&&!item){ r=listRoute(r.ent); p=r.page; }
+    if(p==='prompts'){ r={page:'rotation',tab:'prompt'}; p='rotation'; }
+    if(p==='media'){ r={page:'rotation',tab:r.tab||'file'}; p='rotation'; }
+    const go=route=>()=>this.go(route);
+    const isFaculty=s.role==='faculty';
+    if(p==='thread'){ r={page:'feedback',tab:'comments'}; p='feedback'; }
+    const appPages=['facultyHome','studentHome','studentRotation','about','interns','rotation','prompts','media','feedback','add','view','edit','thread','fbIntern','fbKeyword'];
+    const inApp=!!s.role&&appPages.includes(p);
+    const sec=(()=>{ if(p==='interns'||(['add','view','edit'].includes(p)&&(r.ent==='team'||r.ent==='intern'||r.ent==='faculty'))) return 'interns';
+      if(['rotation','prompts','media','add','view','edit'].includes(p)) return 'rotation';
+      if(['feedback','thread','fbIntern','fbKeyword'].includes(p)) return 'feedback'; if(p==='facultyHome') return 'home'; return p; })();
+    const uList=unreadPosts(d), uSet=new Set(uList.map(x=>x.c.id)), allC=allComments(d);
+    const cRow=({b,c,parent})=>({author:c.author,initials:initials(c.author),context:parent?'replied to '+parent.author:'posted a new comment',board:b.title,snippet:snippet(c.text),time:fmtTs(c.ts),isNew:uSet.has(c.id),onView:()=>this.openPost(b.id,c.id),onMarkRead:()=>this.markRead([c.id])});
+    const cLink=x=>({title:snippet(x.c.text),meta:x.c.author+' · '+(x.parent?'replied to '+x.parent.author:'new comment')+' · '+x.b.title,date:fmtTs(x.c.ts),onClick:()=>this.openPost(x.b.id,x.c.id)});
+    const nav=[['home','Dashboard',{page:'facultyHome'}],['interns','Members',{page:'interns'}],['rotation','Rotation',{page:'rotation'}],['feedback','Feedback',{page:'feedback',tab:'comments',filter:uList.length?'unread':'all'}],['about','About eHospital',{page:'about'}]]
+      .map(([k,label,route])=>{ const nb=k==='feedback'?uList.length:0; return {label,active:sec===k,inactive:sec!==k,onClick:go(route),hasBadge:nb>0,badge:String(nb),badgeLabel:nb+' unread'}; });
+    const studentNav=[['studentHome','Home'],['studentRotation','Rotation'],['about','About']].map(([k,label])=>({label,active:p===k,inactive:p!==k,onClick:go({page:k})}));
+
+    let title='',sub='',crumbs=[],tabs=null,lists=null,headerAction=null,headerActionLabel='';
+    const tName=it=>it[ENT[r.ent].nameKey];
+    const listFor=k=>{ const e=ENT[k]; const items=k==='prompt'?sortedPrompts(d):k==='intern'?[...d.interns].sort((a,b)=>a.name.localeCompare(b.name)):d[e.coll]; const si=e.strong||0;
+      return {title:e.plural,count:String(items.length),hasAdd:true,addLabel:'Add '+e.label,onAdd:()=>this.openAdd(k),cols:e.cols,
+        rows:items.map(it=>({onClick:go({page:'view',ent:k,id:it.id}),cells:e.cells(it,d).map((t,i)=>({text:t,strong:i===si,plain:i!==si}))})),
+        isEmpty:!items.length,emptyText:'No '+e.plural.toLowerCase()+' yet.'}; };
+    const ps=sortedPrompts(d), N=ps.length;
+
+    if(p==='interns'){ const tab=MEMBER_TABS.some(t=>t[0]===r.tab)?r.tab:'team'; title='Members'; sub='Teams, interns and faculty in your rotations.';
+      crumbs=[['Members',{page:'interns',tab:'team'}],[MEMBER_TABS.find(t=>t[0]===tab)[1]]];
+      tabs=MEMBER_TABS.map(([k,l])=>({label:l,count:String(d[ENT[k].coll].length),active:k===tab,inactive:k!==tab,onClick:go({page:'interns',tab:k})}));
+      lists=[listFor(tab)]; }
+    if(p==='rotation'){ const tab=ROT_TABS.some(t=>t[0]===r.tab)?r.tab:'prompt'; title='Rotation'; sub='Build the prompt sequence and the media that supports it.';
+      crumbs=[['Rotation',{page:'rotation',tab:'prompt'}],[ROT_TABS.find(t=>t[0]===tab)[1]]];
+      tabs=ROT_TABS.map(([k,l])=>({label:l,count:String(d[ENT[k].coll].length),active:k===tab,inactive:k!==tab,onClick:go({page:'rotation',tab:k})}));
+      lists=[listFor(tab)]; }
+    if(p==='prompts'){ title='Prompt Sequence'; sub='Ordered prompts interns work through during the rotation.'; crumbs=[['Rotation',{page:'rotation'}],['Prompt Sequence']]; lists=[listFor('prompt')]; }
+    if(p==='media'){ const tab=r.tab||'file'; title='Prompt Media'; sub='Files, links, discussion boards and quizzes that can be attached to prompts.';
+      crumbs=[['Rotation',{page:'rotation'}],['Prompt Media',{page:'media',tab:'file'}],[MEDIA_TABS.find(t=>t[0]===tab)[1]]];
+      tabs=MEDIA_TABS.map(([k,l])=>({label:l,count:String(d[ENT[k].coll].length),active:k===tab,inactive:k!==tab,onClick:go({page:'media',tab:k})}));
+      lists=[listFor(tab)]; }
+    let fcFilter='all';
+    if(p==='feedback'){ const tab=(r.tab==='unread'||r.tab==='threads')?'comments':(FB_TABS.some(t=>t[0]===r.tab)?r.tab:'comments'); fcFilter=(r.filter==='unread'||r.tab==='unread')?'unread':'all';
+      title='Feedback'; sub='Intern comments from discussion boards, grouped by intern and keyword.';
+      crumbs=[['Feedback',{page:'feedback',tab:'comments'}],[FB_TABS.find(t=>t[0]===tab)[1]]];
+      const counts={comments:allC.length,interns:d.interns.length,keywords:d.keywords.length};
+      tabs=FB_TABS.map(([k,l])=>({label:l,count:String(counts[k]),active:k===tab,inactive:k!==tab,onClick:go({page:'feedback',tab:k})}));
+      const mk=(t,cols,items,cells,route)=>({title:t,count:String(items.length),hasAdd:false,cols,isEmpty:!items.length,emptyText:'Nothing here yet.',
+        rows:items.map(it=>({onClick:go(route(it)),cells:cells(it).map((x,i)=>({text:x,strong:i===0,plain:i!==0}))}))});
+      if(tab==='interns') lists=[mk('Interns',['Intern','Team','Comments'],[...d.interns].sort((a,b)=>a.name.localeCompare(b.name)),i=>[i.name,teamName(d,i.team),String(allC.filter(x=>x.c.author===i.name).length)],i=>({page:'fbIntern',id:i.id}))];
+      if(tab==='keywords') lists=[mk('Keywords',['Keyword','Comments','Interns'],[...d.keywords].sort((a,b)=>a.word.localeCompare(b.word)),k=>{ const m=allC.filter(x=>kwMatch(k,x.c)); return [k.word,String(m.length),String(new Set(m.map(x=>x.c.author)).size)]; },k=>({page:'fbKeyword',id:k.id}))];
+    }
+
+    if(p==='add'){ title='Add '+ent.label; crumbs=[...baseCrumbs(r.ent),['Add '+ent.label]]; }
+    if(p==='view'){ title=tName(item); sub=ent.label; crumbs=[...baseCrumbs(r.ent),[tName(item)]]; headerAction=()=>this.openEdit(r.ent,r.id); headerActionLabel='Edit '+ent.label; }
+    if(p==='edit'){ title='Edit '+ent.label; sub=tName(item); crumbs=[...baseCrumbs(r.ent),[tName(item),{page:'view',ent:r.ent,id:r.id}],['Edit']]; }
+    { const homeLbl=isFaculty?'Dashboard':'Home', homeRt={page:isFaculty?'facultyHome':'studentHome'};
+      if(p==='facultyHome'||p==='studentHome') crumbs=[[homeLbl]];
+      if(p==='about') crumbs=[[homeLbl,homeRt],['About eHospital']];
+      if(p==='studentRotation'){ const sp=sortedPrompts(d)[Math.max(0,s.step||0)]; crumbs=[[homeLbl,homeRt],['Rotation',{page:'studentRotation'}],[sp?'Prompt '+((s.step||0)+1)+': '+sp.title:'Prompts']]; } }
+    let thread=null, fbStats=[], fbThreads=[];
+    if(p==='fbIntern'){ const it=d.interns.find(i=>i.id===r.id)||d.interns[0]; const cm=allC.filter(x=>x.c.author===it.name);
+      title=it.name; sub=teamName(d,it.team); crumbs=[['Feedback',{page:'feedback',tab:'comments'}],['Interns',{page:'feedback',tab:'interns'}],[it.name]];
+      fbStats=[{label:'Comments',value:String(cm.length)},{label:'Likes received',value:String(cm.reduce((a,x)=>a+(x.c.up||0),0))},{label:'Rotation progress',value:Math.min(it.progress||0,N)+' of '+N}];
+      fbThreads=cm.map(cLink); }
+    if(p==='fbKeyword'){ const k=d.keywords.find(x=>x.id===r.id)||d.keywords[0]; const cm=allC.filter(x=>kwMatch(k,x.c));
+      title='“'+k.word+'”'; sub='Keyword'; crumbs=[['Feedback',{page:'feedback',tab:'comments'}],['Keywords',{page:'feedback',tab:'keywords'}],[k.word]];
+      fbStats=[{label:'Comments',value:String(cm.length)},{label:'Interns',value:String(new Set(cm.map(x=>x.c.author)).size)}];
+      fbThreads=cm.map(cLink); }
+
+    const crumbVals=crumbs.map((c,i)=>{ const isLink=!!c[1]&&i<crumbs.length-1; return {label:c[0],notFirst:i>0,isLink,isCurrent:!isLink,onClick:c[1]?go(c[1]):null}; });
+
+    let formFields=[];
+    if((p==='add'||p==='edit')&&s.draft){ formFields=ent.fields(d).map(f=>{ const v=s.draft[f.key]; const err=s.errors[f.key];
+      const base={label:f.label,required:!!f.required,placeholder:f.placeholder||'',hint:f.hint||'',hasHint:!!f.hint,error:err||'',hasError:!!err,
+        isInput:['text','email','url','number','date'].includes(f.type),isTextarea:f.type==='textarea',isSelect:f.type==='select',isMulti:f.type==='multi',isFile:f.type==='file',
+        isMediaPick:f.type==='media',isQuestions:f.type==='questions',isToggle:f.type==='toggle',on:!!v,off:!v,toggleText:v?f.onLabel:f.offLabel,onToggle:()=>this.setDraft({[f.key]:!v},f.key),
+        inputType:f.type,value:v==null?'':v,onChange:e=>this.setDraft({[f.key]:e.target.value},f.key),options:f.options||[]};
+      if(f.type==='multi'){ const sel=v||[]; base.chips=f.options.map(o=>({label:o.label,selected:sel.includes(o.value),unselected:!sel.includes(o.value),
+        onToggle:()=>this.setDraft({[f.key]:sel.includes(o.value)?sel.filter(x=>x!==o.value):[...sel,o.value]},f.key)})); }
+      if(f.type==='file'){ base.hasFile=!!v; base.noFile=!v; base.ext=v?v.split('.').pop().toUpperCase():''; base.onPick=()=>this.setDraft({[f.key]:SAMPLE_FILES[Math.floor(Math.random()*SAMPLE_FILES.length)]},f.key); }
+      if(f.type==='media'){ const t=s.draft.mediaType||''; base.typeValue=t; base.typeOptions=MEDIA_TYPES; base.hasType=!!t;
+        base.itemValue=s.draft.mediaId||''; base.itemOptions=t?d[MEDIA_COLL[t]].map(m=>({value:m.id,label:m.title})):[];
+        base.onType=e=>this.setDraft({mediaType:e.target.value,mediaId:''},'media'); base.onItem=e=>this.setDraft({mediaId:e.target.value},'media'); }
+      if(f.type==='questions'){ const qs=v||[];
+        base.qs=qs.map((q,qi)=>({num:String(qi+1),text:q.text,canRemove:qs.length>1,
+          onText:e=>{ const val=e.target.value; this.updateQs(a=>{a[qi].text=val; return a;}); },
+          onRemove:()=>this.updateQs(a=>a.filter((_,j)=>j!==qi)),
+          opts:q.options.map((o,oi)=>({letter:LETTERS[oi],value:o,isCorrect:q.correct===oi,notCorrect:q.correct!==oi,
+            onChange:e=>{ const val=e.target.value; this.updateQs(a=>{a[qi].options[oi]=val; return a;}); },
+            onMark:()=>this.updateQs(a=>{a[qi].correct=oi; return a;})}))}));
+        base.onAddQ=()=>this.updateQs(a=>[...a,blankQ()]); }
+      return base; }); }
+
+    let viewRows=[], viewSections=[];
+    if(p==='view'){ const it=this.withVirtual(r.ent,item);
+      viewRows=ent.fields(d).filter(f=>!f.viewHide).map(f=>{ const v=it[f.key]; let out;
+        if(f.type==='select') out=(f.options.find(o=>o.value===v)||{label:'—'}).label;
+        else if(f.type==='date') out=fmtDate(v);
+        else if(f.type==='toggle') out=v?'Locked. Students can’t open this prompt or any after it.':'Unlocked';
+        else if(f.type==='media') out=mediaLabel(d,item);
+        else if(f.key==='passing') out=v+'%';
+        else out=(v===''||v==null)?'—':String(v);
+        return {label:f.label,value:out}; });
+      viewSections=(ent.sections?ent.sections(item,d):[]).map(sc=>({title:sc.title,count:sc.count||String(sc.items.length),empty:sc.empty,isEmpty:!sc.items.length,
+        items:sc.items.map(x=>({title:x.title,meta:x.meta,tag:x.tag,isLink:!!x.route,isStatic:!x.route,onClick:x.route?go(x.route):null}))})); }
+
+    // Student
+    const me=d.interns.find(i=>i.id===STUDENT_ID)||d.interns[0]||{name:'Student',progress:0,team:''};
+    const prog=Math.min(me.progress||0,N);
+    const myTeam=d.teams.find(t=>t.id===me.team);
+    const sRotationName=myTeam?rotName(d,myTeam.rotation):'Rotation';
+    const sDone=N>0&&prog>=N, sNextIdx=Math.min(prog,Math.max(N-1,0));
+    const openStep=i=>()=>{ this.setState({step:i}); this.go({page:'studentRotation'}); };
+    const lockIdx=(()=>{ const i=ps.findIndex(x=>x.locked); return i<0?N:i; })();
+    const waiting=!sDone&&prog>=lockIdx;
+    const step=Math.max(0,Math.min(s.step||0,lockIdx-1));
+    const cur=ps[step];
+    const m=cur?mediaItem(d,cur):null, mt=m?cur.mediaType:'';
+    let qItems=[], quizVals={quizOpen:false,quizPassed:false,quizFailed:false,quizResultText:'',quizMeta:''};
+    if(mt==='quiz'){ const qs=this.quizState(m.id); const n=m.questions.length;
+      qItems=m.questions.map((q,qi)=>({num:String(qi+1),text:q.text,opts:q.options.map((o,oi)=>({o,oi})).filter(x=>x.o).map(({o,oi})=>{ const sel=qs.answers[qi]===oi, sub=qs.submitted;
+        return {letter:LETTERS[oi],label:o,onPick:()=>{ if(!sub) this.setQuiz(m.id,{...qs,answers:{...qs.answers,[qi]:oi}}); },
+          neutral:!sub&&!sel,selected:!sub&&sel,correct:sub&&oi===q.correct,wrong:sub&&sel&&oi!==q.correct,locked:sub&&!sel&&oi!==q.correct}; })}));
+      const score=m.questions.filter((q,qi)=>qs.answers[qi]===q.correct).length, pct=n?Math.round(score/n*100):0, passed=pct>=m.passing;
+      quizVals={quizOpen:!qs.submitted,quizPassed:qs.submitted&&passed,quizFailed:qs.submitted&&!passed,quizMeta:n+' questions · Pass with '+m.passing+'%',
+        quizResultText:'You scored '+pct+'% ('+score+' of '+n+'). '+(passed?'Passed.':'The passing score is '+m.passing+'%.'),
+        submitQuiz:()=>{ if(Object.keys(qs.answers).length<n){ this.setState({quizError:'Answer every question before submitting.'}); return; } this.setQuiz(m.id,{...qs,submitted:true}); },
+        retakeQuiz:()=>this.setQuiz(m.id,{answers:{},submitted:false})}; }
+
+    thread=null;
+    const tIntern=thread?d.interns.find(i=>i.id===thread.intern):null;
+    const tPrompt=thread?d.prompts.find(x=>x.id===thread.prompt):null;
+    const tBoard=thread?(()=>{ const id=thread.board||THREAD_BOARD[thread.id]||(tPrompt&&tPrompt.mediaType==='board'?tPrompt.mediaId:null); return id?d.boards.find(b=>b.id===id):null; })():null;
+    const uRow=({b,c,parent})=>({author:c.author,initials:initials(c.author),context:parent?'replied to '+parent.author:'posted a new comment',board:b.title,snippet:snippet(c.text),time:fmtTs(c.ts),onView:()=>this.openPost(b.id,c.id),onMarkRead:()=>this.markRead([c.id])});
+    const loginRole=s.loginRole||'faculty';
+    const discBoard=(p==='studentRotation'&&mt==='board')?m:(p==='view'&&r.ent==='board'&&item)?item:null;
+    const disc=discBoard?Object.assign({dShowView:p==='view'},this.discussion(discBoard,isFaculty?{name:facultyName,role:'Faculty'}:{name:me.name,role:'Intern'})):{dShowView:false,dRows:[],dSorts:[]};
+    return Object.assign({
+      showProtoHints:this.props.showProtoHints??true,
+      facultyName, facultyInitials:initials(facultyName), studentName:me.name,
+      showSidebar:inApp&&isFaculty, showTopbar:inApp&&s.role==='student',
+      isLanding:p==='landing'||(!s.role&&p!=='login'), isLogin:p==='login', inApp,
+      nav, studentNav,
+      goHome:go({page:isFaculty?'facultyHome':'studentHome'}), goLanding:go({page:'landing'}),
+      goFeedback:go({page:'feedback',tab:'comments'}), goPrompts:go({page:'prompts'}), goMedia:go({page:'media',tab:'file'}),
+      signOut:()=>{ this.setState({role:null}); this.go({page:'landing'}); },
+      chooseStudent:()=>{ this.setState({loginRole:'student',login:{email:'m.raymond@ehospital.edu',password:'password'}}); this.go({page:'login'}); },
+      chooseFaculty:()=>{ this.setState({loginRole:'faculty',login:{email:'a.patel@ehospital.edu',password:'password'}}); this.go({page:'login'}); },
+      loginTitle:loginRole==='faculty'?'Faculty sign in':'Student sign in',
+      loginEmail:s.login.email, loginPassword:s.login.password,
+      setLoginEmail:e=>this.setState({login:{...s.login,email:e.target.value}}),
+      setLoginPassword:e=>this.setState({login:{...s.login,password:e.target.value}}),
+      signIn:()=>{ this.setState({role:loginRole}); this.go({page:loginRole==='faculty'?'facultyHome':'studentHome'}); },
+      hasHeader:inApp&&!['facultyHome','studentHome','studentRotation','about'].includes(p),
+      hasSoloCrumbs:inApp&&['facultyHome','studentHome','studentRotation','about'].includes(p)&&crumbVals.length>0,
+      hasCrumbs:crumbVals.length>0, crumbs:crumbVals, pageTitle:title, pageSub:sub, hasSub:!!sub,
+      hasHeaderAction:!!headerAction, headerAction, headerActionLabel,
+      hasTabs:!!tabs, tabs:tabs||[],
+      isFacultyHome:p==='facultyHome', isStudentHome:p==='studentHome', isStudentRotation:p==='studentRotation', isAbout:p==='about',
+      todayLabel:new Date(TODAY+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}),
+      homeCards:[
+        {bg:'#AE2573',tint:'#FBEFF5',line:'#EFC9DC',title:'Members',desc:'Organize interns into teams and keep their details current.',stat:d.interns.length+' interns across '+d.teams.length+' teams',onClick:go({page:'interns'})},
+        {bg:'#C93D00',tint:'#FFF2EA',line:'#F7D2BD',title:'Rotation',desc:'Build the prompt sequence and attach supporting media.',stat:N+' prompts · '+(d.files.length+d.urls.length+d.boards.length+d.quizzes.length)+' media items',onClick:go({page:'rotation'})},
+        {bg:'#228848',tint:'#EDF7F0',line:'#C6E5D0',title:'Feedback',desc:'Read intern feedback by comment, intern or keyword.',stat:allC.length+' comments · '+uList.length+' unread',onClick:go({page:'feedback',tab:'threads'})}],
+      recentThreads:allC.slice(0,3).map(cLink),
+      promptCount:N+' prompts', mediaCount:(d.files.length+d.urls.length+d.boards.length+d.quizzes.length)+' items',
+      promptPreview:ps.slice(0,6).map(x=>({order:String(x.order),title:x.title,media:mediaTypeLabel(x.mediaType),onClick:go({page:'view',ent:'prompt',id:x.id})})),
+      mediaPreview:MEDIA_TABS.map(([k,l])=>({label:l,count:String(d[ENT[k].coll].length),onClick:go({page:'media',tab:k})})),
+      isListPage:!!lists, lists:lists||[],
+      isCommentsTab:p==='feedback'&&!lists, fcCount:String(allC.length),
+      fcFilters:[['all','All'],['unread','Unread']].map(([k,l])=>({label:l+(k==='unread'?' ('+uList.length+')':''),active:fcFilter===k,inactive:fcFilter!==k,onClick:go({page:'feedback',tab:'comments',filter:k})})),
+      fcRows:(fcFilter==='unread'?uList:allC).map(cRow), fcEmptyUnread:fcFilter==='unread'&&!uList.length, fcEmptyAll:fcFilter==='all'&&!allC.length,
+      unreadCount:String(uList.length), hasUnread:uList.length>0, noUnread:!uList.length,
+      unreadPreview:uList.slice(0,5).map(uRow),
+      hasMoreUnread:uList.length>5, moreUnreadLabel:'See '+(uList.length-5)+' more unread →',
+      markAllRead:()=>this.markRead(uList.map(x=>x.c.id)), goUnread:go({page:'feedback',tab:'comments',filter:'unread'}),
+      isForm:(p==='add'||p==='edit')&&!!s.draft, isEdit:p==='edit', formFields, entLower:ent?ent.label.toLowerCase():'',
+      saveLabel:p==='add'?'Add '+(ent?ent.label.toLowerCase():''):'Save changes',
+      saveForm:()=>this.save(), cancelForm:()=>{ if(p==='edit') this.go({page:'view',ent:r.ent,id:r.id}); else this.go(listRoute(r.ent)); },
+      askDelete:()=>this.setState({confirm:true}),
+      isView:p==='view', viewRows, viewSections, showViewRows:!(p==='view'&&r.ent==='board'),
+      dBoardTitle:discBoard?discBoard.title:'', dBoardStarter:discBoard?discBoard.starter:'',
+      isThread:p==='thread', threadIntern:tIntern?tIntern.name:'—', threadInternClick:go({page:'fbIntern',id:thread?thread.intern:''}),
+      threadHasBoard:!!tBoard, threadBoard:tBoard?tBoard.title:'', threadBoardClick:tBoard?go({page:'view',ent:'board',id:tBoard.id}):null,
+      threadPrompt:tPrompt?tPrompt.title:'—', threadPromptClick:tPrompt?go({page:'view',ent:'prompt',id:tPrompt.id}):null,
+      threadDate:thread?fmtDate(thread.date):'', threadKeywords:thread?thread.keywords.map(id=>d.keywords.find(k=>k.id===id)).filter(Boolean).map(k=>({word:k.word,onClick:go({page:'fbKeyword',id:k.id})})):[],
+      threadMessages:thread?thread.messages.map(x=>({...x,initials:initials(x.author)})):[],
+      isFbDetail:p==='fbIntern'||p==='fbKeyword', fbStats, fbThreads, fbNoThreads:!fbThreads.length,
+      confirmOpen:s.confirm&&p==='edit', confirmTitle:item?'Delete “'+tName(item)+'”?':'',
+      confirmText:'This cannot be undone.'+(r.ent==='team'?' Its interns will stay, without a team.':''),
+      cancelDelete:()=>this.setState({confirm:false}), confirmDelete:()=>this.remove(), stop:e=>e.stopPropagation(),
+      hasToast:!!s.toast, toast:s.toast||'',
+      sTeamName:myTeam?myTeam.name:'No team', sRotationName,
+      sMates:myTeam?d.interns.filter(i=>i.team===myTeam.id&&i.id!==me.id).sort((a,b)=>a.name.localeCompare(b.name)).map(i=>({name:i.name,initials:initials(i.name),email:i.email,mailto:'mailto:'+i.email})):[],
+      sNoMates:!myTeam||!d.interns.some(i=>i.team===myTeam.id&&i.id!==me.id),
+      sCurrentTitle:N?(sDone?'Rotation complete':ps[sNextIdx].title):'No prompts yet',
+      sCurrentMeta:N?(waiting?'Prompt '+(sNextIdx+1)+' of '+N+' is locked. Your faculty will unlock it when you’re ready to continue.':sDone?'All '+N+' prompts completed. You can review any prompt.':'Prompt '+(sNextIdx+1)+' of '+N+' · '+mediaTypeLabel(ps[sNextIdx].mediaType)):'Your rotation will appear here once faculty add prompts.',
+      sProgressPct:(N?Math.round(prog/N*100):0)+'%', sProgressText:prog+' of '+N+' prompts completed',
+      continueLabel:(sDone||waiting)?'Review rotation':prog>0?'Continue':'Start rotation', continueRotation:openStep(sDone?0:Math.min(sNextIdx,lockIdx-1)), sCanContinue:lockIdx>0,
+      sSeq:ps.map((x,i)=>({num:String(i+1),title:x.title,type:mediaTypeLabel(x.mediaType),locked:i>=lockIdx,done:i<lockIdx&&i<prog,current:i<lockIdx&&i===prog,todo:i<lockIdx&&i>prog,onClick:i<lockIdx?openStep(i):null})),
+      sEmpty:!N, sHasPrompts:N>0&&lockIdx>0, sAllLocked:N>0&&lockIdx===0,
+      steps:ps.map((x,i)=>({num:String(i+1),title:x.title,typeLabel:i>=lockIdx?'Locked':mediaTypeLabel(x.mediaType),lineDone:i<N-1&&i<prog&&i<lockIdx,lineTodo:i<N-1&&(i>=prog||i>=lockIdx),locked:i>=lockIdx,active:i===step&&i<lockIdx,done:i!==step&&i<prog&&i<lockIdx,todo:i!==step&&i>=prog&&i<lockIdx,onClick:i<lockIdx?()=>this.setState({step:i,quizError:''}):null})),
+      nextLocked:step+1===lockIdx&&lockIdx<N, nextOpen:!(step+1===lockIdx&&lockIdx<N),
+      onNextLocked:()=>{ this.setStudentProgress(step+1); this.flash('The next prompt is locked by your faculty'); },
+      stepLabel:N?'Prompt '+(step+1)+' of '+N:'',
+      sOrder:String(step+1), sTitle:cur?cur.title:'', sText:cur?cur.text:'',
+      mTypeLabel:m?mediaTypeLabel(mt):'Media', mFile:mt==='file', mUrl:mt==='url', mBoard:mt==='board', mQuiz:mt==='quiz', mNone:!m,
+      mTitle:m?m.title:'', mDesc:m&&m.description?m.description:'', mFileName:mt==='file'?m.file:'', mExt:mt==='file'?m.file.split('.').pop().toUpperCase():'', mHref:mt==='url'?m.url:'',
+      onDownload:()=>this.flash('Download started (prototype)'),
+      mStarter:mt==='board'?m.starter:'',
+      posts:mt==='board'?(m.posts||[]).map(x=>({...x,initials:initials(x.author)})):[],
+      boardOpen:mt==='board'&&boardStatus(m)==='Open', boardClosed:mt==='board'&&boardStatus(m)!=='Open',
+      replyText:s.reply||'', setReply:e=>this.setState({reply:e.target.value}),
+      postReply:()=>{ const txt=(s.reply||'').trim(); if(!txt||mt!=='board') return;
+        this.setState(st=>({reply:'',data:{...st.data,boards:st.data.boards.map(b=>b.id===m.id?{...b,posts:[...(b.posts||[]),{author:me.name,time:nowLabel(),text:txt}]}:b)}})); this.flash('Reply posted'); },
+      qItems, hasQuizError:!!s.quizError, quizError:s.quizError||'', submitQuiz:null, retakeQuiz:null,
+      hasPrev:step>0, onPrev:()=>{ this.setState({step:step-1,quizError:''}); window.scrollTo(0,0); },
+      nextLabel:step>=N-1?'Finish rotation':'Next prompt →',
+      onNext:()=>{ if(!N) return; this.setStudentProgress(step+1);
+        if(step<N-1){ this.setState({step:step+1,quizError:''}); window.scrollTo(0,0); }
+        else { this.go({page:'studentHome'}); this.flash('Rotation complete'); } }
+    }, quizVals, disc);
+  }
+}
+</script>
+
+
+</body></html>
