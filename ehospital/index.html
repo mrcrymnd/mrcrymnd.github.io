@@ -237,14 +237,14 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 <div class="small text-secondary">{{ u.board }}</div>
 </div>
 <div class="d-flex align-items-center gap-2 flex-shrink-0">
-<button type="button" sc-camel-on-click="{{ u.onView }}" class="btn btn-outline-primary btn-sm">View in discussion</button>
+<button type="button" sc-camel-on-click="{{ u.onView }}" class="btn btn-outline-primary btn-sm">View in round</button>
 <button type="button" sc-camel-on-click="{{ u.onMarkRead }}" class="btn btn-link btn-sm text-secondary">Mark as read</button>
 </div>
 </div>
 </sc-for>
 </div>
 <sc-if value="{{ hasMoreUnread }}"><div class="card-footer bg-white py-2"><button type="button" sc-camel-on-click="{{ goUnread }}" class="btn btn-link btn-sm p-0">{{ moreUnreadLabel }}</button></div></sc-if>
-<sc-if value="{{ noUnread }}"><div class="card-body text-center py-4"><div class="fw-semibold mb-1">You’re all caught up</div><div class="small text-secondary">New student replies in discussions will show up here.</div></div></sc-if>
+<sc-if value="{{ noUnread }}"><div class="card-body text-center py-4"><div class="fw-semibold mb-1">You’re all caught up</div><div class="small text-secondary">New student replies in rounds will show up here.</div></div></sc-if>
 </div>
 <div class="card mt-4">
 <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
@@ -295,12 +295,13 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 <div class="card-header bg-white py-3"><h2 class="h6 fw-bold mb-0">Rotation sequence</h2></div>
 <div class="list-group list-group-flush">
 <sc-for list="{{ sSeq }}" as="q" hint-placeholder-count="4">
-<button type="button" sc-camel-on-click="{{ q.onClick }}" class="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
+<button type="button" sc-camel-on-click="{{ q.onClick }}" disabled="{{ q.noClick }}" class="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3">
 <span class="rounded-circle bg-primary-subtle text-primary-emphasis d-inline-flex align-items-center justify-content-center fw-bold small flex-shrink-0" style="width:28px;height:28px">{{ q.num }}</span>
 <div class="flex-grow-1" style="min-width:0"><div class="fw-semibold">{{ q.title }}</div><div class="small text-secondary">{{ q.type }}</div></div>
 <sc-if value="{{ q.done }}"><span class="badge bg-success-subtle text-success-emphasis border border-success-subtle">✓ Completed</span></sc-if>
 <sc-if value="{{ q.current }}"><span class="badge bg-primary-subtle text-primary-emphasis border border-primary-subtle">→ Up next</span></sc-if>
 <sc-if value="{{ q.todo }}"><span class="badge bg-secondary-subtle text-secondary-emphasis border">○ Not started</span></sc-if>
+<sc-if value="{{ q.upcoming }}"><span class="badge bg-secondary-subtle text-secondary-emphasis border">○ Not yet available</span></sc-if>
 <sc-if value="{{ q.locked }}"><span class="badge bg-secondary-subtle text-secondary-emphasis border d-inline-flex align-items-center gap-1"><span class="d-inline-flex flex-column align-items-center"><span style="width:5px;height:4px;border:1.5px solid currentColor;border-bottom:none;border-radius:3px 3px 0 0"></span><span style="width:8px;height:6px;border-radius:1px;background:currentColor"></span></span>Locked</span></sc-if>
 </button>
 </sc-for>
@@ -335,6 +336,10 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 <span class="rounded-circle border bg-white text-secondary d-inline-flex align-items-center justify-content-center fw-semibold flex-shrink-0" style="width:26px;height:26px;font-size:12px">{{ st.num }}</span>
 <span style="min-width:0"><span class="d-block small fw-medium text-secondary">{{ st.title }}</span><span class="d-block small text-secondary">{{ st.typeLabel }}</span></span>
 </button></sc-if>
+<sc-if value="{{ st.upcoming }}"><div class="list-group-item disabled d-flex gap-3 align-items-start py-3" aria-disabled="true" title="Complete the earlier prompts first">
+<span class="rounded-circle border bg-white text-secondary d-inline-flex align-items-center justify-content-center fw-semibold flex-shrink-0" style="width:26px;height:26px;font-size:12px">{{ st.num }}</span>
+<span style="min-width:0"><span class="d-block small fw-medium">{{ st.title }}</span><span class="d-block small">Complete earlier prompts first</span></span>
+</div></sc-if>
 <sc-if value="{{ st.locked }}"><div class="list-group-item disabled d-flex gap-3 align-items-start py-3" aria-disabled="true">
 <span class="rounded-circle bg-body-secondary d-inline-flex flex-column align-items-center justify-content-center flex-shrink-0" style="width:26px;height:26px"><span style="width:6px;height:5px;border:1.5px solid #7A8A93;border-bottom:none;border-radius:3px 3px 0 0"></span><span style="width:9px;height:7px;border-radius:1.5px;background:#7A8A93"></span></span>
 <span style="min-width:0"><span class="d-block small fw-medium">{{ st.title }}</span><span class="d-block small">{{ st.typeLabel }}</span></span>
@@ -364,36 +369,36 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 <sc-if value="{{ mUrl }}">
 <div class="card"><div class="card-body d-flex align-items-center gap-3 flex-wrap">
 <div class="flex-grow-1" style="min-width:200px"><div class="fw-semibold">{{ mTitle }}</div><div class="small text-secondary text-break">{{ mHref }}</div><div class="small mt-2">{{ mDesc }}</div></div>
-<a href="{{ mHref }}" target="_blank" rel="noopener" class="btn btn-outline-primary">Open link ↗</a>
+<a href="{{ mHref }}" target="_blank" rel="noopener" sc-camel-on-click="{{ onOpenLink }}" class="btn btn-outline-primary">Open link ↗</a>
 </div></div>
 </sc-if>
 
 <sc-if value="{{ mBoard }}">
-<div class="alert alert-primary mb-3">
-<div class="fw-semibold mb-1">{{ mTitle }}</div>
-<p class="mb-1">{{ mStarter }}</p>
-</div>
+<h3 class="h5 fw-bold mb-3">{{ mTitle }}</h3>
+<sc-for list="{{ dQs }}" as="qs">
+<div class="mb-5">
+<div class="alert alert-primary mb-3"><div class="small fw-bold text-uppercase mb-1" style="letter-spacing:.06em">{{ qs.heading }}</div><p class="mb-0">{{ qs.text }}</p></div>
 <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-<span class="fw-semibold">{{ dCount }}</span>
+<span class="fw-semibold">{{ qs.dCount }}</span>
 <div class="d-flex align-items-center gap-2"><span class="small text-secondary">Sort by</span>
 <div class="btn-group btn-group-sm" role="group" aria-label="Sort comments">
-<sc-for list="{{ dSorts }}" as="so">
+<sc-for list="{{ qs.dSorts }}" as="so">
 <sc-if value="{{ so.active }}"><button type="button" sc-camel-on-click="{{ so.onClick }}" class="btn btn-primary" title="{{ so.hint }}">{{ so.label }}</button></sc-if>
 <sc-if value="{{ so.inactive }}"><button type="button" sc-camel-on-click="{{ so.onClick }}" class="btn btn-outline-secondary" title="{{ so.hint }}">{{ so.label }}</button></sc-if>
 </sc-for>
 </div>
 </div>
 </div>
-<sc-if value="{{ dOpen }}">
+<sc-if value="{{ qs.dOpen }}">
 <div class="mb-3">
-<textarea rows="2" value="{{ dDraft }}" sc-camel-on-change="{{ dSetDraft }}" placeholder="Add a comment…" class="form-control mb-2" aria-label="Add a comment"></textarea>
-<div class="d-flex justify-content-end"><button type="button" sc-camel-on-click="{{ dPost }}" class="btn btn-primary btn-sm">Comment</button></div>
+<textarea rows="2" value="{{ qs.dDraft }}" sc-camel-on-change="{{ qs.dSetDraft }}" placeholder="Add a comment…" class="form-control mb-2" aria-label="Add a comment"></textarea>
+<div class="d-flex justify-content-end"><button type="button" sc-camel-on-click="{{ qs.dPost }}" class="btn btn-primary btn-sm">Comment</button></div>
 </div>
 </sc-if>
-<sc-if value="{{ dClosed }}"><div class="alert alert-secondary py-2 small mb-3"><span class="fw-bold me-1">ⓘ</span>This board is not open for new comments or votes.</div></sc-if>
-<sc-if value="{{ dFocused }}"><div class="alert alert-light border d-flex justify-content-between align-items-center flex-wrap gap-2 py-2 small mb-2"><span>{{ dFocusLabel }}</span><button type="button" sc-camel-on-click="{{ dUnfocus }}" class="btn btn-link btn-sm p-0">← Back to full discussion</button></div></sc-if>
+<sc-if value="{{ qs.dClosed }}"><div class="alert alert-secondary py-2 small mb-3"><span class="fw-bold me-1">ⓘ</span>This round is not open for new comments or votes.</div></sc-if>
+<sc-if value="{{ qs.dFocused }}"><div class="alert alert-light border d-flex justify-content-between align-items-center flex-wrap gap-2 py-2 small mb-2"><span>{{ qs.dFocusLabel }}</span><button type="button" sc-camel-on-click="{{ qs.dUnfocus }}" class="btn btn-link btn-sm p-0">← Back to full round</button></div></sc-if>
 <div>
-<sc-for list="{{ dRows }}" as="c" hint-placeholder-count="4">
+<sc-for list="{{ qs.dRows }}" as="c" hint-placeholder-count="4">
 <div id="{{ c.anchor }}" class="d-flex rounded {{ c.sepCls }} {{ c.hlCls }}">
 <sc-for list="{{ c.rails }}" as="rl"><button type="button" sc-camel-on-click="{{ rl.onClick }}" title="{{ rl.title }}" aria-label="{{ rl.title }}" class="btn p-0 border-0 rounded-0 flex-shrink-0" style="width:24px;background:linear-gradient(#DCE3E7,#DCE3E7) center/2px 100% no-repeat" style-hover="background:linear-gradient(#1D4F91,#1D4F91) center/2px 100% no-repeat"></button></sc-for>
 <div class="flex-grow-1 py-2" style="min-width:0">
@@ -437,7 +442,9 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 </div>
 </sc-for>
 </div>
-<sc-if value="{{ dEmpty }}"><p class="text-secondary small text-center py-4 mb-0">No comments yet. Start the discussion.</p></sc-if>
+<sc-if value="{{ qs.dEmpty }}"><p class="text-secondary small text-center py-4 mb-0">No comments yet. Start the round.</p></sc-if>
+</div>
+</sc-for>
 </sc-if>
 
 <sc-if value="{{ mQuiz }}">
@@ -472,6 +479,18 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 </div>
 </sc-if>
 
+<sc-if value="{{ hasReqs }}">
+<div class="border rounded p-3 mt-4 bg-body-tertiary">
+<div class="small fw-bold mb-2">To continue</div>
+<sc-for list="{{ reqs }}" as="rq">
+<div class="d-flex align-items-center gap-2 small mb-1">
+<sc-if value="{{ rq.met }}"><span class="badge text-bg-success">✓</span><span>{{ rq.label }}</span></sc-if>
+<sc-if value="{{ rq.pending }}"><span class="badge bg-secondary-subtle text-secondary-emphasis border">○</span><span>{{ rq.label }}</span></sc-if>
+<sc-if value="{{ rq.alert }}"><span class="badge text-bg-danger">!</span><span class="text-danger fw-semibold">{{ rq.label }}</span></sc-if>
+</div>
+</sc-for>
+</div>
+</sc-if>
 <sc-if value="{{ mNone }}"><p class="text-secondary small mb-0">No media is attached to this prompt.</p></sc-if>
 </div>
 <div class="card-footer bg-body-tertiary d-flex align-items-center gap-2 py-3 px-4">
@@ -497,7 +516,7 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 </div></div>
 <div class="card"><div class="card-body p-4">
 <h2 class="h5 card-title card-title--accent text-primary mb-3">How it works</h2>
-<p class="card-text mb-0">Faculty build a sequence of prompts, each with a file, link, discussion board or quiz attached. Students work through the prompts in order, and faculty review the resulting feedback by thread, intern or keyword.</p>
+<p class="card-text mb-0">Faculty build a sequence of prompts, each with a file, link, round or quiz attached. Students work through the prompts in order, and faculty review the resulting feedback by thread, intern or keyword.</p>
 </div></div>
 <div class="card"><div class="card-body p-4">
 <h2 class="h5 card-title card-title--accent text-primary mb-3">Contact</h2>
@@ -531,7 +550,7 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 <div class="small text-secondary">{{ ua.board }}</div>
 </div>
 <div class="d-flex align-items-center gap-2 flex-shrink-0">
-<button type="button" sc-camel-on-click="{{ ua.onView }}" class="btn btn-outline-primary btn-sm">View in discussion</button>
+<button type="button" sc-camel-on-click="{{ ua.onView }}" class="btn btn-outline-primary btn-sm">View in round</button>
 <sc-if value="{{ ua.isNew }}"><button type="button" sc-camel-on-click="{{ ua.onMarkRead }}" class="btn btn-link btn-sm text-secondary">Mark as read</button></sc-if>
 </div>
 </div>
@@ -539,6 +558,50 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 </div>
 <sc-if value="{{ fcEmptyUnread }}"><div class="card-body text-center py-4"><div class="fw-semibold mb-1">You’re all caught up</div><div class="small text-secondary">New student comments and replies will show up here.</div></div></sc-if>
 <sc-if value="{{ fcEmptyAll }}"><div class="card-body text-center text-secondary py-4">No comments yet.</div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isDiscTab }}">
+<div class="card">
+<div class="card-header bg-white d-flex justify-content-between align-items-center gap-2 flex-wrap py-3">
+<div class="d-flex align-items-center gap-2"><h2 class="h6 fw-bold mb-0">Discussion</h2><span class="badge bg-secondary-subtle text-secondary-emphasis">{{ dtCount }}</span></div>
+<div class="d-flex align-items-center gap-3 flex-wrap">
+<div class="d-flex align-items-center gap-2"><span class="small text-secondary">Sort by</span>
+<div class="btn-group btn-group-sm" role="group" aria-label="Sort discussion">
+<button type="button" sc-camel-on-click="{{ dtSortTeam }}" class="btn btn-outline-secondary">{{ dtTeamLbl }}</button>
+<button type="button" sc-camel-on-click="{{ dtSortRound }}" class="btn btn-outline-secondary">{{ dtRoundLbl }}</button>
+<button type="button" sc-camel-on-click="{{ dtSortTime }}" class="btn btn-outline-secondary">{{ dtTimeLbl }}</button>
+</div></div>
+<div class="btn-group btn-group-sm" role="group" aria-label="Export">
+<button type="button" sc-camel-on-click="{{ dtExportCsv }}" class="btn btn-outline-primary">Export .csv</button>
+<button type="button" sc-camel-on-click="{{ dtExportXls }}" class="btn btn-outline-primary">Export .xls</button>
+</div>
+</div>
+</div>
+<div class="table-responsive">
+<table class="table table-hover align-top mb-0">
+<thead class="table-light"><tr>
+<th scope="col" class="small text-uppercase text-secondary fw-semibold text-nowrap px-3" style="font-size:12px;letter-spacing:.06em"><button type="button" sc-camel-on-click="{{ dtSortTeam }}" class="btn btn-link p-0 text-secondary text-uppercase fw-semibold text-decoration-none" style="font-size:12px;letter-spacing:.06em">{{ dtTeamLbl }}</button></th>
+<th scope="col" class="small text-uppercase text-secondary fw-semibold text-nowrap px-3" style="font-size:12px;letter-spacing:.06em"><button type="button" sc-camel-on-click="{{ dtSortRound }}" class="btn btn-link p-0 text-secondary text-uppercase fw-semibold text-decoration-none" style="font-size:12px;letter-spacing:.06em">{{ dtRoundLbl }}</button></th>
+<th scope="col" class="small text-uppercase text-secondary fw-semibold text-nowrap px-3" style="font-size:12px;letter-spacing:.06em">Author</th>
+<th scope="col" class="small text-uppercase text-secondary fw-semibold text-nowrap px-3" style="font-size:12px;letter-spacing:.06em">Comment</th>
+<th scope="col" class="small text-uppercase text-secondary fw-semibold text-nowrap px-3" style="font-size:12px;letter-spacing:.06em"><button type="button" sc-camel-on-click="{{ dtSortTime }}" class="btn btn-link p-0 text-secondary text-uppercase fw-semibold text-decoration-none" style="font-size:12px;letter-spacing:.06em">{{ dtTimeLbl }}</button></th>
+<th scope="col" class="small text-uppercase text-secondary fw-semibold text-nowrap px-3" style="font-size:12px;letter-spacing:.06em">Likes</th>
+</tr></thead>
+<tbody>
+<sc-for list="{{ dtRows }}" as="r" hint-placeholder-count="6">
+<tr>
+<td class="px-3 py-3 text-nowrap fw-semibold">{{ r.team }}</td>
+<td class="px-3 py-3" style="min-width:160px">{{ r.round }}</td>
+<td class="px-3 py-3 text-nowrap">{{ r.author }}<div class="small text-secondary">{{ r.role }}</div></td>
+<td class="px-3 py-3" style="min-width:260px;text-wrap:pretty">{{ r.text }}<div><button type="button" sc-camel-on-click="{{ r.onView }}" class="btn btn-link btn-sm p-0">View in round</button></div></td>
+<td class="px-3 py-3 text-nowrap small text-secondary">{{ r.time }}</td>
+<td class="px-3 py-3 text-nowrap">{{ r.likes }}</td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
 </div>
 </sc-if>
 
@@ -550,14 +613,17 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 <div class="d-flex align-items-center gap-2"><h2 class="h6 fw-bold mb-0">{{ l.title }}</h2><span class="badge bg-secondary-subtle text-secondary-emphasis">{{ l.count }}</span></div>
 <sc-if value="{{ l.hasAdd }}"><button type="button" sc-camel-on-click="{{ l.onAdd }}" class="btn btn-cta">+ {{ l.addLabel }}</button></sc-if>
 </div>
+<sc-if value="{{ l.hasHint }}"><div class="alert alert-info mb-0 rounded-0 border-0 border-bottom small py-2 px-3">{{ l.hint }}</div></sc-if>
 <div class="table-responsive">
 <sc-raw-table class="table table-hover align-middle mb-0">
 <sc-raw-thead class="table-light"><sc-raw-tr>
+<sc-if value="{{ l.sortable }}"><sc-raw-th scope="col" class="small text-uppercase text-secondary fw-semibold text-nowrap px-3" style="font-size:12px;letter-spacing:.06em">Order</sc-raw-th></sc-if>
 <sc-for list="{{ l.cols }}" as="col"><sc-raw-th scope="col" class="small text-uppercase text-secondary fw-semibold text-nowrap px-3" style="font-size:12px;letter-spacing:.06em">{{ col }}</sc-raw-th></sc-for>
 </sc-raw-tr></sc-raw-thead>
 <sc-raw-tbody>
 <sc-for list="{{ l.rows }}" as="row" hint-placeholder-count="4">
-<sc-raw-tr sc-camel-on-click="{{ row.onClick }}" style="cursor:pointer">
+<sc-raw-tr sc-camel-on-click="{{ row.onClick }}" draggable="{{ row.draggable }}" sc-camel-on-drag-start="{{ row.onDragStart }}" sc-camel-on-drag-over="{{ row.onDragOver }}" sc-camel-on-drop="{{ row.onDrop }}" sc-camel-on-drag-end="{{ row.onDragEnd }}" style="cursor:pointer;{{ row.trCss }}">
+<sc-if value="{{ l.sortable }}"><sc-raw-td class="px-3 py-3 text-nowrap"><span aria-hidden="true" title="Drag to reorder" class="text-secondary" style="cursor:grab;font-size:18px;letter-spacing:-3px">⋮⋮</span><button type="button" sc-camel-on-click="{{ row.onUp }}" disabled="{{ row.upDisabled }}" aria-label="Move up" class="btn btn-light btn-sm border py-0 px-2 ms-2">↑</button><button type="button" sc-camel-on-click="{{ row.onDown }}" disabled="{{ row.downDisabled }}" aria-label="Move down" class="btn btn-light btn-sm border py-0 px-2 ms-1">↓</button></sc-raw-td></sc-if>
 <sc-for list="{{ row.cells }}" as="cell"><sc-raw-td class="px-3 py-3">
 <sc-if value="{{ cell.strong }}"><span class="fw-semibold">{{ cell.text }}</span></sc-if>
 <sc-if value="{{ cell.plain }}"><span>{{ cell.text }}</span></sc-if>
@@ -585,6 +651,35 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 <sc-if value="{{ f.isMediaPick }}"><div class="row g-2">
 <div class="col-sm-6"><sc-raw-select value="{{ f.typeValue }}" sc-camel-on-change="{{ f.onType }}" class="form-select"><option value="">No media</option><sc-for list="{{ f.typeOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select></div>
 <sc-if value="{{ f.hasType }}"><div class="col-sm-6"><sc-raw-select value="{{ f.itemValue }}" sc-camel-on-change="{{ f.onItem }}" class="form-select"><option value="">Select item…</option><sc-for list="{{ f.itemOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select></div></sc-if>
+</div>
+<sc-if value="{{ f.creating }}">
+<div class="border rounded p-3 mt-2 bg-body-tertiary d-flex flex-column gap-2">
+<div class="small fw-bold">New round</div>
+<input value="{{ f.newTitle }}" sc-camel-on-change="{{ f.onNewTitle }}" placeholder="Round title" aria-label="New round title" class="form-control">
+<input value="{{ f.newQ }}" sc-camel-on-change="{{ f.onNewQ }}" placeholder="First question" aria-label="First question" class="form-control">
+<div class="d-flex justify-content-between align-items-center gap-2 flex-wrap"><span class="form-text mt-0">You can add more questions later on the Rounds tab.</span><button type="button" sc-camel-on-click="{{ f.onCreateRound }}" class="btn btn-outline-primary btn-sm">Create round</button></div>
+</div>
+</sc-if>
+</sc-if>
+<sc-if value="{{ f.isReqs }}">
+<div class="border rounded p-3 bg-body-tertiary">
+<sc-if value="{{ f.showNone }}"><div class="small text-secondary">Attach a file, link, round or quiz above to set what students must do before moving on.</div></sc-if>
+<sc-if value="{{ f.showQuiz }}"><div class="small">Students must pass the quiz to continue. The passing score is set on the quiz itself.</div></sc-if>
+<sc-if value="{{ f.showOpen }}"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" id="req-open" checked="{{ f.reqOpenOn }}" sc-camel-on-change="{{ f.onReqOpen }}"><label class="form-check-label small" for="req-open">Students must {{ f.openVerb }} before continuing</label></div></sc-if>
+<sc-if value="{{ f.showBoard }}"><div class="row g-3">
+<div class="col-sm-6"><label class="form-label small fw-semibold" for="req-ans">Questions students must answer</label><input id="req-ans" type="number" min="0" value="{{ f.reqAnswers }}" sc-camel-on-change="{{ f.onReqAnswers }}" placeholder="All" class="form-control"><div class="form-text">{{ f.reqAnswersHint }}</div></div>
+<div class="col-sm-6"><label class="form-label small fw-semibold" for="req-rep">Replies to classmates required</label><input id="req-rep" type="number" min="0" value="{{ f.reqReplies }}" sc-camel-on-change="{{ f.onReqReplies }}" class="form-control"><div class="form-text">0 means replying is optional.</div></div>
+</div></sc-if>
+</div>
+</sc-if>
+<sc-if value="{{ f.isRoundQs }}"><div class="d-flex flex-column gap-3">
+<sc-for list="{{ f.rqs }}" as="q">
+<div class="card bg-body-tertiary"><div class="card-body d-flex flex-column gap-2">
+<div class="d-flex justify-content-between align-items-center"><span class="small fw-bold text-uppercase text-secondary" style="font-size:12px;letter-spacing:.06em">Question {{ q.num }}</span><sc-if value="{{ q.canRemove }}"><button type="button" sc-camel-on-click="{{ q.onRemove }}" class="btn btn-link btn-sm text-danger p-0">Remove</button></sc-if></div>
+<textarea rows="2" value="{{ q.text }}" sc-camel-on-change="{{ q.onText }}" placeholder="What should students discuss?" aria-label="Question {{ q.num }}" class="form-control"></textarea>
+</div></div>
+</sc-for>
+<button type="button" sc-camel-on-click="{{ f.onAddRQ }}" class="btn btn-outline-primary" style="border-style:dashed">+ Add question</button>
 </div></sc-if>
 <sc-if value="{{ f.isQuestions }}"><div class="d-flex flex-column gap-3">
 <sc-for list="{{ f.qs }}" as="q">
@@ -658,32 +753,32 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 <sc-if value="{{ dShowView }}">
 <div class="card">
 <div class="card-body p-4">
-<div class="small fw-semibold text-uppercase text-secondary mb-3" style="letter-spacing:.08em;font-size:12px">Discussion Board</div>
-<div class="alert alert-primary mb-3">
-<div class="fw-semibold mb-1">{{ dBoardTitle }}</div>
-<p class="mb-1">{{ dBoardStarter }}</p>
-</div>
+<div class="small fw-semibold text-uppercase text-secondary mb-3" style="letter-spacing:.08em;font-size:12px">Round</div>
+<h3 class="h5 fw-bold mb-3">{{ dBoardTitle }}</h3>
+<sc-for list="{{ dQs }}" as="qs">
+<div class="mb-5">
+<div class="alert alert-primary mb-3"><div class="small fw-bold text-uppercase mb-1" style="letter-spacing:.06em">{{ qs.heading }}</div><p class="mb-0">{{ qs.text }}</p></div>
 <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-<span class="fw-semibold">{{ dCount }}</span>
+<span class="fw-semibold">{{ qs.dCount }}</span>
 <div class="d-flex align-items-center gap-2"><span class="small text-secondary">Sort by</span>
 <div class="btn-group btn-group-sm" role="group" aria-label="Sort comments">
-<sc-for list="{{ dSorts }}" as="so">
+<sc-for list="{{ qs.dSorts }}" as="so">
 <sc-if value="{{ so.active }}"><button type="button" sc-camel-on-click="{{ so.onClick }}" class="btn btn-primary" title="{{ so.hint }}">{{ so.label }}</button></sc-if>
 <sc-if value="{{ so.inactive }}"><button type="button" sc-camel-on-click="{{ so.onClick }}" class="btn btn-outline-secondary" title="{{ so.hint }}">{{ so.label }}</button></sc-if>
 </sc-for>
 </div>
 </div>
 </div>
-<sc-if value="{{ dOpen }}">
+<sc-if value="{{ qs.dOpen }}">
 <div class="mb-3">
-<textarea rows="2" value="{{ dDraft }}" sc-camel-on-change="{{ dSetDraft }}" placeholder="Add a comment…" class="form-control mb-2" aria-label="Add a comment"></textarea>
-<div class="d-flex justify-content-end"><button type="button" sc-camel-on-click="{{ dPost }}" class="btn btn-primary btn-sm">Comment</button></div>
+<textarea rows="2" value="{{ qs.dDraft }}" sc-camel-on-change="{{ qs.dSetDraft }}" placeholder="Add a comment…" class="form-control mb-2" aria-label="Add a comment"></textarea>
+<div class="d-flex justify-content-end"><button type="button" sc-camel-on-click="{{ qs.dPost }}" class="btn btn-primary btn-sm">Comment</button></div>
 </div>
 </sc-if>
-<sc-if value="{{ dClosed }}"><div class="alert alert-secondary py-2 small mb-3"><span class="fw-bold me-1">ⓘ</span>This board is not open for new comments or votes.</div></sc-if>
-<sc-if value="{{ dFocused }}"><div class="alert alert-light border d-flex justify-content-between align-items-center flex-wrap gap-2 py-2 small mb-2"><span>{{ dFocusLabel }}</span><button type="button" sc-camel-on-click="{{ dUnfocus }}" class="btn btn-link btn-sm p-0">← Back to full discussion</button></div></sc-if>
+<sc-if value="{{ qs.dClosed }}"><div class="alert alert-secondary py-2 small mb-3"><span class="fw-bold me-1">ⓘ</span>This round is not open for new comments or votes.</div></sc-if>
+<sc-if value="{{ qs.dFocused }}"><div class="alert alert-light border d-flex justify-content-between align-items-center flex-wrap gap-2 py-2 small mb-2"><span>{{ qs.dFocusLabel }}</span><button type="button" sc-camel-on-click="{{ qs.dUnfocus }}" class="btn btn-link btn-sm p-0">← Back to full round</button></div></sc-if>
 <div>
-<sc-for list="{{ dRows }}" as="c" hint-placeholder-count="4">
+<sc-for list="{{ qs.dRows }}" as="c" hint-placeholder-count="4">
 <div id="{{ c.anchor }}" class="d-flex rounded {{ c.sepCls }} {{ c.hlCls }}">
 <sc-for list="{{ c.rails }}" as="rl"><button type="button" sc-camel-on-click="{{ rl.onClick }}" title="{{ rl.title }}" aria-label="{{ rl.title }}" class="btn p-0 border-0 rounded-0 flex-shrink-0" style="width:24px;background:linear-gradient(#DCE3E7,#DCE3E7) center/2px 100% no-repeat" style-hover="background:linear-gradient(#1D4F91,#1D4F91) center/2px 100% no-repeat"></button></sc-for>
 <div class="flex-grow-1 py-2" style="min-width:0">
@@ -727,7 +822,9 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 </div>
 </sc-for>
 </div>
-<sc-if value="{{ dEmpty }}"><p class="text-secondary small text-center py-4 mb-0">No comments yet. Start the discussion.</p></sc-if>
+<sc-if value="{{ qs.dEmpty }}"><p class="text-secondary small text-center py-4 mb-0">No comments yet. Start the round.</p></sc-if>
+</div>
+</sc-for>
 </div>
 </div>
 </sc-if>
@@ -739,7 +836,7 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 <div class="d-flex flex-wrap align-items-center gap-3 small text-secondary mb-4">
 <span>Intern: <button type="button" sc-camel-on-click="{{ threadInternClick }}" class="btn btn-link btn-sm p-0 align-baseline fw-semibold">{{ threadIntern }}</button></span>
 <span>Prompt: <button type="button" sc-camel-on-click="{{ threadPromptClick }}" class="btn btn-link btn-sm p-0 align-baseline fw-semibold">{{ threadPrompt }}</button></span>
-<sc-if value="{{ threadHasBoard }}"><span>Discussion board: <button type="button" sc-camel-on-click="{{ threadBoardClick }}" class="btn btn-link btn-sm p-0 align-baseline fw-semibold">{{ threadBoard }}</button></span></sc-if>
+<sc-if value="{{ threadHasBoard }}"><span>Round: <button type="button" sc-camel-on-click="{{ threadBoardClick }}" class="btn btn-link btn-sm p-0 align-baseline fw-semibold">{{ threadBoard }}</button></span></sc-if>
 <span>{{ threadDate }}</span>
 <div class="d-flex gap-1 flex-wrap">
 <sc-for list="{{ threadKeywords }}" as="k"><button type="button" sc-camel-on-click="{{ k.onClick }}" class="btn btn-sm bg-primary-subtle text-primary-emphasis border border-primary-subtle py-0">{{ k.word }}</button></sc-for>
@@ -756,7 +853,7 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 </div></div>
 </sc-for>
 </div>
-<sc-if value="{{ threadHasBoard }}"><div class="mt-4"><button type="button" sc-camel-on-click="{{ threadBoardClick }}" class="btn btn-outline-primary">Open the original discussion board →</button></div></sc-if>
+<sc-if value="{{ threadHasBoard }}"><div class="mt-4"><button type="button" sc-camel-on-click="{{ threadBoardClick }}" class="btn btn-outline-primary">Open the original round →</button></div></sc-if>
 </div>
 </sc-if>
 
@@ -819,10 +916,10 @@ const rotOptions = d => (d.faculty||[]).map(f=>({value:f.id,label:rotLabel(f)}))
 const STATUS = ['Active','Inactive'].map(v=>({value:v,label:v}));
 const FACULTY_STATUS = ['Faculty','Guest'].map(v=>({value:v,label:v}));
 const SAMPLE_FILES = ['sepsis-bundle-checklist.pdf','ipass-handoff-card.pdf','ecg-interpretation-basics.pptx','discharge-summary-example.docx','chest-xray-pneumonia.png','12-lead-ecg-stemi.jpg'];
-const MEDIA_TABS = [['file','Static Media'],['url','URLs'],['board','Discussion Boards'],['quiz','Quizzes']];
-const MEDIA_TYPES = [{value:'file',label:'Static Media'},{value:'url',label:'URL'},{value:'board',label:'Discussion Board'},{value:'quiz',label:'Quiz'}];
+const MEDIA_TABS = [['file','Static Media'],['url','URLs'],['board','Rounds'],['quiz','Quizzes']];
+const MEDIA_TYPES = [{value:'file',label:'Static Media'},{value:'url',label:'URL'},{value:'board',label:'Round'},{value:'quiz',label:'Quiz'}];
 const MEDIA_COLL = {file:'files',url:'urls',board:'boards',quiz:'quizzes'};
-const ROT_TABS = [['prompt','Prompt Sequence'],['file','Static Media'],['url','URLs'],['board','Discussion Boards'],['quiz','Quizzes']];
+const ROT_TABS = [['prompt','Prompt Sequence'],['file','Static Media'],['url','URLs'],['board','Rounds'],['quiz','Quizzes']];
 const MEMBER_TABS = [['team','Teams'],['intern','Interns'],['faculty','Faculty']];
 const unreadPosts = d => { const read=new Set(d.readPosts||[]), out=[]; (d.boards||[]).forEach(b=>{ const ps=b.posts||[]; ps.forEach(c=>{ if(c.role==='Faculty'||read.has(c.id)) return; if(ps.some(x=>x.parent===c.id&&x.role==='Faculty')) return; out.push({b,c,parent:c.parent?ps.find(x=>x.id===c.parent):null}); }); }); return out.sort((x,y)=>Date.parse(y.c.ts)-Date.parse(x.c.ts)); };
 const MERGED_POSTS = {b1:[
@@ -847,7 +944,7 @@ const DEMO_UNREAD = {
   b3:[{id:'d6',parent:'w2',author:"Sofia Rossi",role:'Intern',ts:'2026-10-19T16:05:00',up:2,down:0,text:"Agreed. The smart phrases for the review of systems saved me a lot of documentation time.",kw:["k4"]},
     {id:'d7',parent:null,author:"Ethan Nakamura",role:'Intern',ts:'2026-10-20T12:20:00',up:1,down:0,text:"I was surprised how much of the day is communication with nurses and families, not just writing orders.",kw:["k5"]}]};
 const SEED_READ = ['c3','c7','c8','c9','c10','f3'];
-const FB_TABS = [['comments','Comments'],['interns','Interns'],['keywords','Keywords']];
+const FB_TABS = [['comments','Comments'],['discussion','Discussion'],['teams','Teams'],['interns','Interns'],['keywords','Keywords']];
 const allComments = d => { const out=[]; (d.boards||[]).forEach(b=>{ const ps=b.posts||[]; ps.forEach(c=>{ if(c.role==='Faculty') return; out.push({b,c,parent:c.parent?ps.find(x=>x.id===c.parent):null}); }); }); return out.sort((x,y)=>Date.parse(y.c.ts)-Date.parse(x.c.ts)); };
 const kwMatch = (k,c) => (c.kw||[]).includes(k.id) || (c.text||'').toLowerCase().includes(k.word.toLowerCase());
 const FACULTY = 'Dr. Anika Patel';
@@ -855,18 +952,18 @@ const LETTERS = 'ABCDEFGH';
 
 const SEED = {
   teams: [
-    {id:'t1',name:'Team 1',description:'Inpatient cardiology, step-down unit and CCU consults.',rotation:'fa1'},
-    {id:'t2',name:'Team 2',description:'Emergency department, triage and stabilization.',rotation:'fa1'},
-    {id:'t3',name:'Team 3',description:'General pediatrics ward and newborn nursery.',rotation:'fa1'},
-    {id:'t4',name:'Team 4',description:'General medicine wards, admissions and discharge planning.',rotation:'fa1'},
-    {id:'t5',name:'Team 5',description:'Medical ICU.',rotation:'fa1'},
-    {id:'t6',name:'Team 6',description:'Pulmonology consult service.',rotation:'fa1'},
-    {id:'t7',name:'Team 7',description:'General surgery, pre- and post-operative care.',rotation:'fa2'},
-    {id:'t8',name:'Team 8',description:'Neurology ward and stroke unit.',rotation:'fa2'},
-    {id:'t9',name:'Team 9',description:'Oncology and infusion center.',rotation:'fa2'},
-    {id:'t10',name:'Team 10',description:'Nephrology and dialysis unit.',rotation:'fa2'},
-    {id:'t11',name:'Team 11',description:'Obstetrics and labor & delivery.',rotation:'fa2'},
-    {id:'t12',name:'Team 12',description:'Geriatrics and palliative care.',rotation:'fa2'}
+    {id:'t1',name:'Team 1',rotation:'fa1'},
+    {id:'t2',name:'Team 2',rotation:'fa1'},
+    {id:'t3',name:'Team 3',rotation:'fa1'},
+    {id:'t4',name:'Team 4',rotation:'fa1'},
+    {id:'t5',name:'Team 5',rotation:'fa1'},
+    {id:'t6',name:'Team 6',rotation:'fa1'},
+    {id:'t7',name:'Team 7',rotation:'fa2'},
+    {id:'t8',name:'Team 8',rotation:'fa2'},
+    {id:'t9',name:'Team 9',rotation:'fa2'},
+    {id:'t10',name:'Team 10',rotation:'fa2'},
+    {id:'t11',name:'Team 11',rotation:'fa2'},
+    {id:'t12',name:'Team 12',rotation:'fa2'}
   ],
   faculty: [
     {id:'fa1',name:'Trudi Cloyd',email:'t.cloyd@ehospital.edu',status:'Faculty'},
@@ -1009,6 +1106,16 @@ const mediaTypeLabel = t => (MEDIA_TYPES.find(m=>m.value===t)||{label:'No media'
 const mediaItem = (d,p) => p&&p.mediaType ? d[MEDIA_COLL[p.mediaType]].find(x=>x.id===p.mediaId) : null;
 const mediaLabel = (d,p) => { if(!p.mediaType) return 'None'; const m=mediaItem(d,p); return mediaTypeLabel(p.mediaType)+(m?' · '+m.title:''); };
 const boardStatus = b => 'Open';
+const EXTRA_Q = {b1:[{id:'b1q2',text:'What information did you share when you escalated, and how did you share it?'},{id:'b1q3',text:'What would you do differently next time?'}]};
+const SEED_REQ = {p4:{reqOpen:true},p19:{reqOpen:true},p25:{reqAnswers:2,reqReplies:1},p28:{reqOpen:true}};
+const postQ = (b,c) => ((b.questions||[]).some(q=>q.id===c.qid)?c.qid:((b.questions||[{id:''}])[0]||{id:''}).id);
+const normData = d => ({...d,boards:(d.boards||[]).map(b=>{ let qs=b.questions; if(!qs||!qs.length) qs=[{id:b.id+'q1',text:b.starter||''}]; if(EXTRA_Q[b.id]&&qs.length===1&&!b.qSeeded) qs=[...qs,...EXTRA_Q[b.id]]; const {starter,...rest}=b; return {...rest,questions:qs,qSeeded:true}; }),prompts:(d.prompts||[]).map(p=>(!d.reqSeeded&&SEED_REQ[p.id])?{...p,...SEED_REQ[p.id]}:p),reqSeeded:true});
+const reqText = (d,p) => { const bd=p.mediaType==='board'?(d.boards||[]).find(x=>x.id===p.mediaId):null;
+  if(bd){ const n=bd.questions.length, a=Math.min(n,p.reqAnswers||n); return 'Answer '+a+' of '+n+' question'+(n===1?'':'s')+(p.reqReplies?', reply to '+p.reqReplies+' classmate'+(p.reqReplies===1?'':'s'):''); }
+  if(p.mediaType==='file') return p.reqOpen?'Must download the file':'None';
+  if(p.mediaType==='url') return p.reqOpen?'Must open the link':'None';
+  if(p.mediaType==='quiz') return 'Pass the quiz';
+  return 'None'; };
 const blankQ = () => ({text:'',options:['','','',''],correct:0});
 const THREAD_BOARD = {h1:'b1',h2:'b2',h3:'b1',h4:'b1',h5:'b2'};
 const fmtTs = ts => { const d=new Date(ts); return isNaN(d)?'':d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}); };
@@ -1018,8 +1125,7 @@ const nowLabel = () => new Date().toLocaleString('en-US',{month:'short',day:'num
 const ENT = {
   team:{coll:'teams',label:'Team',plural:'Teams',nameKey:'name',
     fields:d=>[{key:'name',label:'Team name',type:'text',required:true,placeholder:'e.g. Team 5'},
-      {key:'description',label:'Description',type:'textarea'},
-      {key:'rotation',label:'Rotation',type:'select',options:rotOptions(d)},
+            {key:'rotation',label:'Rotation',type:'select',options:rotOptions(d)},
       {key:'members',label:'Members',type:'multi',viewHide:true,options:d.interns.map(i=>({value:i.id,label:i.name})),hint:'An intern belongs to one team. Selecting an intern moves them here.'}],
     cols:['Name','Rotation','Members'], cells:(t,d)=>[t.name,rotName(d,t.rotation),String(d.interns.filter(i=>i.team===t.id).length)],
     defaults:d=>{ let n=d.teams.length+1; while(d.teams.some(t=>t.name==='Team '+n)) n++; return {name:'Team '+n,rotation:(d.faculty[0]||{}).id||'',members:[]}; },
@@ -1044,19 +1150,20 @@ const ENT = {
       {key:'text',label:'Prompt text',type:'textarea',required:true,placeholder:'What should interns do or answer?'},
       {key:'order',label:'Order in sequence',type:'number'},
       {key:'media',label:'Attached media',type:'media'},
+      {key:'reqs',label:'Requirements',type:'reqs'},
       {key:'locked',label:'Student access',type:'toggle',onLabel:'Locked',offLabel:'Unlocked',hint:'When locked, students can’t open this prompt or any prompt after it.'}],
-    cols:['#','Title','Attached media','Access'], cells:(p,d)=>[String(p.order),p.title,mediaLabel(d,p),p.locked?'Locked':'Open'],
-    defaults:d=>({order:String(Math.max(0,...d.prompts.map(p=>p.order))+1),mediaType:'',mediaId:'',locked:false})},
+    cols:['#','Title','Attached media','Requirements','Access'], cells:(p,d)=>[String(p.order),p.title,mediaLabel(d,p),reqText(d,p),p.locked?'Locked':'Open'],
+    defaults:d=>({order:String(Math.max(0,...d.prompts.map(p=>p.order))+1),mediaType:'',mediaId:'',locked:false,reqAnswers:'',reqReplies:'0',reqOpen:false})},
   file:{coll:'files',label:'File',plural:'Static Media',nameKey:'title',
     fields:()=>[{key:'title',label:'Title',type:'text',required:true},{key:'file',label:'File',type:'file',required:true},{key:'description',label:'Description',type:'textarea'}],
     cols:['Title','File'], cells:f=>[f.title,f.file], defaults:()=>({})},
   url:{coll:'urls',label:'URL',plural:'URLs',nameKey:'title',
     fields:()=>[{key:'title',label:'Title',type:'text',required:true},{key:'url',label:'URL',type:'url',required:true,placeholder:'https://'},{key:'description',label:'Description',type:'textarea'}],
     cols:['Title','URL'], cells:u=>[u.title,u.url.replace(/^https?:\/\//,'')], defaults:()=>({url:'https://'})},
-  board:{coll:'boards',label:'Discussion Board',plural:'Discussion Boards',nameKey:'title',
-    fields:()=>[{key:'title',label:'Title',type:'text',required:true},{key:'starter',label:'Starter question',type:'textarea',required:true}],
-    cols:['Title','Comments'], cells:b=>[b.title,String((b.posts||[]).length)],
-    defaults:()=>({posts:[]}),
+  board:{coll:'boards',label:'Round',plural:'Rounds',nameKey:'title',
+    fields:()=>[{key:'title',label:'Title',type:'text',required:true},{key:'questions',label:'Questions',type:'roundQs',viewHide:true,hint:'Students answer each question in its own conversation. Add as many as the round needs.'}],
+    cols:['Title','Questions','Comments'], cells:b=>[b.title,String((b.questions||[]).length),String((b.posts||[]).length)],
+    defaults:()=>({posts:[],questions:[{id:uid('q'),text:''}]}),
     sections:()=>[]},
   quiz:{coll:'quizzes',label:'Quiz',plural:'Quizzes',nameKey:'title',
     fields:()=>[{key:'title',label:'Title',type:'text',required:true},{key:'passing',label:'Passing score (%)',type:'number'},
@@ -1086,29 +1193,37 @@ class Component extends DCLogic {
     if(saved&&saved.data&&!saved.commentsMerged){ saved.data=mergeIn(saved.data); saved.commentsMerged=1; }
     if(saved&&saved.data&&!saved.demoUnread){ const ids=new Set(Object.values(DEMO_UNREAD).flat().map(x=>x.id)); saved.data=mergeIn({...saved.data,readPosts:(saved.data.readPosts||[]).filter(x=>!ids.has(x))}); saved.demoUnread=1; }
     if(saved&&saved.journeyReset!==1){ if(saved.data&&saved.data.interns) saved.data.interns=saved.data.interns.map(i=>i.id===STUDENT_ID?{...i,progress:0}:i); saved.step=0; saved.quiz={}; saved.journeyReset=1; }
+    if(saved&&saved.data) saved.data=normData(saved.data);
+    if(saved&&saved.draft&&saved.route&&saved.route.ent==='board'&&!saved.draft.questions){ saved.draft=null; saved.route={page:'rotation',tab:'board'}; }
     if(saved&&saved.draft&&LEGACY_ROT[saved.draft.rotation]) saved.draft={...saved.draft,rotation:LEGACY_ROT[saved.draft.rotation]};
-    this.state = Object.assign({journeyReset:1,commentsMerged:1,demoUnread:1,role:null,route:{page:'landing'},data:mergeIn(SEED),draft:null,errors:{},confirm:false,toast:null,loginRole:null,login:{email:'',password:''},step:0,quiz:{},reply:'',quizError:'',votes:{},dSort:'oldest',dDraft:'',replyTo:null,replyDraft:'',dFocus:null,hl:null,scrollTo:null}, saved||{}, {collapsed,scrollTo:null});
+    this.state = Object.assign({journeyReset:1,commentsMerged:1,demoUnread:1,role:null,route:{page:'landing'},data:normData(mergeIn(SEED)),draft:null,errors:{},confirm:false,toast:null,loginRole:null,login:{email:'',password:''},step:0,quiz:{},reply:'',quizError:'',votes:{},dSort:'oldest',dDraft:'',replyTo:null,replyDraft:'',dFocus:null,hl:null,scrollTo:null,dDrafts:{},opened:{},reqTry:null,dragId:null,dragOver:null}, saved||{}, {collapsed,scrollTo:null});
   }
   componentDidUpdate(){
-    const {role,route,data,draft,loginRole,step,quiz,votes,dSort,collapsed,journeyReset,commentsMerged,demoUnread}=this.state;
-    try{ localStorage.setItem(KEY, JSON.stringify({role,route,data,draft,loginRole,step,quiz,votes,dSort,journeyReset,commentsMerged,demoUnread})); sessionStorage.setItem(KEY+'-collapsed', JSON.stringify(collapsed||{})); }catch(e){}
+    const {role,route,data,draft,loginRole,step,quiz,votes,dSort,collapsed,journeyReset,commentsMerged,demoUnread,opened}=this.state;
+    try{ localStorage.setItem(KEY, JSON.stringify({role,route,data,draft,loginRole,step,quiz,votes,dSort,journeyReset,commentsMerged,demoUnread,opened})); sessionStorage.setItem(KEY+'-collapsed', JSON.stringify(collapsed||{})); }catch(e){}
     if(this.state.scrollTo){ const id=this.state.scrollTo; this.setState({scrollTo:null}); setTimeout(()=>{ const el=document.getElementById('cm-'+id); if(el) window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-120,behavior:'smooth'}); },80); }
   }
   go(route){ this.setState({route,errors:{},confirm:false,draft:null,quizError:'',replyTo:null,dFocus:null,hl:null}); window.scrollTo(0,0); }
   flash(msg){ this.setState({toast:msg}); clearTimeout(this._t); this._t=setTimeout(()=>this.setState({toast:null}),2600); }
-  withVirtual(k,item){ const d=this.state.data; const o={...item}; if(k==='team') o.members=d.interns.filter(i=>i.team===item.id).map(i=>i.id);
+  withVirtual(k,item){ const d=this.state.data; const o={...item}; if(k==='board') o.questions=JSON.parse(JSON.stringify(item.questions||[])); if(k==='team') o.members=d.interns.filter(i=>i.team===item.id).map(i=>i.id);
     if(k==='quiz') o.questions=JSON.parse(JSON.stringify(item.questions||[]));
     for(const key in o) if(typeof o[key]==='number') o[key]=String(o[key]); return o; }
   openAdd(k){ this.setState({route:{page:'add',ent:k},draft:ENT[k].defaults(this.state.data),errors:{},confirm:false}); window.scrollTo(0,0); }
   openEdit(k,id){ const it=this.state.data[ENT[k].coll].find(x=>x.id===id); this.setState({route:{page:'edit',ent:k,id},draft:this.withVirtual(k,it),errors:{},confirm:false}); window.scrollTo(0,0); }
   setDraft(obj,errKey){ this.setState(s=>({draft:{...s.draft,...obj},errors:{...s.errors,[errKey]:null}})); }
+  updateRQs(fn){ this.setState(s=>({draft:{...s.draft,questions:fn((s.draft.questions||[]).map(q=>({...q})))},errors:{...s.errors,questions:null}})); }
+  setPromptOrder(ids){ this.setState(s=>({data:{...s.data,prompts:s.data.prompts.map(p=>({...p,order:ids.indexOf(p.id)+1}))}})); }
+  movePrompt(id,dir){ const ids=sortedPrompts(this.state.data).map(p=>p.id); const i=ids.indexOf(id), j=i+dir; if(j<0||j>=ids.length) return; [ids[i],ids[j]]=[ids[j],ids[i]]; this.setPromptOrder(ids); this.flash('Prompt moved to position '+(j+1)); }
+  dropPrompt(targetId){ const from=this.state.dragId; this.setState({dragId:null,dragOver:null}); if(!from||from===targetId) return; const orig=sortedPrompts(this.state.data).map(p=>p.id); const ids=[...orig]; const to=orig.indexOf(targetId); ids.splice(ids.indexOf(from),1); ids.splice(to,0,from); this.setPromptOrder(ids); this.flash('Prompt moved to position '+(to+1)); }
   updateQs(fn){ this.setState(s=>({draft:{...s.draft,questions:fn(s.draft.questions.map(q=>({...q,options:[...q.options]})))},errors:{...s.errors,questions:null}})); }
   save(){
     const {route,draft,data}=this.state, k=route.ent, e=ENT[k], errors={};
-    e.fields(data).forEach(f=>{ if(f.type==='questions'||f.type==='media') return; const v=draft[f.key]; if(f.required && (!v || !String(v).trim() || v==='https://')) errors[f.key]=f.label+' is required.'; });
+    e.fields(data).forEach(f=>{ if(['questions','media','reqs','roundQs'].includes(f.type)) return; const v=draft[f.key]; if(f.required && (!v || !String(v).trim() || v==='https://')) errors[f.key]=f.label+' is required.'; });
     if(k==='intern' && draft.email && !/^\S+@\S+\.\S+$/.test(draft.email)) errors.email='Enter a valid email address.';
     if(k==='url' && draft.url && draft.url!=='https://' && !/^https?:\/\/\S+\.\S+/.test(draft.url)) errors.url='Enter a full URL starting with https://';
-    if(k==='prompt' && draft.mediaType && !draft.mediaId) errors.media='Choose which item to attach.';
+    if(k==='prompt' && draft.mediaType && (!draft.mediaId||draft.mediaId==='__new')) errors.media=draft.mediaId==='__new'?'Create the new round first, or choose an existing one.':'Choose which item to attach.';
+    if(k==='prompt' && draft.mediaType==='board'){ const bd=data.boards.find(x=>x.id===draft.mediaId); if(bd&&Number(draft.reqAnswers)>bd.questions.length) errors.reqs='This round only has '+bd.questions.length+' question'+(bd.questions.length===1?'':'s')+'.'; if(Number(draft.reqAnswers)<0||Number(draft.reqReplies)<0) errors.reqs='Requirements can’t be negative.'; }
+    if(k==='board'){ const qs=draft.questions||[]; if(!qs.length||qs.some(q=>!(q.text||'').trim())) errors.questions='Add at least one question, and fill in every question.'; }
     if(k==='quiz'){
       if(draft.passing!=='' && (Number(draft.passing)<0||Number(draft.passing)>100)) errors.passing='Passing score must be between 0 and 100.';
       const qs=draft.questions||[];
@@ -1116,7 +1231,9 @@ class Component extends DCLogic {
       else if(qs.some(q=>!q.text.trim()||q.options.filter(o=>o.trim()).length<2||!q.options[q.correct].trim())) errors.questions='Each question needs text, at least two options, and a correct answer.';
     }
     if(Object.keys(errors).length){ this.setState({errors}); return; }
-    const rec={...draft}; ['order','passing'].forEach(n=>{ if(n in rec) rec[n]=Number(rec[n])||0; });
+    const rec={...draft}; ['order','passing','reqAnswers','reqReplies'].forEach(n=>{ if(n in rec) rec[n]=Number(rec[n])||0; });
+    delete rec.newTitle; delete rec.newQ;
+    if(k==='board') rec.questions=rec.questions.map(q=>({id:q.id,text:q.text.trim()}));
     if(k==='quiz') rec.questions=rec.questions.map(q=>({text:q.text.trim(),options:q.options.map(o=>o.trim()),correct:q.correct}));
     const members=rec.members; delete rec.members;
     const isNew=route.page==='add'; const id=isNew?uid(k[0]):route.id; rec.id=id;
@@ -1137,17 +1254,18 @@ class Component extends DCLogic {
   }
   toggleColl(id){ this.setState(s=>({collapsed:{...s.collapsed,[id]:!(s.collapsed||{})[id]},replyTo:null})); }
   vote(id){ this.setState(s=>{ const v={...s.votes}; v[id]=v[id]===1?0:1; return {votes:v}; }); }
-  addComment(boardId,parent,text,who){ const t=(text||'').trim(); if(!t) return false;
-    const c={id:uid('c'),parent,author:who.name,role:who.role,ts:new Date().toISOString(),up:0,down:0,text:t};
+  addComment(boardId,parent,text,who,qid){ const t=(text||'').trim(); if(!t) return false;
+    const bd=this.state.data.boards.find(x=>x.id===boardId), pp=parent?(bd.posts||[]).find(x=>x.id===parent):null;
+    const c={id:uid('c'),parent,qid:pp?postQ(bd,pp):(qid||bd.questions[0].id),author:who.name,role:who.role,ts:new Date().toISOString(),up:0,down:0,text:t};
     this.setState(s=>({data:{...s.data,readPosts:(who.role==='Faculty'&&parent)?[...(s.data.readPosts||[]),parent]:s.data.readPosts,boards:s.data.boards.map(b=>b.id===boardId?{...b,posts:[...(b.posts||[]),c]}:b)},replyTo:null,replyDraft:'',collapsed:parent?{...s.collapsed,[parent]:false}:s.collapsed}));
     this.flash(parent?'Reply posted':'Comment posted'); return true; }
   markRead(ids){ if(!ids.length) return; this.setState(s=>({data:{...s.data,readPosts:[...new Set([...(s.data.readPosts||[]),...ids])]}})); this.flash(ids.length>1?'All replies marked as read':'Marked as read'); }
   openPost(boardId,postId){ const b=this.state.data.boards.find(x=>x.id===boardId); const byId={}; ((b&&b.posts)||[]).forEach(c=>byId[c.id]=c);
     const coll={...(this.state.collapsed||{})}; let x=byId[postId]; while(x){ coll[x.id]=false; x=byId[x.parent]; }
     this.go({page:'view',ent:'board',id:boardId}); this.setState({collapsed:coll,hl:postId,scrollTo:postId}); }
-  discussion(b,who){
+  discussion(b,who,qid){
     const unreadIds=who.role==='Faculty'?new Set(unreadPosts(this.state.data).map(x=>x.c.id)):new Set();
-    const s=this.state, all=b.posts||[], open=boardStatus(b)==='Open', votes=s.votes||{}, coll=s.collapsed||{}, sort=(s.dSort==='new'?'new':'oldest');
+    const s=this.state, all=(b.posts||[]).filter(c=>postQ(b,c)===qid), open=boardStatus(b)==='Open', votes=s.votes||{}, coll=s.collapsed||{}, sort=(s.dSort==='new'?'new':'oldest');
     const focus=s.dFocus&&s.dFocus.board===b.id?s.dFocus.id:null;
     const kids={}; all.forEach(c=>{ const k=c.parent||'root'; (kids[k]=kids[k]||[]).push(c); });
     const likes=c=>(c.up||0)+(votes[c.id]===1?1:0);
@@ -1175,8 +1293,8 @@ class Component extends DCLogic {
     (fc?[fc]:sorted(kids.root)).forEach(c=>walk(c,0,[]));
     return {dCount:all.length+(all.length===1?' comment':' comments'),
       dSorts:[['oldest','Oldest','Oldest first'],['new','Newest','Most recent first']].map(([k,l,hint])=>({label:l,hint,active:sort===k,inactive:sort!==k,onClick:()=>this.setState({dSort:k})})),
-      dOpen:open,dClosed:!open,dDraft:s.dDraft||'',dSetDraft:e=>this.setState({dDraft:e.target.value}),
-      dPost:()=>{ if(this.addComment(b.id,null,this.state.dDraft,who)) this.setState({dDraft:''}); },
+      dOpen:open,dClosed:!open,dDraft:(s.dDrafts||{})[qid]||'',dSetDraft:e=>{ const v=e.target.value; this.setState(st=>({dDrafts:{...st.dDrafts,[qid]:v}})); },
+      dPost:()=>{ if(this.addComment(b.id,null,(this.state.dDrafts||{})[qid],who,qid)) this.setState(st=>({dDrafts:{...st.dDrafts,[qid]:''}})); },
       dFocused:!!fc,dFocusLabel:fc?'Continuing a thread from '+fc.author:'',dUnfocus:()=>this.setState({dFocus:null}),
       dRows:rows,dEmpty:!all.length};
   }
@@ -1210,7 +1328,15 @@ class Component extends DCLogic {
     const tName=it=>it[ENT[r.ent].nameKey];
     const listFor=k=>{ const e=ENT[k]; const items=k==='prompt'?sortedPrompts(d):k==='intern'?[...d.interns].sort((a,b)=>a.name.localeCompare(b.name)):d[e.coll]; const si=e.strong||0;
       return {title:e.plural,count:String(items.length),hasAdd:true,addLabel:'Add '+e.label,onAdd:()=>this.openAdd(k),cols:e.cols,
-        rows:items.map(it=>({onClick:go({page:'view',ent:k,id:it.id}),cells:e.cells(it,d).map((t,i)=>({text:t,strong:i===si,plain:i!==si}))})),
+        rows:items.map((it,ix)=>({onClick:go({page:'view',ent:k,id:it.id}),cells:e.cells(it,d).map((t,i)=>({text:t,strong:i===si,plain:i!==si})),
+          draggable:k==='prompt',trCss:k==='prompt'?((s.dragId===it.id?'opacity:.45;':'')+(s.dragOver===it.id&&s.dragId&&s.dragId!==it.id?'box-shadow:inset 0 3px 0 #0077C8;':'')):'',
+          onDragStart:ev=>{ try{ ev.dataTransfer.effectAllowed='move'; ev.dataTransfer.setData('text/plain',it.id); }catch(x){} this.setState({dragId:it.id}); },
+          onDragOver:ev=>{ ev.preventDefault(); if(this.state.dragId&&this.state.dragOver!==it.id) this.setState({dragOver:it.id}); },
+          onDrop:ev=>{ ev.preventDefault(); this.dropPrompt(it.id); },
+          onDragEnd:()=>this.setState({dragId:null,dragOver:null}),
+          onUp:ev=>{ ev.stopPropagation(); this.movePrompt(it.id,-1); },onDown:ev=>{ ev.stopPropagation(); this.movePrompt(it.id,1); },upDisabled:ix===0,downDisabled:ix===items.length-1})),
+        sortable:k==='prompt',hasHint:k==='prompt'||k==='board',
+        hint:k==='prompt'?'Drag a row by its handle (⋮⋮), or use the ↑ ↓ buttons, to change the order students see the prompts. Click a row to view or edit it.':k==='board'?'A Round is a discussion with one or more questions. Create it here, then attach it to a prompt on the Prompt Sequence tab. You can also create a new round directly from the prompt form.':'',
         isEmpty:!items.length,emptyText:'No '+e.plural.toLowerCase()+' yet.'}; };
     const ps=sortedPrompts(d), N=ps.length;
 
@@ -1223,18 +1349,19 @@ class Component extends DCLogic {
       tabs=ROT_TABS.map(([k,l])=>({label:l,count:String(d[ENT[k].coll].length),active:k===tab,inactive:k!==tab,onClick:go({page:'rotation',tab:k})}));
       lists=[listFor(tab)]; }
     if(p==='prompts'){ title='Prompt Sequence'; sub='Ordered prompts interns work through during the rotation.'; crumbs=[['Rotation',{page:'rotation'}],['Prompt Sequence']]; lists=[listFor('prompt')]; }
-    if(p==='media'){ const tab=r.tab||'file'; title='Prompt Media'; sub='Files, links, discussion boards and quizzes that can be attached to prompts.';
+    if(p==='media'){ const tab=r.tab||'file'; title='Prompt Media'; sub='Files, links, rounds and quizzes that can be attached to prompts.';
       crumbs=[['Rotation',{page:'rotation'}],['Prompt Media',{page:'media',tab:'file'}],[MEDIA_TABS.find(t=>t[0]===tab)[1]]];
       tabs=MEDIA_TABS.map(([k,l])=>({label:l,count:String(d[ENT[k].coll].length),active:k===tab,inactive:k!==tab,onClick:go({page:'media',tab:k})}));
       lists=[listFor(tab)]; }
-    let fcFilter='all';
+    let fcFilter='all', fbTab='comments';
     if(p==='feedback'){ const tab=(r.tab==='unread'||r.tab==='threads')?'comments':(FB_TABS.some(t=>t[0]===r.tab)?r.tab:'comments'); fcFilter=(r.filter==='unread'||r.tab==='unread')?'unread':'all';
-      title='Feedback'; sub='Intern comments from discussion boards, grouped by intern and keyword.';
+      fbTab=tab; title='Feedback'; sub='Intern comments from rounds, grouped by team, intern and keyword.';
       crumbs=[['Feedback',{page:'feedback',tab:'comments'}],[FB_TABS.find(t=>t[0]===tab)[1]]];
-      const counts={comments:allC.length,interns:d.interns.length,keywords:d.keywords.length};
+      const counts={comments:allC.length,discussion:d.boards.reduce((n,b)=>n+(b.posts||[]).length,0),teams:d.teams.length,interns:d.interns.length,keywords:d.keywords.length};
       tabs=FB_TABS.map(([k,l])=>({label:l,count:String(counts[k]),active:k===tab,inactive:k!==tab,onClick:go({page:'feedback',tab:k})}));
       const mk=(t,cols,items,cells,route)=>({title:t,count:String(items.length),hasAdd:false,cols,isEmpty:!items.length,emptyText:'Nothing here yet.',
         rows:items.map(it=>({onClick:go(route(it)),cells:cells(it).map((x,i)=>({text:x,strong:i===0,plain:i!==0}))}))});
+      if(tab==='teams') lists=[mk('Teams',['Team','Rotation','Interns','Comments','Unread'],[...d.teams].sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true})),t=>{ const names=new Set(d.interns.filter(i=>i.team===t.id).map(i=>i.name)); return [t.name,rotName(d,t.rotation),String(names.size),String(allC.filter(x=>names.has(x.c.author)).length),String(uList.filter(x=>names.has(x.c.author)).length)]; },t=>({page:'view',ent:'team',id:t.id}))];
       if(tab==='interns') lists=[mk('Interns',['Intern','Team','Comments'],[...d.interns].sort((a,b)=>a.name.localeCompare(b.name)),i=>[i.name,teamName(d,i.team),String(allC.filter(x=>x.c.author===i.name).length)],i=>({page:'fbIntern',id:i.id}))];
       if(tab==='keywords') lists=[mk('Keywords',['Keyword','Comments','Interns'],[...d.keywords].sort((a,b)=>a.word.localeCompare(b.word)),k=>{ const m=allC.filter(x=>kwMatch(k,x.c)); return [k.word,String(m.length),String(new Set(m.map(x=>x.c.author)).size)]; },k=>({page:'fbKeyword',id:k.id}))];
     }
@@ -1262,14 +1389,24 @@ class Component extends DCLogic {
     if((p==='add'||p==='edit')&&s.draft){ formFields=ent.fields(d).map(f=>{ const v=s.draft[f.key]; const err=s.errors[f.key];
       const base={label:f.label,required:!!f.required,placeholder:f.placeholder||'',hint:f.hint||'',hasHint:!!f.hint,error:err||'',hasError:!!err,
         isInput:['text','email','url','number','date'].includes(f.type),isTextarea:f.type==='textarea',isSelect:f.type==='select',isMulti:f.type==='multi',isFile:f.type==='file',
-        isMediaPick:f.type==='media',isQuestions:f.type==='questions',isToggle:f.type==='toggle',on:!!v,off:!v,toggleText:v?f.onLabel:f.offLabel,onToggle:()=>this.setDraft({[f.key]:!v},f.key),
+        isMediaPick:f.type==='media',isQuestions:f.type==='questions',isReqs:f.type==='reqs',isRoundQs:f.type==='roundQs',isToggle:f.type==='toggle',on:!!v,off:!v,toggleText:v?f.onLabel:f.offLabel,onToggle:()=>this.setDraft({[f.key]:!v},f.key),
         inputType:f.type,value:v==null?'':v,onChange:e=>this.setDraft({[f.key]:e.target.value},f.key),options:f.options||[]};
       if(f.type==='multi'){ const sel=v||[]; base.chips=f.options.map(o=>({label:o.label,selected:sel.includes(o.value),unselected:!sel.includes(o.value),
         onToggle:()=>this.setDraft({[f.key]:sel.includes(o.value)?sel.filter(x=>x!==o.value):[...sel,o.value]},f.key)})); }
       if(f.type==='file'){ base.hasFile=!!v; base.noFile=!v; base.ext=v?v.split('.').pop().toUpperCase():''; base.onPick=()=>this.setDraft({[f.key]:SAMPLE_FILES[Math.floor(Math.random()*SAMPLE_FILES.length)]},f.key); }
       if(f.type==='media'){ const t=s.draft.mediaType||''; base.typeValue=t; base.typeOptions=MEDIA_TYPES; base.hasType=!!t;
         base.itemValue=s.draft.mediaId||''; base.itemOptions=t?d[MEDIA_COLL[t]].map(m=>({value:m.id,label:m.title})):[];
+        if(t==='board') base.itemOptions=[...base.itemOptions,{value:'__new',label:'+ Create new round…'}];
+        base.creating=t==='board'&&s.draft.mediaId==='__new'; base.newTitle=s.draft.newTitle||''; base.newQ=s.draft.newQ||'';
+        base.onNewTitle=e=>this.setDraft({newTitle:e.target.value},'media'); base.onNewQ=e=>this.setDraft({newQ:e.target.value},'media');
+        base.onCreateRound=()=>{ const tt=(s.draft.newTitle||'').trim(), qq=(s.draft.newQ||'').trim(); if(!tt||!qq){ this.setState(st=>({errors:{...st.errors,media:'Give the new round a title and a first question.'}})); return; } const id=uid('b'); this.setState(st=>({data:{...st.data,boards:[...st.data.boards,{id,title:tt,questions:[{id:id+'q1',text:qq}],posts:[],qSeeded:true}]},draft:{...st.draft,mediaId:id,newTitle:'',newQ:''},errors:{...st.errors,media:null}})); this.flash('Round created. Add more questions on the Rounds tab.'); };
         base.onType=e=>this.setDraft({mediaType:e.target.value,mediaId:''},'media'); base.onItem=e=>this.setDraft({mediaId:e.target.value},'media'); }
+      if(f.type==='reqs'){ const t=s.draft.mediaType||'', bd=t==='board'?d.boards.find(x=>x.id===s.draft.mediaId):null, nq=bd?bd.questions.length:0;
+        base.showBoard=!!bd; base.showOpen=t==='file'||t==='url'; base.showQuiz=t==='quiz'; base.showNone=!t||(t==='board'&&!bd);
+        base.reqAnswers=s.draft.reqAnswers||''; base.reqAnswersHint=nq?'Leave blank to require all '+nq+' question'+(nq===1?'':'s')+'.':''; base.reqReplies=s.draft.reqReplies||'0';
+        base.onReqAnswers=e=>this.setDraft({reqAnswers:e.target.value},'reqs'); base.onReqReplies=e=>this.setDraft({reqReplies:e.target.value},'reqs');
+        base.reqOpenOn=!!s.draft.reqOpen; base.onReqOpen=()=>this.setDraft({reqOpen:!s.draft.reqOpen},'reqs'); base.openVerb=t==='url'?'open the link':'download the file'; }
+      if(f.type==='roundQs'){ const qs=v||[]; base.rqs=qs.map((q,i)=>({num:String(i+1),text:q.text,canRemove:qs.length>1,onText:e=>{ const val=e.target.value; this.updateRQs(a=>{a[i].text=val; return a;}); },onRemove:()=>this.updateRQs(a=>a.filter((_,j)=>j!==i))})); base.onAddRQ=()=>this.updateRQs(a=>[...a,{id:uid('q'),text:''}]); }
       if(f.type==='questions'){ const qs=v||[];
         base.qs=qs.map((q,qi)=>({num:String(qi+1),text:q.text,canRemove:qs.length>1,
           onText:e=>{ const val=e.target.value; this.updateQs(a=>{a[qi].text=val; return a;}); },
@@ -1287,6 +1424,7 @@ class Component extends DCLogic {
         else if(f.type==='date') out=fmtDate(v);
         else if(f.type==='toggle') out=v?'Locked. Students can’t open this prompt or any after it.':'Unlocked';
         else if(f.type==='media') out=mediaLabel(d,item);
+        else if(f.type==='reqs') out=reqText(d,item);
         else if(f.key==='passing') out=v+'%';
         else out=(v===''||v==null)?'—':String(v);
         return {label:f.label,value:out}; });
@@ -1302,8 +1440,11 @@ class Component extends DCLogic {
     const openStep=i=>()=>{ this.setState({step:i}); this.go({page:'studentRotation'}); };
     const lockIdx=(()=>{ const i=ps.findIndex(x=>x.locked); return i<0?N:i; })();
     const waiting=!sDone&&prog>=lockIdx;
-    const step=Math.max(0,Math.min(s.step||0,lockIdx-1));
+    const maxStep=Math.max(0,Math.min(prog,lockIdx-1));
+    const step=Math.max(0,Math.min(s.step||0,maxStep));
     const cur=ps[step];
+    if(p==='studentRotation'&&cur&&crumbVals.length) crumbVals[crumbVals.length-1].label='Prompt '+(step+1)+': '+cur.title;
+    if(s.step!==step&&p==='studentRotation') setTimeout(()=>this.setState({step}),0);
     const m=cur?mediaItem(d,cur):null, mt=m?cur.mediaType:'';
     let qItems=[], quizVals={quizOpen:false,quizPassed:false,quizFailed:false,quizResultText:'',quizMeta:''};
     if(mt==='quiz'){ const qs=this.quizState(m.id); const n=m.questions.length;
@@ -1316,14 +1457,45 @@ class Component extends DCLogic {
         submitQuiz:()=>{ if(Object.keys(qs.answers).length<n){ this.setState({quizError:'Answer every question before submitting.'}); return; } this.setQuiz(m.id,{...qs,submitted:true}); },
         retakeQuiz:()=>this.setQuiz(m.id,{answers:{},submitted:false})}; }
 
+    const opened=s.opened||{}, reqs=[];
+    if(cur&&mt==='file'&&cur.reqOpen) reqs.push({label:'Download the file',met:!!opened[cur.id]});
+    if(cur&&mt==='url'&&cur.reqOpen) reqs.push({label:'Open the link',met:!!opened[cur.id]});
+    if(cur&&mt==='board'){ const nq=m.questions.length, need=Math.min(nq,cur.reqAnswers||0), mine=(m.posts||[]).filter(c=>c.author===me.name);
+      const ans=new Set(mine.filter(c=>!c.parent).map(c=>postQ(m,c))).size;
+      if(need>0) reqs.push({label:'Answer '+need+' of '+nq+' question'+(nq===1?'':'s')+' ('+Math.min(ans,need)+'/'+need+')',met:ans>=need});
+      const nr=cur.reqReplies||0, rep=mine.filter(c=>{ const pp=c.parent&&(m.posts||[]).find(x=>x.id===c.parent); return pp&&pp.role==='Intern'&&pp.author!==me.name; }).length;
+      if(nr>0) reqs.push({label:'Reply to '+nr+' classmate'+(nr===1?'':'s')+' ('+Math.min(rep,nr)+'/'+nr+')',met:rep>=nr}); }
+    if(cur&&mt==='quiz'){ const qq=this.quizState(m.id), nQ=m.questions.length, sc=m.questions.filter((q,qi)=>qq.answers[qi]===q.correct).length; reqs.push({label:'Pass the quiz ('+m.passing+'% to pass)',met:qq.submitted&&Math.round(sc/nQ*100)>=m.passing}); }
+    const reqTry=s.reqTry===step, reqVals=reqs.map(r=>({label:r.label,met:r.met,pending:!r.met&&!reqTry,alert:!r.met&&reqTry}));
+    const blockNext=()=>{ if(reqs.some(r=>!r.met)){ this.setState({reqTry:step}); this.flash('Complete the requirements to continue'); return true; } return false; };
     thread=null;
     const tIntern=thread?d.interns.find(i=>i.id===thread.intern):null;
     const tPrompt=thread?d.prompts.find(x=>x.id===thread.prompt):null;
     const tBoard=thread?(()=>{ const id=thread.board||THREAD_BOARD[thread.id]||(tPrompt&&tPrompt.mediaType==='board'?tPrompt.mediaId:null); return id?d.boards.find(b=>b.id===id):null; })():null;
     const uRow=({b,c,parent})=>({author:c.author,initials:initials(c.author),context:parent?'replied to '+parent.author:'posted a new comment',board:b.title,snippet:snippet(c.text),time:fmtTs(c.ts),onView:()=>this.openPost(b.id,c.id),onMarkRead:()=>this.markRead([c.id])});
+    const dtKey=s.dtKey||'team', dtDir=s.dtDir||'asc';
+    let dtRows=[], dtExport=()=>{};
+    if(p==='feedback'&&fbTab==='discussion'){
+      const teamOf={}; d.interns.forEach(i=>teamOf[i.name]=teamName(d,i.team));
+      const raw=[]; d.boards.forEach(b=>{ const ps=b.posts||[]; ps.forEach(c=>{ const par=c.parent?ps.find(x=>x.id===c.parent):null;
+        raw.push({team:teamOf[c.author]||(c.role==='Faculty'?'Faculty':'—'),round:b.title+((b.questions||[]).length>1?' · Q'+((b.questions||[]).findIndex(q=>q.id===postQ(b,c))+1):''),author:c.author,role:c.role,text:c.text,replyTo:par?par.author:'',ts:c.ts,likes:c.up||0,boardId:b.id,postId:c.id}); }); });
+      const nat=(a,b)=>String(a).localeCompare(String(b),undefined,{numeric:true,sensitivity:'base'});
+      const cmp={team:(a,b)=>nat(a.team,b.team)||nat(a.round,b.round)||Date.parse(a.ts)-Date.parse(b.ts),round:(a,b)=>nat(a.round,b.round)||nat(a.team,b.team)||Date.parse(a.ts)-Date.parse(b.ts),time:(a,b)=>Date.parse(a.ts)-Date.parse(b.ts)}[dtKey]||((a,b)=>0);
+      raw.sort((a,b)=>cmp(a,b)*(dtDir==='desc'?-1:1));
+      dtRows=raw.map(x=>({...x,time:fmtTs(x.ts),onView:()=>this.openPost(x.boardId,x.postId)}));
+      dtExport=fmt=>{ const head=['Team','Round','Author','Role','Comment','Replying to','Posted','Likes'];
+        const body=raw.map(x=>[x.team,x.round,x.author,x.role,x.text,x.replyTo,new Date(x.ts).toLocaleString('en-US'),x.likes]);
+        const name='ehospital-discussion-'+new Date().toISOString().slice(0,10); let blob,ext;
+        if(fmt==='csv'){ const q=v=>'"'+String(v).replace(/"/g,'""')+'"'; blob=new Blob(['\ufeff'+[head,...body].map(r=>r.map(q).join(',')).join('\r\n')],{type:'text/csv;charset=utf-8'}); ext='csv'; }
+        else { const e=v=>String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); blob=new Blob(['<html xmlns:x="urn:schemas-microsoft-com:office:excel"><head><meta charset="utf-8"></head><body><table border="1"><tr>'+head.map(c=>'<th>'+e(c)+'</th>').join('')+'</tr>'+body.map(r=>'<tr>'+r.map(c=>'<td>'+e(c)+'</td>').join('')+'</tr>').join('')+'</table></body></html>'],{type:'application/vnd.ms-excel'}); ext='xls'; }
+        const u=URL.createObjectURL(blob), a=document.createElement('a'); a.href=u; a.download=name+'.'+ext; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),2000);
+        this.flash('Exported '+raw.length+' comments to .'+ext); };
+    }
+    const dtSort=k=>()=>this.setState(st=>({dtKey:k,dtDir:(st.dtKey||'team')===k&&(st.dtDir||'asc')==='asc'?'desc':'asc'}));
+    const dtArrow=k=>dtKey===k?(dtDir==='asc'?' ▲':' ▼'):'';
     const loginRole=s.loginRole||'faculty';
     const discBoard=(p==='studentRotation'&&mt==='board')?m:(p==='view'&&r.ent==='board'&&item)?item:null;
-    const disc=discBoard?Object.assign({dShowView:p==='view'},this.discussion(discBoard,isFaculty?{name:facultyName,role:'Faculty'}:{name:me.name,role:'Intern'})):{dShowView:false,dRows:[],dSorts:[]};
+    const disc=discBoard?Object.assign({dShowView:p==='view'},{dQs:discBoard.questions.map((q,i)=>({num:String(i+1),text:q.text,heading:discBoard.questions.length>1?'Question '+(i+1)+' of '+discBoard.questions.length:'Question',...this.discussion(discBoard,isFaculty?{name:facultyName,role:'Faculty'}:{name:me.name,role:'Intern'},q.id)}))}):{dShowView:false,dQs:[]};
     return Object.assign({
       showProtoHints:this.props.showProtoHints??true,
       facultyName, facultyInitials:initials(facultyName), studentName:me.name,
@@ -1356,7 +1528,9 @@ class Component extends DCLogic {
       promptPreview:ps.slice(0,6).map(x=>({order:String(x.order),title:x.title,media:mediaTypeLabel(x.mediaType),onClick:go({page:'view',ent:'prompt',id:x.id})})),
       mediaPreview:MEDIA_TABS.map(([k,l])=>({label:l,count:String(d[ENT[k].coll].length),onClick:go({page:'media',tab:k})})),
       isListPage:!!lists, lists:lists||[],
-      isCommentsTab:p==='feedback'&&!lists, fcCount:String(allC.length),
+      isCommentsTab:p==='feedback'&&fbTab==='comments', isDiscTab:p==='feedback'&&fbTab==='discussion',
+      dtRows, dtCount:String(dtRows.length)+' comments', dtExportCsv:()=>dtExport('csv'), dtExportXls:()=>dtExport('xls'),
+      dtSortTeam:dtSort('team'), dtSortRound:dtSort('round'), dtSortTime:dtSort('time'), dtTeamLbl:'Team'+dtArrow('team'), dtRoundLbl:'Round'+dtArrow('round'), dtTimeLbl:'Posted'+dtArrow('time'), fcCount:String(allC.length),
       fcFilters:[['all','All'],['unread','Unread']].map(([k,l])=>({label:l+(k==='unread'?' ('+uList.length+')':''),active:fcFilter===k,inactive:fcFilter!==k,onClick:go({page:'feedback',tab:'comments',filter:k})})),
       fcRows:(fcFilter==='unread'?uList:allC).map(cRow), fcEmptyUnread:fcFilter==='unread'&&!uList.length, fcEmptyAll:fcFilter==='all'&&!allC.length,
       unreadCount:String(uList.length), hasUnread:uList.length>0, noUnread:!uList.length,
@@ -1368,7 +1542,7 @@ class Component extends DCLogic {
       saveForm:()=>this.save(), cancelForm:()=>{ if(p==='edit') this.go({page:'view',ent:r.ent,id:r.id}); else this.go(listRoute(r.ent)); },
       askDelete:()=>this.setState({confirm:true}),
       isView:p==='view', viewRows, viewSections, showViewRows:!(p==='view'&&r.ent==='board'),
-      dBoardTitle:discBoard?discBoard.title:'', dBoardStarter:discBoard?discBoard.starter:'',
+      dBoardTitle:discBoard?discBoard.title:'', 
       isThread:p==='thread', threadIntern:tIntern?tIntern.name:'—', threadInternClick:go({page:'fbIntern',id:thread?thread.intern:''}),
       threadHasBoard:!!tBoard, threadBoard:tBoard?tBoard.title:'', threadBoardClick:tBoard?go({page:'view',ent:'board',id:tBoard.id}):null,
       threadPrompt:tPrompt?tPrompt.title:'—', threadPromptClick:tPrompt?go({page:'view',ent:'prompt',id:tPrompt.id}):null,
@@ -1386,17 +1560,18 @@ class Component extends DCLogic {
       sCurrentMeta:N?(waiting?'Prompt '+(sNextIdx+1)+' of '+N+' is locked. Your faculty will unlock it when you’re ready to continue.':sDone?'All '+N+' prompts completed. You can review any prompt.':'Prompt '+(sNextIdx+1)+' of '+N+' · '+mediaTypeLabel(ps[sNextIdx].mediaType)):'Your rotation will appear here once faculty add prompts.',
       sProgressPct:(N?Math.round(prog/N*100):0)+'%', sProgressText:prog+' of '+N+' prompts completed',
       continueLabel:(sDone||waiting)?'Review rotation':prog>0?'Continue':'Start rotation', continueRotation:openStep(sDone?0:Math.min(sNextIdx,lockIdx-1)), sCanContinue:lockIdx>0,
-      sSeq:ps.map((x,i)=>({num:String(i+1),title:x.title,type:mediaTypeLabel(x.mediaType),locked:i>=lockIdx,done:i<lockIdx&&i<prog,current:i<lockIdx&&i===prog,todo:i<lockIdx&&i>prog,onClick:i<lockIdx?openStep(i):null})),
+      sSeq:ps.map((x,i)=>({num:String(i+1),title:x.title,type:mediaTypeLabel(x.mediaType),locked:i>=lockIdx,done:i<lockIdx&&i<prog,current:i<lockIdx&&i===prog,todo:false,upcoming:i<lockIdx&&i>prog,noClick:!(i<=prog&&i<lockIdx),onClick:i<=prog&&i<lockIdx?openStep(i):null})),
       sEmpty:!N, sHasPrompts:N>0&&lockIdx>0, sAllLocked:N>0&&lockIdx===0,
-      steps:ps.map((x,i)=>({num:String(i+1),title:x.title,typeLabel:i>=lockIdx?'Locked':mediaTypeLabel(x.mediaType),lineDone:i<N-1&&i<prog&&i<lockIdx,lineTodo:i<N-1&&(i>=prog||i>=lockIdx),locked:i>=lockIdx,active:i===step&&i<lockIdx,done:i!==step&&i<prog&&i<lockIdx,todo:i!==step&&i>=prog&&i<lockIdx,onClick:i<lockIdx?()=>this.setState({step:i,quizError:''}):null})),
+      steps:ps.map((x,i)=>({num:String(i+1),title:x.title,typeLabel:i>=lockIdx?'Locked':mediaTypeLabel(x.mediaType),lineDone:i<N-1&&i<prog&&i<lockIdx,lineTodo:i<N-1&&(i>=prog||i>=lockIdx),locked:i>=lockIdx,active:i===step&&i<lockIdx,done:i!==step&&i<prog&&i<lockIdx,todo:i!==step&&i===prog&&i<lockIdx,upcoming:i>prog&&i<lockIdx,onClick:i<=prog&&i<lockIdx?()=>this.setState({step:i,quizError:''}):null})),
       nextLocked:step+1===lockIdx&&lockIdx<N, nextOpen:!(step+1===lockIdx&&lockIdx<N),
-      onNextLocked:()=>{ this.setStudentProgress(step+1); this.flash('The next prompt is locked by your faculty'); },
+      onNextLocked:()=>{ if(blockNext()) return; this.setStudentProgress(step+1); this.flash('The next prompt is locked by your faculty'); },
       stepLabel:N?'Prompt '+(step+1)+' of '+N:'',
       sOrder:String(step+1), sTitle:cur?cur.title:'', sText:cur?cur.text:'',
       mTypeLabel:m?mediaTypeLabel(mt):'Media', mFile:mt==='file', mUrl:mt==='url', mBoard:mt==='board', mQuiz:mt==='quiz', mNone:!m,
       mTitle:m?m.title:'', mDesc:m&&m.description?m.description:'', mFileName:mt==='file'?m.file:'', mExt:mt==='file'?m.file.split('.').pop().toUpperCase():'', mHref:mt==='url'?m.url:'',
-      onDownload:()=>this.flash('Download started (prototype)'),
-      mStarter:mt==='board'?m.starter:'',
+      hasReqs:reqVals.length>0, reqs:reqVals, onOpenLink:()=>{ if(cur) this.setState(st=>({opened:{...st.opened,[cur.id]:true}})); },
+      onDownload:()=>{ if(cur) this.setState(st=>({opened:{...st.opened,[cur.id]:true}})); this.flash('Download started (prototype)'); },
+      
       posts:mt==='board'?(m.posts||[]).map(x=>({...x,initials:initials(x.author)})):[],
       boardOpen:mt==='board'&&boardStatus(m)==='Open', boardClosed:mt==='board'&&boardStatus(m)!=='Open',
       replyText:s.reply||'', setReply:e=>this.setState({reply:e.target.value}),
@@ -1405,7 +1580,9 @@ class Component extends DCLogic {
       qItems, hasQuizError:!!s.quizError, quizError:s.quizError||'', submitQuiz:null, retakeQuiz:null,
       hasPrev:step>0, onPrev:()=>{ this.setState({step:step-1,quizError:''}); window.scrollTo(0,0); },
       nextLabel:step>=N-1?'Finish rotation':'Next prompt →',
-      onNext:()=>{ if(!N) return; this.setStudentProgress(step+1);
+      onNext:()=>{ if(!N) return;
+        if(blockNext()) return;
+        this.setStudentProgress(step+1);
         if(step<N-1){ this.setState({step:step+1,quizError:''}); window.scrollTo(0,0); }
         else { this.go({page:'studentHome'}); this.flash('Rotation complete'); } }
     }, quizVals, disc);
