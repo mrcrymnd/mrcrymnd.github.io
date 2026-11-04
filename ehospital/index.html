@@ -14,7 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 <style>:root{--bs-primary:#1D4F91;--bs-primary-rgb:29,79,145;--bs-primary-bg-subtle:#E4ECF7;--bs-primary-border-subtle:#C9D8EE;--bs-primary-text-emphasis:#163D72;--bs-link-color:#1D4F91;--bs-link-color-rgb:29,79,145;--bs-link-hover-color:#163D72;--bs-link-hover-color-rgb:22,61,114;
 --cuimc-navy:#1D4F91;--cuimc-navy-dark:#163D72;--cuimc-card-blue:#2058A2;--cuimc-accent:#0077C8;--cuimc-accent-dark:#005FA3;
---bs-body-font-family:'Montserrat',system-ui,sans-serif;--bs-body-color:#15232B;--bs-secondary-color:#5A6B75;--bs-border-color:#DCE3E7;--bs-focus-ring-color:rgba(29,79,145,.35);
+--bs-body-font-family:'Montserrat',system-ui,sans-serif;--bs-body-color:#15232B;--bs-secondary-color:#5A6B75;--bs-secondary:#5A6B75;--bs-secondary-rgb:90,107,117;--bs-border-color:#DCE3E7;--bs-focus-ring-color:rgba(29,79,145,.35);
 --bs-border-radius:2px;--bs-border-radius-sm:2px;--bs-border-radius-lg:2px;--bs-border-radius-xl:2px;--bs-border-radius-xxl:2px;--bs-border-radius-pill:2px;
 --bs-success:#1E7B4F;--bs-success-rgb:30,123,79;--bs-success-bg-subtle:#E3F3EA;--bs-success-border-subtle:#BFE0CE;--bs-success-text-emphasis:#1E7B4F;
 --bs-warning:#B26A00;--bs-warning-rgb:178,106,0;--bs-warning-bg-subtle:#FFF3D6;--bs-warning-border-subtle:#F2D9A0;--bs-warning-text-emphasis:#8A5200;
@@ -23,8 +23,10 @@
 --bs-form-invalid-color:#B42318;--bs-form-invalid-border-color:#B42318}
 body{background:#F4F6F7;-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4,h5,h6,.h1,.h2,.h3,.h4,.h5,.h6,.card-title{font-weight:700;line-height:1.2}
-a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
-.btn-link{font-weight:600}
+a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-decoration-thickness:2px}
+.btn-link{font-weight:600;text-decoration:underline}
+.form-control::placeholder{color:#5A6B75;opacity:1}
+@media (max-width:991.98px){.app-shell{flex-direction:column}.app-side{width:100%!important;height:auto!important;position:static!important}.app-side .nav{flex-direction:row!important;flex-wrap:wrap}.app-side .mt-auto{margin-top:12px!important}}
 .btn:focus-visible{box-shadow:0 0 0 .25rem rgba(29,79,145,.35)!important}
 .btn-primary{--bs-btn-bg:#1D4F91;--bs-btn-border-color:#1D4F91;--bs-btn-hover-bg:#163D72;--bs-btn-hover-border-color:#163D72;--bs-btn-active-bg:#122F59;--bs-btn-active-border-color:#122F59;--bs-btn-disabled-bg:#1D4F91;--bs-btn-disabled-border-color:#1D4F91;--bs-btn-focus-shadow-rgb:29,79,145}
 .btn-cta{--bs-btn-bg:#0077C8;--bs-btn-border-color:#0077C8;--bs-btn-color:#fff;--bs-btn-hover-bg:#005FA3;--bs-btn-hover-border-color:#005FA3;--bs-btn-hover-color:#fff;--bs-btn-active-bg:#004D85;--bs-btn-active-border-color:#004D85;--bs-btn-active-color:#fff;--bs-btn-font-weight:600;--bs-btn-focus-shadow-rgb:29,79,145;min-height:44px}
@@ -52,23 +54,24 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 .form-control:focus,.form-select:focus,.form-check-input:focus{border-color:#1D4F91;box-shadow:0 0 0 .25rem rgba(29,79,145,.35)}
 .form-check-input:checked{background-color:#1D4F91;border-color:#1D4F91}</style>
 </helmet>
-<div class="d-flex min-vh-100">
+<button type="button" class="visually-hidden-focusable btn btn-cta position-fixed top-0 start-0 m-2" style="z-index:3000" sc-camel-on-click="{{ skipToMain }}">Skip to main content</button>
+<div class="d-flex min-vh-100 app-shell">
 <sc-if value="{{ showSidebar }}" hint-placeholder-val="{{ false }}">
 <!-- TODO: replace with approved CUIMC lockup (placeholder "e" mark below and in the student top bar, landing and sign-in pages) -->
-<aside class="d-flex flex-column flex-shrink-0 p-3 sticky-top vh-100 text-white" style="width:240px;background:#1D4F91">
+<aside class="app-side d-flex flex-column flex-shrink-0 p-3 sticky-top vh-100 text-white" style="width:240px;background:#1D4F91">
 <button type="button" sc-camel-on-click="{{ goHome }}" class="btn d-flex align-items-center gap-2 px-2 border-0 text-white">
 <span class="bg-white rounded-2 d-inline-flex align-items-center justify-content-center fw-bold" style="width:36px;height:36px;font-size:12px;letter-spacing:-.02em;color:#B42318">R4R</span>
 <span class="fs-5 fw-bold">eHospital</span>
 </button>
 <div class="fw-semibold text-uppercase px-3 pt-4 pb-2" style="letter-spacing:.08em;font-size:12px;color:rgba(255,255,255,.8)">Faculty</div>
-<ul class="nav nav-pills nav-dark flex-column gap-1">
+<nav aria-label="Faculty"><ul class="nav nav-pills nav-dark flex-column gap-1">
 <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
 <li class="nav-item">
-<sc-if value="{{ n.active }}"><button type="button" sc-camel-on-click="{{ n.onClick }}" class="nav-link active w-100 text-start fw-semibold d-flex align-items-center gap-2">{{ n.label }}<sc-if value="{{ n.hasBadge }}"><span class="badge bg-danger ms-auto" aria-label="{{ n.badgeLabel }}">{{ n.badge }}</span></sc-if></button></sc-if>
+<sc-if value="{{ n.active }}"><button type="button" sc-camel-on-click="{{ n.onClick }}" aria-current="page" class="nav-link active w-100 text-start fw-semibold d-flex align-items-center gap-2">{{ n.label }}<sc-if value="{{ n.hasBadge }}"><span class="badge bg-danger ms-auto" aria-label="{{ n.badgeLabel }}">{{ n.badge }}</span></sc-if></button></sc-if>
 <sc-if value="{{ n.inactive }}"><button type="button" sc-camel-on-click="{{ n.onClick }}" class="nav-link w-100 text-start d-flex align-items-center gap-2">{{ n.label }}<sc-if value="{{ n.hasBadge }}"><span class="badge bg-danger ms-auto" aria-label="{{ n.badgeLabel }}">{{ n.badge }}</span></sc-if></button></sc-if>
 </li>
 </sc-for>
-</ul>
+</ul></nav>
 <div class="mt-auto d-flex align-items-center gap-2 pt-3" style="border-top:1px solid rgba(255,255,255,.25)">
 <span class="rounded-circle bg-white text-primary d-inline-flex align-items-center justify-content-center fw-bold small flex-shrink-0" style="width:34px;height:34px">{{ facultyInitials }}</span>
 <div class="flex-grow-1" style="min-width:0">
@@ -81,7 +84,7 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 
 <div class="flex-grow-1 d-flex flex-column" style="min-width:0">
 <sc-if value="{{ showTopbar }}" hint-placeholder-val="{{ false }}">
-<nav class="navbar navbar-expand px-3 px-lg-4 text-white" style="background:#1D4F91">
+<nav aria-label="Student" class="navbar navbar-expand px-3 px-lg-4 text-white" style="background:#1D4F91">
 <div class="container-fluid gap-3 flex-wrap">
 <button type="button" sc-camel-on-click="{{ goHome }}" class="navbar-brand btn d-flex align-items-center gap-2 border-0 p-0 text-white">
 <span class="bg-white rounded-2 d-inline-flex align-items-center justify-content-center fw-bold" style="width:34px;height:34px;font-size:12px;letter-spacing:-.02em;color:#B42318">R4R</span>
@@ -90,7 +93,7 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 <ul class="nav nav-pills nav-dark me-auto gap-1">
 <sc-for list="{{ studentNav }}" as="n" hint-placeholder-count="3">
 <li class="nav-item">
-<sc-if value="{{ n.active }}"><button type="button" sc-camel-on-click="{{ n.onClick }}" class="nav-link active">{{ n.label }}</button></sc-if>
+<sc-if value="{{ n.active }}"><button type="button" sc-camel-on-click="{{ n.onClick }}" aria-current="page" class="nav-link active">{{ n.label }}</button></sc-if>
 <sc-if value="{{ n.inactive }}"><button type="button" sc-camel-on-click="{{ n.onClick }}" class="nav-link">{{ n.label }}</button></sc-if>
 </li>
 </sc-for>
@@ -152,7 +155,7 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 </sc-if>
 
 <sc-if value="{{ inApp }}" hint-placeholder-val="{{ false }}">
-<main class="container-fluid px-4 px-lg-5 py-4 py-lg-5" style="max-width:1180px;margin-left:0">
+<main id="main-content" tabindex="-1" class="container-fluid px-4 px-lg-5 py-4 py-lg-5" style="max-width:1180px;margin-left:0;outline:none">
 
 <sc-if value="{{ hasSoloCrumbs }}">
 <nav aria-label="breadcrumb">
@@ -188,7 +191,7 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 <ul class="nav nav-tabs mt-4">
 <sc-for list="{{ tabs }}" as="t">
 <li class="nav-item">
-<sc-if value="{{ t.active }}"><button type="button" sc-camel-on-click="{{ t.onClick }}" class="nav-link active fw-semibold d-flex align-items-center gap-2">{{ t.label }}<span class="badge text-bg-primary">{{ t.count }}</span></button></sc-if>
+<sc-if value="{{ t.active }}"><button type="button" sc-camel-on-click="{{ t.onClick }}" aria-current="page" class="nav-link active fw-semibold d-flex align-items-center gap-2">{{ t.label }}<span class="badge text-bg-primary">{{ t.count }}</span></button></sc-if>
 <sc-if value="{{ t.inactive }}"><button type="button" sc-camel-on-click="{{ t.onClick }}" class="nav-link d-flex align-items-center gap-2">{{ t.label }}<span class="badge bg-secondary-subtle text-secondary-emphasis">{{ t.count }}</span></button></sc-if>
 </li>
 </sc-for>
@@ -208,12 +211,12 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 <div class="col-md-4">
 <div class="card h-100" style="background:{{ h.tint }};border-color:{{ h.line }};border-top:4px solid {{ h.bg }}">
 <div class="card-body d-flex flex-column p-4">
-<h2 class="h5 card-title mb-3" style="color:{{ h.bg }}">{{ h.title }}</h2>
+<h2 class="h5 card-title mb-3" style="color:{{ h.fg }}">{{ h.title }}</h2>
 <p class="card-text small mb-0" style="color:#2C3B43">{{ h.desc }}</p>
 </div>
 <div class="card-footer bg-transparent d-flex justify-content-between align-items-center px-4 py-3" style="border-top:1px solid {{ h.line }}">
 <span class="small" style="color:#3A4A53">{{ h.stat }}</span>
-<button type="button" sc-camel-on-click="{{ h.onClick }}" class="btn btn-link btn-sm p-0 stretched-link text-nowrap" style="color:{{ h.bg }}">Open →</button>
+<button type="button" sc-camel-on-click="{{ h.onClick }}" class="btn btn-link btn-sm p-0 stretched-link text-nowrap" style="color:{{ h.fg }}">Open →</button>
 </div>
 </div>
 </div>
@@ -272,7 +275,7 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 <div class="small fw-semibold text-uppercase text-primary mb-2" style="letter-spacing:.08em">Continue your rotation</div>
 <h2 class="h4 card-title card-title--accent mb-3">{{ sCurrentTitle }}</h2>
 <p class="small mb-4" style="color:#3A4A53">{{ sCurrentMeta }}</p>
-<div class="progress" role="progressbar" style="height:8px;background:#FFFFFF"><div class="progress-bar" style="width:{{ sProgressPct }}"></div></div>
+<div class="progress" role="progressbar" aria-label="Rotation progress" aria-valuenow="{{ sProgressNum }}" aria-valuemin="0" aria-valuemax="100" style="height:8px;background:#FFFFFF"><div class="progress-bar" style="width:{{ sProgressPct }}"></div></div>
 <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap mt-3">
 <span class="small" style="color:#3A4A53">{{ sProgressText }}</span>
 <sc-if value="{{ sCanContinue }}"><button type="button" sc-camel-on-click="{{ continueRotation }}" class="btn btn-cta">{{ continueLabel }}</button></sc-if>
@@ -471,7 +474,7 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 <sc-if value="{{ quizOpen }}">
 <div class="d-flex align-items-center gap-3 flex-wrap">
 <button type="button" sc-camel-on-click="{{ submitQuiz }}" class="btn btn-primary">Submit quiz</button>
-<sc-if value="{{ hasQuizError }}"><span class="small text-danger fw-medium">{{ quizError }}</span></sc-if>
+<sc-if value="{{ hasQuizError }}"><span role="alert" class="small text-danger fw-medium">{{ quizError }}</span></sc-if>
 </div>
 </sc-if>
 <sc-if value="{{ quizPassed }}"><div class="alert alert-success d-flex justify-content-between align-items-center gap-2 flex-wrap mb-0"><span class="fw-semibold">✓ {{ quizResultText }}</span><button type="button" sc-camel-on-click="{{ retakeQuiz }}" class="btn btn-sm btn-outline-success">Retake</button></div></sc-if>
@@ -561,6 +564,60 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 </div>
 </sc-if>
 
+<sc-if value="{{ isInsights }}">
+<div class="d-flex justify-content-between align-items-center gap-3 flex-wrap mb-4">
+<div class="small text-secondary">{{ insScope }}</div>
+<div class="d-flex align-items-center gap-2"><label class="small fw-semibold" for="ins-team">Team</label>
+<sc-raw-select id="ins-team" value="{{ insTeam }}" sc-camel-on-change="{{ onInsTeam }}" class="form-select form-select-sm" style="width:auto"><option value="">All teams</option><sc-for list="{{ insTeams }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select></div>
+</div>
+<sc-for list="{{ insSections }}" as="sec">
+<section class="mb-5">
+<h2 class="h5 fw-bold mb-1">{{ sec.title }}</h2>
+<p class="small text-secondary mb-3">{{ sec.sub }}</p>
+<div class="row g-3 mb-3">
+<sc-for list="{{ sec.kpis }}" as="k">
+<div class="col-sm-6 col-xl-3"><div class="card h-100"><div class="card-body">
+<div class="small fw-semibold text-secondary mb-1">{{ k.label }}</div>
+<div class="display-6 fw-bold" style="color:{{ k.color }}">{{ k.value }}</div>
+<div class="small text-secondary">{{ k.note }}</div>
+</div></div></div>
+</sc-for>
+</div>
+<sc-for list="{{ sec.tables }}" as="t">
+<div class="card mb-3">
+<div class="card-header bg-white py-3"><h3 class="h6 fw-bold mb-0">{{ t.title }}</h3></div>
+<div class="table-responsive">
+<sc-raw-table class="table table-hover align-middle mb-0">
+<sc-raw-thead class="table-light"><sc-raw-tr>
+<sc-for list="{{ t.cols }}" as="col"><sc-raw-th scope="col" class="small text-uppercase text-secondary fw-semibold text-nowrap px-3" style="font-size:12px;letter-spacing:.06em">{{ col }}</sc-raw-th></sc-for>
+</sc-raw-tr></sc-raw-thead>
+<sc-raw-tbody>
+<sc-for list="{{ t.rows }}" as="row">
+<sc-raw-tr sc-camel-on-click="{{ row.onClick }}" style="cursor:{{ row.cur }}">
+<sc-for list="{{ row.cells }}" as="cell"><sc-raw-td class="px-3 py-3">
+<sc-if value="{{ cell.link }}"><button type="button" sc-camel-on-click="{{ cell.onOpen }}" class="btn btn-link p-0 fw-semibold text-start">{{ cell.text }}</button></sc-if>
+<sc-if value="{{ cell.strong }}"><span class="fw-semibold">{{ cell.text }}</span></sc-if>
+<sc-if value="{{ cell.plain }}"><span>{{ cell.text }}</span></sc-if>
+<sc-if value="{{ cell.hasBar }}"><div class="d-flex align-items-center gap-2" style="min-width:170px"><div class="progress flex-grow-1" role="progressbar" aria-label="{{ cell.text }}" aria-valuenow="{{ cell.pctNum }}" aria-valuemin="0" aria-valuemax="100" style="height:8px"><div class="progress-bar" style="width:{{ cell.pct }}"></div></div><span class="small text-nowrap">{{ cell.text }}</span></div></sc-if>
+</sc-raw-td></sc-for>
+</sc-raw-tr>
+</sc-for>
+</sc-raw-tbody>
+</sc-raw-table>
+</div>
+<sc-if value="{{ t.isEmpty }}"><div class="card-body text-center text-secondary py-4">{{ t.emptyText }}</div></sc-if>
+</div>
+</sc-for>
+</section>
+</sc-for>
+<div class="card">
+<div class="card-header bg-white py-3"><h2 class="h6 fw-bold mb-0">How these are measured</h2></div>
+<div class="list-group list-group-flush">
+<sc-for list="{{ insDefs }}" as="df"><div class="list-group-item py-3"><div class="row g-2"><div class="col-md-3 fw-semibold small">{{ df.term }}</div><div class="col-md-9 small text-secondary">{{ df.def }}</div></div></div></sc-for>
+</div>
+</div>
+</sc-if>
+
 <sc-if value="{{ isDiscTab }}">
 <div class="card">
 <div class="card-header bg-white d-flex justify-content-between align-items-center gap-2 flex-wrap py-3">
@@ -625,6 +682,7 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 <sc-raw-tr sc-camel-on-click="{{ row.onClick }}" draggable="{{ row.draggable }}" sc-camel-on-drag-start="{{ row.onDragStart }}" sc-camel-on-drag-over="{{ row.onDragOver }}" sc-camel-on-drop="{{ row.onDrop }}" sc-camel-on-drag-end="{{ row.onDragEnd }}" style="cursor:pointer;{{ row.trCss }}">
 <sc-if value="{{ l.sortable }}"><sc-raw-td class="px-3 py-3 text-nowrap"><span aria-hidden="true" title="Drag to reorder" class="text-secondary" style="cursor:grab;font-size:18px;letter-spacing:-3px">⋮⋮</span><button type="button" sc-camel-on-click="{{ row.onUp }}" disabled="{{ row.upDisabled }}" aria-label="Move up" class="btn btn-light btn-sm border py-0 px-2 ms-2">↑</button><button type="button" sc-camel-on-click="{{ row.onDown }}" disabled="{{ row.downDisabled }}" aria-label="Move down" class="btn btn-light btn-sm border py-0 px-2 ms-1">↓</button></sc-raw-td></sc-if>
 <sc-for list="{{ row.cells }}" as="cell"><sc-raw-td class="px-3 py-3">
+<sc-if value="{{ cell.link }}"><button type="button" sc-camel-on-click="{{ cell.onOpen }}" class="btn btn-link p-0 fw-semibold text-start">{{ cell.text }}</button></sc-if>
 <sc-if value="{{ cell.strong }}"><span class="fw-semibold">{{ cell.text }}</span></sc-if>
 <sc-if value="{{ cell.plain }}"><span>{{ cell.text }}</span></sc-if>
 </sc-raw-td></sc-for>
@@ -644,13 +702,13 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 <div class="card-body p-4">
 <sc-for list="{{ formFields }}" as="f" hint-placeholder-count="4">
 <div class="mb-4">
-<label class="form-label fw-semibold small">{{ f.label }}<sc-if value="{{ f.required }}"><span class="text-danger"> *</span></sc-if></label>
-<sc-if value="{{ f.isInput }}"><input type="{{ f.inputType }}" value="{{ f.value }}" sc-camel-on-change="{{ f.onChange }}" placeholder="{{ f.placeholder }}" class="form-control"></sc-if>
-<sc-if value="{{ f.isTextarea }}"><textarea rows="4" value="{{ f.value }}" sc-camel-on-change="{{ f.onChange }}" placeholder="{{ f.placeholder }}" class="form-control"></textarea></sc-if>
-<sc-if value="{{ f.isSelect }}"><sc-raw-select value="{{ f.value }}" sc-camel-on-change="{{ f.onChange }}" class="form-select"><option value="">Select…</option><sc-for list="{{ f.options }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select></sc-if>
+<label id="{{ f.lid }}" for="{{ f.fid }}" class="form-label fw-semibold small">{{ f.label }}<sc-if value="{{ f.required }}"><span class="text-danger"> *</span></sc-if></label>
+<sc-if value="{{ f.isInput }}"><input id="{{ f.fid }}" aria-invalid="{{ f.hasError }}" aria-describedby="{{ f.dby }}" autocomplete="off" type="{{ f.inputType }}" value="{{ f.value }}" sc-camel-on-change="{{ f.onChange }}" placeholder="{{ f.placeholder }}" class="form-control"></sc-if>
+<sc-if value="{{ f.isTextarea }}"><textarea id="{{ f.fid }}" aria-invalid="{{ f.hasError }}" aria-describedby="{{ f.dby }}" rows="4" value="{{ f.value }}" sc-camel-on-change="{{ f.onChange }}" placeholder="{{ f.placeholder }}" class="form-control"></textarea></sc-if>
+<sc-if value="{{ f.isSelect }}"><sc-raw-select id="{{ f.fid }}" aria-invalid="{{ f.hasError }}" aria-describedby="{{ f.dby }}" value="{{ f.value }}" sc-camel-on-change="{{ f.onChange }}" class="form-select"><option value="">Select…</option><sc-for list="{{ f.options }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select></sc-if>
 <sc-if value="{{ f.isMediaPick }}"><div class="row g-2">
-<div class="col-sm-6"><sc-raw-select value="{{ f.typeValue }}" sc-camel-on-change="{{ f.onType }}" class="form-select"><option value="">No media</option><sc-for list="{{ f.typeOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select></div>
-<sc-if value="{{ f.hasType }}"><div class="col-sm-6"><sc-raw-select value="{{ f.itemValue }}" sc-camel-on-change="{{ f.onItem }}" class="form-select"><option value="">Select item…</option><sc-for list="{{ f.itemOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select></div></sc-if>
+<div class="col-sm-6"><sc-raw-select id="{{ f.fid }}" aria-invalid="{{ f.hasError }}" aria-describedby="{{ f.dby }}" value="{{ f.typeValue }}" sc-camel-on-change="{{ f.onType }}" class="form-select"><option value="">No media</option><sc-for list="{{ f.typeOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select></div>
+<sc-if value="{{ f.hasType }}"><div class="col-sm-6"><sc-raw-select aria-label="Attached item" aria-invalid="{{ f.hasError }}" aria-describedby="{{ f.dby }}" value="{{ f.itemValue }}" sc-camel-on-change="{{ f.onItem }}" class="form-select"><option value="">Select item…</option><sc-for list="{{ f.itemOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select></div></sc-if>
 </div>
 <sc-if value="{{ f.creating }}">
 <div class="border rounded p-3 mt-2 bg-body-tertiary d-flex flex-column gap-2">
@@ -662,7 +720,7 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 </sc-if>
 </sc-if>
 <sc-if value="{{ f.isReqs }}">
-<div class="border rounded p-3 bg-body-tertiary">
+<div role="group" aria-labelledby="{{ f.lid }}" class="border rounded p-3 bg-body-tertiary">
 <sc-if value="{{ f.showNone }}"><div class="small text-secondary">Attach a file, link, round or quiz above to set what students must do before moving on.</div></sc-if>
 <sc-if value="{{ f.showQuiz }}"><div class="small">Students must pass the quiz to continue. The passing score is set on the quiz itself.</div></sc-if>
 <sc-if value="{{ f.showOpen }}"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch" id="req-open" checked="{{ f.reqOpenOn }}" sc-camel-on-change="{{ f.onReqOpen }}"><label class="form-check-label small" for="req-open">Students must {{ f.openVerb }} before continuing</label></div></sc-if>
@@ -672,7 +730,7 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 </div></sc-if>
 </div>
 </sc-if>
-<sc-if value="{{ f.isRoundQs }}"><div class="d-flex flex-column gap-3">
+<sc-if value="{{ f.isRoundQs }}"><div role="group" aria-labelledby="{{ f.lid }}" class="d-flex flex-column gap-3">
 <sc-for list="{{ f.rqs }}" as="q">
 <div class="card bg-body-tertiary"><div class="card-body d-flex flex-column gap-2">
 <div class="d-flex justify-content-between align-items-center"><span class="small fw-bold text-uppercase text-secondary" style="font-size:12px;letter-spacing:.06em">Question {{ q.num }}</span><sc-if value="{{ q.canRemove }}"><button type="button" sc-camel-on-click="{{ q.onRemove }}" class="btn btn-link btn-sm text-danger p-0">Remove</button></sc-if></div>
@@ -681,21 +739,21 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 </sc-for>
 <button type="button" sc-camel-on-click="{{ f.onAddRQ }}" class="btn btn-outline-primary" style="border-style:dashed">+ Add question</button>
 </div></sc-if>
-<sc-if value="{{ f.isQuestions }}"><div class="d-flex flex-column gap-3">
+<sc-if value="{{ f.isQuestions }}"><div role="group" aria-labelledby="{{ f.lid }}" class="d-flex flex-column gap-3">
 <sc-for list="{{ f.qs }}" as="q">
 <div class="card bg-body-tertiary"><div class="card-body d-flex flex-column gap-2">
 <div class="d-flex justify-content-between align-items-center"><span class="small fw-bold text-uppercase text-secondary" style="font-size:12px;letter-spacing:.06em">Question {{ q.num }}</span><sc-if value="{{ q.canRemove }}"><button type="button" sc-camel-on-click="{{ q.onRemove }}" class="btn btn-link btn-sm text-danger p-0">Remove</button></sc-if></div>
-<input value="{{ q.text }}" sc-camel-on-change="{{ q.onText }}" placeholder="Question text" class="form-control">
+<input value="{{ q.text }}" sc-camel-on-change="{{ q.onText }}" placeholder="Question text" aria-label="Question {{ q.num }} text" class="form-control">
 <sc-for list="{{ q.opts }}" as="o"><div class="input-group input-group-sm">
 <sc-if value="{{ o.isCorrect }}"><button type="button" sc-camel-on-click="{{ o.onMark }}" title="Correct answer" class="btn btn-success" style="width:38px">✓</button></sc-if>
 <sc-if value="{{ o.notCorrect }}"><button type="button" sc-camel-on-click="{{ o.onMark }}" title="Mark as correct answer" class="btn btn-outline-secondary bg-white" style="width:38px">{{ o.letter }}</button></sc-if>
-<input value="{{ o.value }}" sc-camel-on-change="{{ o.onChange }}" placeholder="Option {{ o.letter }}" class="form-control">
+<input value="{{ o.value }}" sc-camel-on-change="{{ o.onChange }}" placeholder="Option {{ o.letter }}" aria-label="Option {{ o.letter }}" class="form-control">
 </div></sc-for>
 </div></div>
 </sc-for>
 <button type="button" sc-camel-on-click="{{ f.onAddQ }}" class="btn btn-outline-primary" style="border-style:dashed">+ Add question</button>
 </div></sc-if>
-<sc-if value="{{ f.isMulti }}"><div class="d-flex flex-wrap gap-2">
+<sc-if value="{{ f.isMulti }}"><div role="group" aria-labelledby="{{ f.lid }}" class="d-flex flex-wrap gap-2">
 <sc-for list="{{ f.chips }}" as="o">
 <sc-if value="{{ o.selected }}"><button type="button" sc-camel-on-click="{{ o.onToggle }}" class="btn btn-sm btn-primary">✓ {{ o.label }}</button></sc-if>
 <sc-if value="{{ o.unselected }}"><button type="button" sc-camel-on-click="{{ o.onToggle }}" class="btn btn-sm btn-outline-secondary">{{ o.label }}</button></sc-if>
@@ -709,8 +767,8 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 <input class="form-check-input" type="checkbox" role="switch" id="field-switch" checked="{{ f.on }}" sc-camel-on-change="{{ f.onToggle }}">
 <label class="form-check-label" for="field-switch">{{ f.toggleText }}</label>
 </div></sc-if>
-<sc-if value="{{ f.hasHint }}"><div class="form-text">{{ f.hint }}</div></sc-if>
-<sc-if value="{{ f.hasError }}"><div class="invalid-feedback d-flex align-items-center gap-1 fw-medium"><span class="rounded-circle bg-danger text-white d-inline-flex align-items-center justify-content-center fw-bold flex-shrink-0" style="width:16px;height:16px;font-size:12px">!</span>{{ f.error }}</div></sc-if>
+<sc-if value="{{ f.hasHint }}"><div id="{{ f.hid }}" class="form-text">{{ f.hint }}</div></sc-if>
+<sc-if value="{{ f.hasError }}"><div id="{{ f.eid }}" role="alert" class="invalid-feedback d-flex align-items-center gap-1 fw-medium"><span class="rounded-circle bg-danger text-white d-inline-flex align-items-center justify-content-center fw-bold flex-shrink-0" style="width:16px;height:16px;font-size:12px">!</span>{{ f.error }}</div></sc-if>
 </div>
 </sc-for>
 </div>
@@ -886,10 +944,10 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 
 <sc-if value="{{ confirmOpen }}" hint-placeholder-val="{{ false }}">
 <div class="modal-backdrop fade show"></div>
-<div class="modal fade show d-block" tabindex="-1" role="dialog" sc-camel-on-click="{{ cancelDelete }}">
-<div class="modal-dialog modal-dialog-centered" sc-camel-on-click="{{ stop }}">
+<div class="modal fade show d-block" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="del-title" sc-camel-on-click="{{ cancelDelete }}">
+<div id="del-dialog" tabindex="-1" style="outline:none" class="modal-dialog modal-dialog-centered" sc-camel-on-click="{{ stop }}">
 <div class="modal-content">
-<div class="modal-header"><h2 class="modal-title h5 fw-bold">{{ confirmTitle }}</h2><button type="button" class="btn-close" aria-label="Close" sc-camel-on-click="{{ cancelDelete }}"></button></div>
+<div class="modal-header"><h2 id="del-title" class="modal-title h5 fw-bold">{{ confirmTitle }}</h2><button type="button" class="btn-close" aria-label="Close" sc-camel-on-click="{{ cancelDelete }}"></button></div>
 <div class="modal-body"><p class="mb-0">{{ confirmText }}</p></div>
 <div class="modal-footer">
 <button type="button" sc-camel-on-click="{{ cancelDelete }}" class="btn btn-outline-secondary">Cancel</button>
@@ -900,11 +958,13 @@ a{font-weight:600;text-decoration:none}a:hover{text-decoration:underline}
 </div>
 </sc-if>
 
+<div class="position-fixed bottom-0 start-50 translate-middle-x mb-4" style="z-index:1090" role="status" aria-live="polite" aria-atomic="true">
 <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
-<div class="toast show align-items-center text-bg-dark border-0 position-fixed bottom-0 start-50 translate-middle-x mb-4" role="status" style="z-index:1090;width:auto">
+<div class="toast show align-items-center text-bg-dark border-0" style="width:auto">
 <div class="toast-body fw-medium px-3">{{ toast }}</div>
 </div>
 </sc-if>
+</div>
 </x-dc>
 <script type="text/x-dc" data-dc-script="" data-props="{&quot;facultyName&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Dr. Trudi Cloyd&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
 const KEY = 'ehospital-proto-v7';
@@ -1116,6 +1176,9 @@ const reqText = (d,p) => { const bd=p.mediaType==='board'?(d.boards||[]).find(x=
   if(p.mediaType==='url') return p.reqOpen?'Must open the link':'None';
   if(p.mediaType==='quiz') return 'Pass the quiz';
   return 'None'; };
+const INS_QUIZ = {q1:{attempts:34,passed:27,avg:82},q2:{attempts:30,passed:28,avg:88}};
+const median = a => { if(!a.length) return null; const s=[...a].sort((x,y)=>x-y), m=Math.floor(s.length/2); return s.length%2?s[m]:(s[m-1]+s[m])/2; };
+const fmtDur = hrs => hrs==null?'—':hrs<1?Math.max(1,Math.round(hrs*60))+' min':hrs<48?(Math.round(hrs*10)/10)+' hrs':(Math.round(hrs/24*10)/10)+' days';
 const blankQ = () => ({text:'',options:['','','',''],correct:0});
 const THREAD_BOARD = {h1:'b1',h2:'b2',h3:'b1',h4:'b1',h5:'b2'};
 const fmtTs = ts => { const d=new Date(ts); return isNaN(d)?'':d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}); };
@@ -1198,13 +1261,22 @@ class Component extends DCLogic {
     if(saved&&saved.draft&&LEGACY_ROT[saved.draft.rotation]) saved.draft={...saved.draft,rotation:LEGACY_ROT[saved.draft.rotation]};
     this.state = Object.assign({journeyReset:1,commentsMerged:1,demoUnread:1,role:null,route:{page:'landing'},data:normData(mergeIn(SEED)),draft:null,errors:{},confirm:false,toast:null,loginRole:null,login:{email:'',password:''},step:0,quiz:{},reply:'',quizError:'',votes:{},dSort:'oldest',dDraft:'',replyTo:null,replyDraft:'',dFocus:null,hl:null,scrollTo:null,dDrafts:{},opened:{},reqTry:null,dragId:null,dragOver:null}, saved||{}, {collapsed,scrollTo:null});
   }
-  componentDidUpdate(){
+  componentDidMount(){ this._setTitle(); }
+  _setTitle(){ const t=this._docTitle; if(t&&document.title!==t+' – eHospital') document.title=t+' – eHospital'; }
+  _mkKey(){ return e=>{ if(e.key==='Escape'){ this.setState({confirm:false}); return; } if(e.key==='Tab'){ const d=document.getElementById('del-dialog'); if(!d) return; const f=[...d.querySelectorAll('button,[href],input,select,textarea')].filter(x=>!x.disabled); if(!f.length) return; const first=f[0], last=f[f.length-1], cur=document.activeElement; if(e.shiftKey&&(cur===first||cur===d)){ e.preventDefault(); last.focus(); } else if(!e.shiftKey&&(cur===last||!d.contains(cur))){ e.preventDefault(); first.focus(); } } }; }
+  componentDidUpdate(pp,ps){
+    this._setTitle();
+    const ra=ps&&ps.route, rb=this.state.route;
+    if(ra&&(ra.page!==rb.page||ra.ent!==rb.ent||ra.id!==rb.id)&&!this.state.scrollTo) setTimeout(()=>{ const m=document.getElementById('main-content'); if(m) m.focus({preventScroll:true}); },80);
+    const was=!!(ps&&ps.confirm), now=!!this.state.confirm;
+    if(now&&!was){ this._prevFocus=document.activeElement; this._dlgKey=this._dlgKey||this._mkKey(); document.addEventListener('keydown',this._dlgKey); setTimeout(()=>{ const d=document.getElementById('del-dialog'); if(d) d.focus(); },40); }
+    if(!now&&was){ if(this._dlgKey) document.removeEventListener('keydown',this._dlgKey); const pf=this._prevFocus; if(pf&&pf.isConnected&&pf.focus) pf.focus(); }
     const {role,route,data,draft,loginRole,step,quiz,votes,dSort,collapsed,journeyReset,commentsMerged,demoUnread,opened}=this.state;
     try{ localStorage.setItem(KEY, JSON.stringify({role,route,data,draft,loginRole,step,quiz,votes,dSort,journeyReset,commentsMerged,demoUnread,opened})); sessionStorage.setItem(KEY+'-collapsed', JSON.stringify(collapsed||{})); }catch(e){}
     if(this.state.scrollTo){ const id=this.state.scrollTo; this.setState({scrollTo:null}); setTimeout(()=>{ const el=document.getElementById('cm-'+id); if(el) window.scrollTo({top:el.getBoundingClientRect().top+window.scrollY-120,behavior:'smooth'}); },80); }
   }
   go(route){ this.setState({route,errors:{},confirm:false,draft:null,quizError:'',replyTo:null,dFocus:null,hl:null}); window.scrollTo(0,0); }
-  flash(msg){ this.setState({toast:msg}); clearTimeout(this._t); this._t=setTimeout(()=>this.setState({toast:null}),2600); }
+  flash(msg){ this.setState({toast:msg}); clearTimeout(this._t); this._t=setTimeout(()=>this.setState({toast:null}),6000); }
   withVirtual(k,item){ const d=this.state.data; const o={...item}; if(k==='board') o.questions=JSON.parse(JSON.stringify(item.questions||[])); if(k==='team') o.members=d.interns.filter(i=>i.team===item.id).map(i=>i.id);
     if(k==='quiz') o.questions=JSON.parse(JSON.stringify(item.questions||[]));
     for(const key in o) if(typeof o[key]==='number') o[key]=String(o[key]); return o; }
@@ -1212,6 +1284,7 @@ class Component extends DCLogic {
   openEdit(k,id){ const it=this.state.data[ENT[k].coll].find(x=>x.id===id); this.setState({route:{page:'edit',ent:k,id},draft:this.withVirtual(k,it),errors:{},confirm:false}); window.scrollTo(0,0); }
   setDraft(obj,errKey){ this.setState(s=>({draft:{...s.draft,...obj},errors:{...s.errors,[errKey]:null}})); }
   updateRQs(fn){ this.setState(s=>({draft:{...s.draft,questions:fn((s.draft.questions||[]).map(q=>({...q})))},errors:{...s.errors,questions:null}})); }
+  goHome_(x){ if(x&&x.round) return ()=>this.go({page:'view',ent:'board',id:x.round}); if(x&&x.id) return ()=>this.go({page:'view',ent:'intern',id:x.id}); return null; }
   setPromptOrder(ids){ this.setState(s=>({data:{...s.data,prompts:s.data.prompts.map(p=>({...p,order:ids.indexOf(p.id)+1}))}})); }
   movePrompt(id,dir){ const ids=sortedPrompts(this.state.data).map(p=>p.id); const i=ids.indexOf(id), j=i+dir; if(j<0||j>=ids.length) return; [ids[i],ids[j]]=[ids[j],ids[i]]; this.setPromptOrder(ids); this.flash('Prompt moved to position '+(j+1)); }
   dropPrompt(targetId){ const from=this.state.dragId; this.setState({dragId:null,dragOver:null}); if(!from||from===targetId) return; const orig=sortedPrompts(this.state.data).map(p=>p.id); const ids=[...orig]; const to=orig.indexOf(targetId); ids.splice(ids.indexOf(from),1); ids.splice(to,0,from); this.setPromptOrder(ids); this.flash('Prompt moved to position '+(to+1)); }
@@ -1312,7 +1385,7 @@ class Component extends DCLogic {
     const go=route=>()=>this.go(route);
     const isFaculty=s.role==='faculty';
     if(p==='thread'){ r={page:'feedback',tab:'comments'}; p='feedback'; }
-    const appPages=['facultyHome','studentHome','studentRotation','about','interns','rotation','prompts','media','feedback','add','view','edit','thread','fbIntern','fbKeyword'];
+    const appPages=['insights','facultyHome','studentHome','studentRotation','about','interns','rotation','prompts','media','feedback','add','view','edit','thread','fbIntern','fbKeyword'];
     const inApp=!!s.role&&appPages.includes(p);
     const sec=(()=>{ if(p==='interns'||(['add','view','edit'].includes(p)&&(r.ent==='team'||r.ent==='intern'||r.ent==='faculty'))) return 'interns';
       if(['rotation','prompts','media','add','view','edit'].includes(p)) return 'rotation';
@@ -1320,7 +1393,7 @@ class Component extends DCLogic {
     const uList=unreadPosts(d), uSet=new Set(uList.map(x=>x.c.id)), allC=allComments(d);
     const cRow=({b,c,parent})=>({author:c.author,initials:initials(c.author),context:parent?'replied to '+parent.author:'posted a new comment',board:b.title,snippet:snippet(c.text),time:fmtTs(c.ts),isNew:uSet.has(c.id),onView:()=>this.openPost(b.id,c.id),onMarkRead:()=>this.markRead([c.id])});
     const cLink=x=>({title:snippet(x.c.text),meta:x.c.author+' · '+(x.parent?'replied to '+x.parent.author:'new comment')+' · '+x.b.title,date:fmtTs(x.c.ts),onClick:()=>this.openPost(x.b.id,x.c.id)});
-    const nav=[['home','Dashboard',{page:'facultyHome'}],['interns','Members',{page:'interns'}],['rotation','Rotation',{page:'rotation'}],['feedback','Feedback',{page:'feedback',tab:'comments',filter:uList.length?'unread':'all'}],['about','About eHospital',{page:'about'}]]
+    const nav=[['home','Dashboard',{page:'facultyHome'}],['interns','Members',{page:'interns'}],['rotation','Rotation',{page:'rotation'}],['feedback','Feedback',{page:'feedback',tab:'comments',filter:uList.length?'unread':'all'}],['insights','Insights',{page:'insights'}],['about','About eHospital',{page:'about'}]]
       .map(([k,label,route])=>{ const nb=k==='feedback'?uList.length:0; return {label,active:sec===k,inactive:sec!==k,onClick:go(route),hasBadge:nb>0,badge:String(nb),badgeLabel:nb+' unread'}; });
     const studentNav=[['studentHome','Home'],['studentRotation','Rotation'],['about','About']].map(([k,label])=>({label,active:p===k,inactive:p!==k,onClick:go({page:k})}));
 
@@ -1328,7 +1401,7 @@ class Component extends DCLogic {
     const tName=it=>it[ENT[r.ent].nameKey];
     const listFor=k=>{ const e=ENT[k]; const items=k==='prompt'?sortedPrompts(d):k==='intern'?[...d.interns].sort((a,b)=>a.name.localeCompare(b.name)):d[e.coll]; const si=e.strong||0;
       return {title:e.plural,count:String(items.length),hasAdd:true,addLabel:'Add '+e.label,onAdd:()=>this.openAdd(k),cols:e.cols,
-        rows:items.map((it,ix)=>({onClick:go({page:'view',ent:k,id:it.id}),cells:e.cells(it,d).map((t,i)=>({text:t,strong:i===si,plain:i!==si})),
+        rows:items.map((it,ix)=>({onClick:go({page:'view',ent:k,id:it.id}),cells:e.cells(it,d).map((t,i)=>({text:t,strong:false,plain:i!==si,link:i===si,onOpen:ev=>{ if(ev&&ev.stopPropagation) ev.stopPropagation(); go({page:'view',ent:k,id:it.id})(); }})),
           draggable:k==='prompt',trCss:k==='prompt'?((s.dragId===it.id?'opacity:.45;':'')+(s.dragOver===it.id&&s.dragId&&s.dragId!==it.id?'box-shadow:inset 0 3px 0 #0077C8;':'')):'',
           onDragStart:ev=>{ try{ ev.dataTransfer.effectAllowed='move'; ev.dataTransfer.setData('text/plain',it.id); }catch(x){} this.setState({dragId:it.id}); },
           onDragOver:ev=>{ ev.preventDefault(); if(this.state.dragId&&this.state.dragOver!==it.id) this.setState({dragOver:it.id}); },
@@ -1353,6 +1426,7 @@ class Component extends DCLogic {
       crumbs=[['Rotation',{page:'rotation'}],['Prompt Media',{page:'media',tab:'file'}],[MEDIA_TABS.find(t=>t[0]===tab)[1]]];
       tabs=MEDIA_TABS.map(([k,l])=>({label:l,count:String(d[ENT[k].coll].length),active:k===tab,inactive:k!==tab,onClick:go({page:'media',tab:k})}));
       lists=[listFor(tab)]; }
+    if(p==='insights'){ title='Insights'; sub='How interns are progressing, how they engage, and how quickly faculty respond.'; crumbs=[['Insights']]; }
     let fcFilter='all', fbTab='comments';
     if(p==='feedback'){ const tab=(r.tab==='unread'||r.tab==='threads')?'comments':(FB_TABS.some(t=>t[0]===r.tab)?r.tab:'comments'); fcFilter=(r.filter==='unread'||r.tab==='unread')?'unread':'all';
       fbTab=tab; title='Feedback'; sub='Intern comments from rounds, grouped by team, intern and keyword.';
@@ -1360,7 +1434,7 @@ class Component extends DCLogic {
       const counts={comments:allC.length,discussion:d.boards.reduce((n,b)=>n+(b.posts||[]).length,0),teams:d.teams.length,interns:d.interns.length,keywords:d.keywords.length};
       tabs=FB_TABS.map(([k,l])=>({label:l,count:String(counts[k]),active:k===tab,inactive:k!==tab,onClick:go({page:'feedback',tab:k})}));
       const mk=(t,cols,items,cells,route)=>({title:t,count:String(items.length),hasAdd:false,cols,isEmpty:!items.length,emptyText:'Nothing here yet.',
-        rows:items.map(it=>({onClick:go(route(it)),cells:cells(it).map((x,i)=>({text:x,strong:i===0,plain:i!==0}))}))});
+        rows:items.map(it=>({onClick:go(route(it)),cells:cells(it).map((x,i)=>({text:x,strong:false,plain:i!==0,link:i===0,onOpen:ev=>{ if(ev&&ev.stopPropagation) ev.stopPropagation(); go(route(it))(); }}))}))});
       if(tab==='teams') lists=[mk('Teams',['Team','Rotation','Interns','Comments','Unread'],[...d.teams].sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true})),t=>{ const names=new Set(d.interns.filter(i=>i.team===t.id).map(i=>i.name)); return [t.name,rotName(d,t.rotation),String(names.size),String(allC.filter(x=>names.has(x.c.author)).length),String(uList.filter(x=>names.has(x.c.author)).length)]; },t=>({page:'view',ent:'team',id:t.id}))];
       if(tab==='interns') lists=[mk('Interns',['Intern','Team','Comments'],[...d.interns].sort((a,b)=>a.name.localeCompare(b.name)),i=>[i.name,teamName(d,i.team),String(allC.filter(x=>x.c.author===i.name).length)],i=>({page:'fbIntern',id:i.id}))];
       if(tab==='keywords') lists=[mk('Keywords',['Keyword','Comments','Interns'],[...d.keywords].sort((a,b)=>a.word.localeCompare(b.word)),k=>{ const m=allC.filter(x=>kwMatch(k,x.c)); return [k.word,String(m.length),String(new Set(m.map(x=>x.c.author)).size)]; },k=>({page:'fbKeyword',id:k.id}))];
@@ -1387,7 +1461,7 @@ class Component extends DCLogic {
 
     let formFields=[];
     if((p==='add'||p==='edit')&&s.draft){ formFields=ent.fields(d).map(f=>{ const v=s.draft[f.key]; const err=s.errors[f.key];
-      const base={label:f.label,required:!!f.required,placeholder:f.placeholder||'',hint:f.hint||'',hasHint:!!f.hint,error:err||'',hasError:!!err,
+      const base={label:f.label,required:!!f.required,placeholder:f.placeholder||'',hint:f.hint||'',hasHint:!!f.hint,error:err||'',hasError:!!err,fid:'fld-'+f.key,lid:'lbl-'+f.key,hid:'hint-'+f.key,eid:'err-'+f.key,dby:[err?'err-'+f.key:'',f.hint?'hint-'+f.key:''].filter(Boolean).join(' '),
         isInput:['text','email','url','number','date'].includes(f.type),isTextarea:f.type==='textarea',isSelect:f.type==='select',isMulti:f.type==='multi',isFile:f.type==='file',
         isMediaPick:f.type==='media',isQuestions:f.type==='questions',isReqs:f.type==='reqs',isRoundQs:f.type==='roundQs',isToggle:f.type==='toggle',on:!!v,off:!v,toggleText:v?f.onLabel:f.offLabel,onToggle:()=>this.setDraft({[f.key]:!v},f.key),
         inputType:f.type,value:v==null?'':v,onChange:e=>this.setDraft({[f.key]:e.target.value},f.key),options:f.options||[]};
@@ -1493,7 +1567,58 @@ class Component extends DCLogic {
     }
     const dtSort=k=>()=>this.setState(st=>({dtKey:k,dtDir:(st.dtKey||'team')===k&&(st.dtDir||'asc')==='asc'?'desc':'asc'}));
     const dtArrow=k=>dtKey===k?(dtDir==='asc'?' ▲':' ▼'):'';
+    let insSections=[], insScope='';
+    const insTeam=s.insTeam||'';
+    if(p==='insights'){
+      const C=(text,o={})=>({text:String(text),strong:!!o.strong,plain:!o.strong&&o.bar==null,hasBar:o.bar!=null,pct:(o.bar||0)+'%',pctNum:o.bar!=null?o.bar:0});
+      const R=(cells,onClick)=>{ if(onClick&&cells.length) cells=[{...cells[0],strong:false,plain:false,link:true,onOpen:ev=>{ if(ev&&ev.stopPropagation) ev.stopPropagation(); onClick(); }},...cells.slice(1)]; return {cells,onClick:onClick||null,cur:onClick?'pointer':'default'}; };
+      const scopeInterns=insTeam?d.interns.filter(i=>i.team===insTeam):d.interns, names=new Set(scopeInterns.map(i=>i.name)), nI=scopeInterns.length||1;
+      insScope=(insTeam?teamName(d,insTeam):'All teams')+' · '+scopeInterns.length+' intern'+(scopeInterns.length===1?'':'s')+' · '+N+' prompts';
+      const all=[]; d.boards.forEach(b=>(b.posts||[]).forEach(c=>all.push({b,c})));
+      const NOW=Math.max(...all.map(x=>Date.parse(x.c.ts)),0);
+      const stu=all.filter(x=>x.c.role!=='Faculty'&&names.has(x.c.author));
+      const firstReply=({b,c})=>{ const ps=b.posts||[], kidsOf={}; ps.forEach(x=>{ const k=x.parent||'root'; (kidsOf[k]=kidsOf[k]||[]).push(x); }); let best=null; const walk=id=>(kidsOf[id]||[]).forEach(x=>{ if(x.role==='Faculty'){ const t=Date.parse(x.ts); if(best==null||t<best) best=t; } walk(x.id); }); walk(c.id); return best; };
+      const rows=stu.map(x=>({...x,reply:firstReply(x)}));
+      const hrsOf=x=>(x.reply-Date.parse(x.c.ts))/36e5;
+      const answered=rows.filter(x=>x.reply!=null), waiting=rows.filter(x=>x.reply==null).sort((a,b)=>Date.parse(a.c.ts)-Date.parse(b.c.ts));
+      // A. progress
+      const prog=i=>Math.min(i.progress||0,N)/(N||1);
+      const finished=scopeInterns.filter(i=>(i.progress||0)>=N&&N>0).length, notStarted=scopeInterns.filter(i=>!(i.progress||0)).length;
+      const avgProg=Math.round(scopeInterns.reduce((a,i)=>a+prog(i),0)/nI*100);
+      const progTable=insTeam
+        ?{title:'Interns',cols:['Intern','Progress','Prompts completed'],rows:[...scopeInterns].sort((a,b)=>a.name.localeCompare(b.name)).map(i=>R([C(i.name,{strong:true}),C(Math.round(prog(i)*100)+'%',{bar:Math.round(prog(i)*100)}),C(Math.min(i.progress||0,N)+' of '+N)],this.goHome_(i)))}
+        :{title:'By team',cols:['Team','Interns','Average progress','Not started','In progress','Finished'],rows:[...d.teams].sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true})).map(t=>{ const m=d.interns.filter(i=>i.team===t.id), n=m.length||1, a=Math.round(m.reduce((x,i)=>x+prog(i),0)/n*100); return R([C(t.name,{strong:true}),C(m.length),C(a+'%',{bar:a}),C(m.filter(i=>!(i.progress||0)).length),C(m.filter(i=>(i.progress||0)>0&&(i.progress||0)<N).length),C(m.filter(i=>(i.progress||0)>=N&&N>0).length)],()=>this.setState({insTeam:t.id})); })};
+      // B. engagement
+      const posters=new Set(stu.map(x=>x.c.author)), repliesToPeers=stu.filter(x=>{ const pp=x.c.parent&&(x.b.posts||[]).find(y=>y.id===x.c.parent); return pp&&pp.role!=='Faculty'&&pp.author!==x.c.author; }).length;
+      const qs=Object.values(INS_QUIZ), att=qs.reduce((a,q)=>a+q.attempts,0), pas=qs.reduce((a,q)=>a+q.passed,0);
+      const roundRows=d.boards.map(b=>{ const bs=stu.filter(x=>x.b.id===b.id), pu=new Set(bs.map(x=>x.c.author)).size, rp=bs.filter(x=>x.c.parent).length, pct=Math.round(pu/nI*100); return R([C(b.title,{strong:true}),C(pu+' of '+scopeInterns.length+' ('+pct+'%)',{bar:pct}),C(bs.length),C(pu?(Math.round(rp/pu*10)/10):'—')],this.goHome_({round:b.id})); });
+      const quizRows=d.quizzes.map(q=>{ const st=INS_QUIZ[q.id]; if(!st) return R([C(q.title,{strong:true}),C('—'),C('—'),C('—')]); const pr=Math.round(st.passed/st.attempts*100); return R([C(q.title,{strong:true}),C(st.attempts),C(pr+'% ('+st.passed+')',{bar:pr}),C(st.avg+'%')]); });
+      // C. responsiveness
+      const med=median(answered.map(hrsOf)), ansPct=rows.length?Math.round(answered.length/rows.length*100):0;
+      const unreadIn=uList.filter(x=>names.has(x.c.author)).length;
+      const perRound=d.boards.map(b=>{ const rr=rows.filter(x=>x.b.id===b.id), an=rr.filter(x=>x.reply!=null); return R([C(b.title,{strong:true}),C(rr.length),C(rr.length?Math.round(an.length/rr.length*100)+'%':'—'),C(fmtDur(median(an.map(hrsOf))))]); });
+      const waitRows=waiting.slice(0,8).map(x=>R([C(x.b.title+((x.b.questions||[]).length>1?' · Q'+((x.b.questions||[]).findIndex(q=>q.id===postQ(x.b,x.c))+1):'')),C(x.c.author,{strong:true}),C(snippet(x.c.text)),C(fmtDur((NOW-Date.parse(x.c.ts))/36e5))],()=>this.openPost(x.b.id,x.c.id)));
+      insSections=[
+        {title:'Student progress',sub:'Where interns are in the rotation.',
+          kpis:[{label:'Finished the rotation',value:Math.round(finished/nI*100)+'%',note:finished+' of '+scopeInterns.length+' interns',color:'#1D4F91'},{label:'Average progress',value:avgProg+'%',note:'Share of prompts completed',color:'#1D4F91'},{label:'Not started',value:String(notStarted),note:'Interns with no completed prompts',color:notStarted?'#B26A00':'#1D4F91'},{label:'Time to finish',value:'—',note:finished?'':'No intern has finished yet',color:'#5A6B75'}],tables:[progTable]},
+        {title:'Engagement',sub:'How interns take part in rounds and quizzes.',
+          kpis:[{label:'Round participation',value:Math.round(posters.size/nI*100)+'%',note:posters.size+' of '+scopeInterns.length+' interns have posted',color:'#228848'},{label:'Comments per participant',value:posters.size?String(Math.round(stu.length/posters.size*10)/10):'—',note:stu.length+' comments in total',color:'#228848'},{label:'Replies to classmates',value:String(repliesToPeers),note:posters.size?(Math.round(repliesToPeers/posters.size*10)/10)+' per participant':'',color:'#228848'},{label:'Quiz pass rate',value:att?Math.round(pas/att*100)+'%':'—',note:'Sample figures, all teams',color:'#228848'}],
+          tables:[{title:'By round',cols:['Round','Participation','Comments','Replies per participant'],rows:roundRows},{title:'Quizzes (sample figures, all teams)',cols:['Quiz','Attempts','Pass rate','Average score'],rows:quizRows}]},
+        {title:'Faculty responsiveness',sub:'How quickly student comments get a faculty reply.',
+          kpis:[{label:'Median time to first reply',value:fmtDur(med),note:answered.length+' answered comments',color:'#AE2573'},{label:'Comments answered',value:ansPct+'%',note:answered.length+' of '+rows.length+' have a faculty reply',color:'#AE2573'},{label:'Waiting for a reply',value:String(waiting.length),note:waiting.length?'Oldest: '+fmtDur((NOW-Date.parse(waiting[0].c.ts))/36e5):'All answered',color:waiting.length?'#B26A00':'#AE2573'},{label:'Unread comments',value:String(unreadIn),note:'Not yet marked as read',color:unreadIn?'#B42318':'#AE2573'}],
+          tables:[{title:'Longest waiting',cols:['Round','Intern','Comment','Waiting'],rows:waitRows,empty:'Every student comment has a faculty reply.'},{title:'By round',cols:['Round','Student comments','Answered','Median time to reply'],rows:perRound}]}
+      ];
+      insSections.forEach(sx=>sx.tables.forEach(t=>{ t.isEmpty=!t.rows.length; t.emptyText=t.empty||'Nothing to show.'; }));
+    }
+    const insDefs=[
+      {term:'Student progress',def:'Prompts completed divided by prompts in the sequence. “Finished” means every prompt is completed. Time to finish needs completion dates, which the live product would record.'},
+      {term:'Round participation',def:'Interns who posted at least one comment in a round, as a share of interns in the selected team.'},
+      {term:'Replies to classmates',def:'Comments written in reply to another intern, not to faculty.'},
+      {term:'Quiz pass rate',def:'Attempts at or above the quiz’s passing score. The prototype does not store results per intern, so these are sample figures.'},
+      {term:'Time to first reply',def:'Time from a student comment to the earliest faculty reply anywhere beneath it. The median is used so a few very slow replies don’t skew the number.'},
+      {term:'Waiting',def:'Student comments with no faculty reply yet, measured against the newest comment on the platform.'}];
     const loginRole=s.loginRole||'faculty';
+    this._docTitle=title||({facultyHome:'Dashboard',studentHome:'Home',studentRotation:'Rotation',about:'About eHospital',landing:'Welcome',login:loginRole==='faculty'?'Faculty sign in':'Student sign in',insights:'Insights'}[p])||'eHospital';
     const discBoard=(p==='studentRotation'&&mt==='board')?m:(p==='view'&&r.ent==='board'&&item)?item:null;
     const disc=discBoard?Object.assign({dShowView:p==='view'},{dQs:discBoard.questions.map((q,i)=>({num:String(i+1),text:q.text,heading:discBoard.questions.length>1?'Question '+(i+1)+' of '+discBoard.questions.length:'Question',...this.discussion(discBoard,isFaculty?{name:facultyName,role:'Faculty'}:{name:me.name,role:'Intern'},q.id)}))}):{dShowView:false,dQs:[]};
     return Object.assign({
@@ -1520,14 +1645,15 @@ class Component extends DCLogic {
       isFacultyHome:p==='facultyHome', isStudentHome:p==='studentHome', isStudentRotation:p==='studentRotation', isAbout:p==='about',
       todayLabel:new Date(TODAY+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}),
       homeCards:[
-        {bg:'#AE2573',tint:'#FBEFF5',line:'#EFC9DC',title:'Members',desc:'Organize interns into teams and keep their details current.',stat:d.interns.length+' interns across '+d.teams.length+' teams',onClick:go({page:'interns'})},
-        {bg:'#C93D00',tint:'#FFF2EA',line:'#F7D2BD',title:'Rotation',desc:'Build the prompt sequence and attach supporting media.',stat:N+' prompts · '+(d.files.length+d.urls.length+d.boards.length+d.quizzes.length)+' media items',onClick:go({page:'rotation'})},
-        {bg:'#228848',tint:'#EDF7F0',line:'#C6E5D0',title:'Feedback',desc:'Read intern feedback by comment, intern or keyword.',stat:allC.length+' comments · '+uList.length+' unread',onClick:go({page:'feedback',tab:'threads'})}],
+        {bg:'#AE2573',fg:'#AE2573',tint:'#FBEFF5',line:'#EFC9DC',title:'Members',desc:'Organize interns into teams and keep their details current.',stat:d.interns.length+' interns across '+d.teams.length+' teams',onClick:go({page:'interns'})},
+        {bg:'#C93D00',fg:'#C93D00',tint:'#FFF2EA',line:'#F7D2BD',title:'Rotation',desc:'Build the prompt sequence and attach supporting media.',stat:N+' prompts · '+(d.files.length+d.urls.length+d.boards.length+d.quizzes.length)+' media items',onClick:go({page:'rotation'})},
+        {bg:'#228848',fg:'#1B6E3A',tint:'#EDF7F0',line:'#C6E5D0',title:'Feedback',desc:'Read intern feedback by comment, intern or keyword.',stat:allC.length+' comments · '+uList.length+' unread',onClick:go({page:'feedback',tab:'threads'})}],
       recentThreads:allC.slice(0,3).map(cLink),
       promptCount:N+' prompts', mediaCount:(d.files.length+d.urls.length+d.boards.length+d.quizzes.length)+' items',
       promptPreview:ps.slice(0,6).map(x=>({order:String(x.order),title:x.title,media:mediaTypeLabel(x.mediaType),onClick:go({page:'view',ent:'prompt',id:x.id})})),
       mediaPreview:MEDIA_TABS.map(([k,l])=>({label:l,count:String(d[ENT[k].coll].length),onClick:go({page:'media',tab:k})})),
       isListPage:!!lists, lists:lists||[],
+      isInsights:p==='insights', insSections, insScope, insDefs, insTeam, insTeams:[...d.teams].sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true})).map(t=>({value:t.id,label:t.name})), onInsTeam:e=>this.setState({insTeam:e.target.value}),
       isCommentsTab:p==='feedback'&&fbTab==='comments', isDiscTab:p==='feedback'&&fbTab==='discussion',
       dtRows, dtCount:String(dtRows.length)+' comments', dtExportCsv:()=>dtExport('csv'), dtExportXls:()=>dtExport('xls'),
       dtSortTeam:dtSort('team'), dtSortRound:dtSort('round'), dtSortTime:dtSort('time'), dtTeamLbl:'Team'+dtArrow('team'), dtRoundLbl:'Round'+dtArrow('round'), dtTimeLbl:'Posted'+dtArrow('time'), fcCount:String(allC.length),
@@ -1553,12 +1679,13 @@ class Component extends DCLogic {
       confirmText:'This cannot be undone.'+(r.ent==='team'?' Its interns will stay, without a team.':''),
       cancelDelete:()=>this.setState({confirm:false}), confirmDelete:()=>this.remove(), stop:e=>e.stopPropagation(),
       hasToast:!!s.toast, toast:s.toast||'',
+      skipToMain:()=>{ const el=document.getElementById('main-content')||document.querySelector('h1'); if(el){ if(!el.hasAttribute('tabindex')) el.setAttribute('tabindex','-1'); el.focus(); } },
       sTeamName:myTeam?myTeam.name:'No team', sRotationName,
       sMates:myTeam?d.interns.filter(i=>i.team===myTeam.id&&i.id!==me.id).sort((a,b)=>a.name.localeCompare(b.name)).map(i=>({name:i.name,initials:initials(i.name),email:i.email,mailto:'mailto:'+i.email})):[],
       sNoMates:!myTeam||!d.interns.some(i=>i.team===myTeam.id&&i.id!==me.id),
       sCurrentTitle:N?(sDone?'Rotation complete':ps[sNextIdx].title):'No prompts yet',
       sCurrentMeta:N?(waiting?'Prompt '+(sNextIdx+1)+' of '+N+' is locked. Your faculty will unlock it when you’re ready to continue.':sDone?'All '+N+' prompts completed. You can review any prompt.':'Prompt '+(sNextIdx+1)+' of '+N+' · '+mediaTypeLabel(ps[sNextIdx].mediaType)):'Your rotation will appear here once faculty add prompts.',
-      sProgressPct:(N?Math.round(prog/N*100):0)+'%', sProgressText:prog+' of '+N+' prompts completed',
+      sProgressNum:N?Math.round(prog/N*100):0, sProgressPct:(N?Math.round(prog/N*100):0)+'%', sProgressText:prog+' of '+N+' prompts completed',
       continueLabel:(sDone||waiting)?'Review rotation':prog>0?'Continue':'Start rotation', continueRotation:openStep(sDone?0:Math.min(sNextIdx,lockIdx-1)), sCanContinue:lockIdx>0,
       sSeq:ps.map((x,i)=>({num:String(i+1),title:x.title,type:mediaTypeLabel(x.mediaType),locked:i>=lockIdx,done:i<lockIdx&&i<prog,current:i<lockIdx&&i===prog,todo:false,upcoming:i<lockIdx&&i>prog,noClick:!(i<=prog&&i<lockIdx),onClick:i<=prog&&i<lockIdx?openStep(i):null})),
       sEmpty:!N, sHasPrompts:N>0&&lockIdx>0, sAllLocked:N>0&&lockIdx===0,
