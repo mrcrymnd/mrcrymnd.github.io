@@ -52,7 +52,8 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 .alert-primary{border-left-color:#1D4F91}.alert-success{border-left-color:#1E7B4F}.alert-danger{border-left-color:#B42318}.alert-warning{border-left-color:#B26A00}.alert-info{border-left-color:#0B6A8F}.alert-secondary{border-left-color:#5A6B75}
 .form-control,.form-select{border-color:#DCE3E7}
 .form-control:focus,.form-select:focus,.form-check-input:focus{border-color:#1D4F91;box-shadow:0 0 0 .25rem rgba(29,79,145,.35)}
-.form-check-input:checked{background-color:#1D4F91;border-color:#1D4F91}</style>
+.form-check-input:checked{background-color:#1D4F91;border-color:#1D4F91}.md-body>:last-child{margin-bottom:0!important}
+</style>
 </helmet>
 <button type="button" class="visually-hidden-focusable btn btn-cta position-fixed top-0 start-0 m-2" style="z-index:3000" sc-camel-on-click="{{ skipToMain }}">Skip to main content</button>
 <div class="d-flex min-vh-100 app-shell">
@@ -356,9 +357,10 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 <div class="card-body p-4">
 <div class="small fw-semibold text-uppercase text-primary mb-2" style="letter-spacing:.08em">Prompt {{ sOrder }}</div>
 <h2 class="h3 fw-bold mb-3">{{ sTitle }}</h2>
-<p class="fs-6 mb-0" style="line-height:1.65;text-wrap:pretty">{{ sText }}</p>
+<div class="fs-6 md-body" style="line-height:1.65;text-wrap:pretty" dangerouslySetInnerHTML="{{ sTextHtml }}"></div>
 </div>
 <div class="card-body p-4 border-top">
+<sc-if value="{{ viewingExtra }}"><button type="button" sc-camel-on-click="{{ onBackExtra }}" class="btn btn-link btn-sm p-0 mb-3">← Back to this prompt</button></sc-if>
 <div class="small fw-semibold text-uppercase text-secondary mb-3" style="letter-spacing:.08em;font-size:12px">{{ mTypeLabel }}</div>
 
 <sc-if value="{{ mFile }}">
@@ -376,11 +378,24 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 </div></div>
 </sc-if>
 
+<sc-if value="{{ hasExtras }}">
+<div class="small fw-semibold text-uppercase text-secondary mt-4 mb-3" style="letter-spacing:.08em;font-size:12px">Additional resources</div>
+<div class="d-flex flex-column gap-3">
+<sc-for list="{{ sExtras }}" as="x"><div class="card"><div class="card-body d-flex align-items-center gap-3 flex-wrap">
+<span class="rounded bg-primary-subtle text-primary-emphasis d-inline-flex align-items-center justify-content-center fw-bold small flex-shrink-0" style="width:48px;height:56px">{{ x.badge }}</span>
+<div class="flex-grow-1" style="min-width:200px"><div class="fw-semibold">{{ x.title }}</div><div class="small text-secondary text-break">{{ x.sub }}</div><div class="small mt-2">{{ x.desc }}</div></div>
+<sc-if value="{{ x.isFile }}"><button type="button" sc-camel-on-click="{{ x.onDownload }}" class="btn btn-outline-primary">Download</button></sc-if>
+<sc-if value="{{ x.isUrl }}"><a href="{{ x.href }}" target="_blank" rel="noopener" class="btn btn-outline-primary">Open link ↗</a></sc-if>
+<sc-if value="{{ x.isOpen }}"><button type="button" sc-camel-on-click="{{ x.onOpen }}" class="btn btn-outline-primary">{{ x.openLabel }}</button></sc-if>
+</div></div></sc-for>
+</div>
+</sc-if>
+
 <sc-if value="{{ mBoard }}">
 <h3 class="h5 fw-bold mb-3">{{ mTitle }}</h3>
 <sc-for list="{{ dQs }}" as="qs">
 <div class="mb-5">
-<div class="alert alert-primary mb-3"><div class="small fw-bold text-uppercase mb-1" style="letter-spacing:.06em">{{ qs.heading }}</div><p class="mb-0">{{ qs.text }}</p></div>
+<div class="alert alert-primary mb-3"><div class="small fw-bold text-uppercase mb-1" style="letter-spacing:.06em">{{ qs.heading }}</div><div class="md-body" dangerouslySetInnerHTML="{{ qs.textHtml }}"></div></div>
 <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
 <span class="fw-semibold">{{ qs.dCount }}</span>
 <div class="d-flex align-items-center gap-2"><span class="small text-secondary">Sort by</span>
@@ -456,6 +471,7 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 <sc-for list="{{ qItems }}" as="q" hint-placeholder-count="3">
 <div>
 <div class="fw-semibold mb-2">{{ q.num }}. {{ q.text }}</div>
+<sc-if value="{{ q.isEssay }}"><label for="essay-{{ q.num }}" class="visually-hidden">Your answer to question {{ q.num }}</label><textarea id="essay-{{ q.num }}" rows="4" value="{{ q.essay }}" disabled="{{ q.essayLocked }}" sc-camel-on-change="{{ q.onEssay }}" placeholder="Type your answer…" class="form-control"></textarea><div class="form-text">Not scored. Your faculty will read your answer.</div></sc-if>
 <div class="row g-2">
 <sc-for list="{{ q.opts }}" as="o">
 <div class="col-md-6">
@@ -552,10 +568,19 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 <p class="small mb-1 mt-1" style="text-wrap:pretty">{{ ua.snippet }}</p>
 <div class="small text-secondary">{{ ua.board }}</div>
 </div>
-<div class="d-flex align-items-center gap-2 flex-shrink-0">
-<button type="button" sc-camel-on-click="{{ ua.onView }}" class="btn btn-outline-primary btn-sm">View in round</button>
+<div class="d-flex flex-column align-items-stretch gap-2 flex-shrink-0">
+<sc-if value="{{ ua.replyClosed }}"><button type="button" sc-camel-on-click="{{ ua.onToggleReply }}" aria-expanded="false" aria-controls="{{ ua.replyId }}" class="btn btn-primary btn-sm">{{ ua.closedLabel }}</button></sc-if>
+<sc-if value="{{ ua.replyOpen }}"><button type="button" sc-camel-on-click="{{ ua.onToggleReply }}" aria-expanded="true" aria-controls="{{ ua.replyId }}" class="btn btn-secondary btn-sm">{{ ua.openLabel }}</button></sc-if>
 <sc-if value="{{ ua.isNew }}"><button type="button" sc-camel-on-click="{{ ua.onMarkRead }}" class="btn btn-link btn-sm text-secondary">Mark as read</button></sc-if>
 </div>
+<sc-if value="{{ ua.replyOpen }}"><div id="{{ ua.replyId }}" class="w-100 border-top pt-3 mt-1">
+<div class="small text-secondary mb-1">{{ ua.author }} wrote:</div>
+<p class="small mb-3 p-3 bg-body-tertiary rounded" style="white-space:pre-wrap;text-wrap:pretty">{{ ua.fullText }}</p>
+<label for="{{ ua.replyId }}-t" class="form-label small fw-semibold">Reply to {{ ua.author }}</label>
+<textarea id="{{ ua.replyId }}-t" rows="3" readonly="{{ ua.replied }}" value="{{ ua.draft }}" sc-camel-on-change="{{ ua.onDraft }}" placeholder="Write a reply…" class="form-control mb-2"></textarea>
+<sc-if value="{{ ua.replied }}"><div class="small text-success fw-semibold" role="status">Reply sent</div></sc-if>
+<sc-if value="{{ ua.notReplied }}"><div class="d-flex gap-2 justify-content-end"><button type="button" sc-camel-on-click="{{ ua.onToggleReply }}" class="btn btn-outline-secondary btn-sm">Cancel</button><button type="button" sc-camel-on-click="{{ ua.onSend }}" class="btn btn-primary btn-sm">Send reply</button></div></sc-if>
+</div></sc-if>
 </div>
 </sc-for>
 </div>
@@ -597,7 +622,7 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 <sc-for list="{{ row.cells }}" as="cell"><sc-raw-td class="px-3 py-3">
 <sc-if value="{{ cell.link }}"><button type="button" sc-camel-on-click="{{ cell.onOpen }}" class="btn btn-link p-0 fw-semibold text-start">{{ cell.text }}</button></sc-if>
 <sc-if value="{{ cell.strong }}"><span class="fw-semibold">{{ cell.text }}</span></sc-if>
-<sc-if value="{{ cell.plain }}"><span>{{ cell.text }}</span></sc-if>
+<sc-if value="{{ cell.plain }}"><span style="white-space:pre-line">{{ cell.text }}</span></sc-if>
 <sc-if value="{{ cell.hasBar }}"><div class="d-flex align-items-center gap-2" style="min-width:170px"><div class="progress flex-grow-1" role="progressbar" aria-label="{{ cell.text }}" aria-valuenow="{{ cell.pctNum }}" aria-valuemin="0" aria-valuemax="100" style="height:8px"><div class="progress-bar" style="width:{{ cell.pct }}"></div></div><span class="small text-nowrap">{{ cell.text }}</span></div></sc-if>
 </sc-raw-td></sc-for>
 </sc-raw-tr>
@@ -684,7 +709,7 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 <sc-for list="{{ row.cells }}" as="cell"><sc-raw-td class="px-3 py-3">
 <sc-if value="{{ cell.link }}"><button type="button" sc-camel-on-click="{{ cell.onOpen }}" class="btn btn-link p-0 fw-semibold text-start">{{ cell.text }}</button></sc-if>
 <sc-if value="{{ cell.strong }}"><span class="fw-semibold">{{ cell.text }}</span></sc-if>
-<sc-if value="{{ cell.plain }}"><span>{{ cell.text }}</span></sc-if>
+<sc-if value="{{ cell.plain }}"><span style="white-space:pre-line">{{ cell.text }}</span></sc-if>
 </sc-raw-td></sc-for>
 </sc-raw-tr>
 </sc-for>
@@ -719,6 +744,15 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 </div>
 </sc-if>
 </sc-if>
+<sc-if value="{{ f.isExtras }}"><div class="d-flex flex-column gap-2">
+<sc-if value="{{ f.hasExtras }}"><ul class="list-group">
+<sc-for list="{{ f.exList }}" as="x"><li class="list-group-item d-flex align-items-center justify-content-between gap-2"><span class="text-break"><span class="badge text-bg-secondary me-2">{{ x.typeLabel }}</span>{{ x.title }}</span><button type="button" sc-camel-on-click="{{ x.onRemove }}" aria-label="Remove {{ x.title }}" class="btn btn-outline-danger btn-sm flex-shrink-0">Remove</button></li>
+</sc-for></ul></sc-if>
+<div class="row g-2">
+<div class="col-sm-4"><sc-raw-select aria-label="Type of additional attachment" value="{{ f.exType }}" sc-camel-on-change="{{ f.onExType }}" class="form-select"><option value="file">Static Media</option><option value="url">URL</option><option value="board">Round</option><option value="quiz">Quiz</option></sc-raw-select></div>
+<div class="col-sm-5"><sc-raw-select aria-label="Item to attach" value="{{ f.exId }}" sc-camel-on-change="{{ f.onExId }}" class="form-select"><option value="">Select item…</option><sc-for list="{{ f.exOptions }}" as="o"><option value="{{ o.value }}">{{ o.label }}</option></sc-for></sc-raw-select></div>
+<div class="col-sm-3 d-grid"><button type="button" sc-camel-on-click="{{ f.onExAdd }}" class="btn btn-outline-primary">+ Add</button></div>
+</div></div></sc-if>
 <sc-if value="{{ f.isReqs }}">
 <div role="group" aria-labelledby="{{ f.lid }}" class="border rounded p-3 bg-body-tertiary">
 <sc-if value="{{ f.showNone }}"><div class="small text-secondary">Attach a file, link, round or quiz above to set what students must do before moving on.</div></sc-if>
@@ -742,16 +776,20 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 <sc-if value="{{ f.isQuestions }}"><div role="group" aria-labelledby="{{ f.lid }}" class="d-flex flex-column gap-3">
 <sc-for list="{{ f.qs }}" as="q">
 <div class="card bg-body-tertiary"><div class="card-body d-flex flex-column gap-2">
-<div class="d-flex justify-content-between align-items-center"><span class="small fw-bold text-uppercase text-secondary" style="font-size:12px;letter-spacing:.06em">Question {{ q.num }}</span><sc-if value="{{ q.canRemove }}"><button type="button" sc-camel-on-click="{{ q.onRemove }}" class="btn btn-link btn-sm text-danger p-0">Remove</button></sc-if></div>
+<div class="d-flex justify-content-between align-items-center"><span class="small fw-bold text-uppercase text-secondary" style="font-size:12px;letter-spacing:.06em">Question {{ q.num }}</span><div class="d-flex align-items-center gap-3"><sc-raw-select value="{{ q.type }}" sc-camel-on-change="{{ q.onType }}" aria-label="Question {{ q.num }} type" class="form-select form-select-sm" style="width:auto"><sc-for list="{{ f.qTypes }}" as="t"><option value="{{ t.value }}">{{ t.label }}</option></sc-for></sc-raw-select><sc-if value="{{ q.canRemove }}"><button type="button" sc-camel-on-click="{{ q.onRemove }}" class="btn btn-link btn-sm text-danger p-0">Remove</button></sc-if></div></div>
 <input value="{{ q.text }}" sc-camel-on-change="{{ q.onText }}" placeholder="Question text" aria-label="Question {{ q.num }} text" class="form-control">
+<sc-if value="{{ q.isEssay }}"><div class="small text-secondary">Students type a free-text answer. Essay answers aren’t scored and don’t count toward the passing score.</div></sc-if>
+<sc-if value="{{ q.isTf }}"><div class="small text-secondary mb-1">Select the correct answer.</div></sc-if>
 <sc-for list="{{ q.opts }}" as="o"><div class="input-group input-group-sm">
 <sc-if value="{{ o.isCorrect }}"><button type="button" sc-camel-on-click="{{ o.onMark }}" title="Correct answer" class="btn btn-success" style="width:38px">✓</button></sc-if>
 <sc-if value="{{ o.notCorrect }}"><button type="button" sc-camel-on-click="{{ o.onMark }}" title="Mark as correct answer" class="btn btn-outline-secondary bg-white" style="width:38px">{{ o.letter }}</button></sc-if>
-<input value="{{ o.value }}" sc-camel-on-change="{{ o.onChange }}" placeholder="Option {{ o.letter }}" aria-label="Option {{ o.letter }}" class="form-control">
+<input value="{{ o.value }}" readonly="{{ o.fixed }}" sc-camel-on-change="{{ o.onChange }}" placeholder="Option {{ o.letter }}" aria-label="Option {{ o.letter }}" class="form-control">
+<sc-if value="{{ o.canRemove }}"><button type="button" sc-camel-on-click="{{ o.onRemove }}" aria-label="Remove option {{ o.letter }}" title="Remove option" class="btn btn-outline-danger">✕</button></sc-if>
 </div></sc-for>
+<sc-if value="{{ q.canAddOpt }}"><div><button type="button" sc-camel-on-click="{{ q.onAddOpt }}" class="btn btn-link btn-sm p-0">+ Add choice</button><span class="small text-secondary ms-2">{{ q.optCount }}</span></div></sc-if>
 </div></div>
 </sc-for>
-<button type="button" sc-camel-on-click="{{ f.onAddQ }}" class="btn btn-outline-primary" style="border-style:dashed">+ Add question</button>
+<div class="d-flex flex-wrap gap-2"><sc-for list="{{ f.addBtns }}" as="a"><button type="button" sc-camel-on-click="{{ a.onClick }}" class="btn btn-outline-primary" style="border-style:dashed">+ {{ a.label }}</button></sc-for></div>
 </div></sc-if>
 <sc-if value="{{ f.isMulti }}"><div role="group" aria-labelledby="{{ f.lid }}" class="d-flex flex-wrap gap-2">
 <sc-for list="{{ f.chips }}" as="o">
@@ -760,6 +798,7 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 </sc-for>
 </div></sc-if>
 <sc-if value="{{ f.isFile }}">
+<input type="file" id="{{ f.fileId }}" accept=".pdf,.doc,.docx,.ppt,.pptx,.png,.jpg,.jpeg,image/png,image/jpeg,application/pdf" tabindex="-1" aria-hidden="true" class="visually-hidden" sc-camel-on-change="{{ f.onFile }}">
 <sc-if value="{{ f.hasFile }}"><div class="input-group"><span class="input-group-text fw-bold small bg-primary-subtle text-primary-emphasis">{{ f.ext }}</span><span class="form-control text-truncate">{{ f.value }}</span><button type="button" sc-camel-on-click="{{ f.onPick }}" class="btn btn-outline-primary">Replace</button></div></sc-if>
 <sc-if value="{{ f.noFile }}"><button type="button" sc-camel-on-click="{{ f.onPick }}" class="btn btn-light border w-100 py-4 text-secondary" style="border-style:dashed !important">Click to choose a file<span class="d-block small mt-1">PDF, DOCX, PPTX, PNG or JPG up to 25 MB</span></button></sc-if>
 </sc-if>
@@ -790,7 +829,8 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 <sc-for list="{{ viewRows }}" as="v" hint-placeholder-count="4">
 <li class="list-group-item py-3"><div class="row g-2">
 <div class="col-sm-4 small fw-semibold text-secondary">{{ v.label }}</div>
-<div class="col-sm-8 text-break" style="white-space:pre-wrap">{{ v.value }}</div>
+<sc-if value="{{ v.plain }}"><div class="col-sm-8 text-break" style="white-space:pre-wrap">{{ v.value }}</div></sc-if>
+<sc-if value="{{ v.isMd }}"><div class="col-sm-8 text-break md-body" style="text-wrap:pretty" dangerouslySetInnerHTML="{{ v.html }}"></div></sc-if>
 </div></li>
 </sc-for>
 </ul>
@@ -815,7 +855,7 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 <h3 class="h5 fw-bold mb-3">{{ dBoardTitle }}</h3>
 <sc-for list="{{ dQs }}" as="qs">
 <div class="mb-5">
-<div class="alert alert-primary mb-3"><div class="small fw-bold text-uppercase mb-1" style="letter-spacing:.06em">{{ qs.heading }}</div><p class="mb-0">{{ qs.text }}</p></div>
+<div class="alert alert-primary mb-3"><div class="small fw-bold text-uppercase mb-1" style="letter-spacing:.06em">{{ qs.heading }}</div><div class="md-body" dangerouslySetInnerHTML="{{ qs.textHtml }}"></div></div>
 <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
 <span class="fw-semibold">{{ qs.dCount }}</span>
 <div class="d-flex align-items-center gap-2"><span class="small text-secondary">Sort by</span>
@@ -915,6 +955,33 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 </div>
 </sc-if>
 
+<sc-if value="{{ isFbTeam }}">
+<div style="max-width:800px">
+<div class="row g-3 mb-4">
+<sc-for list="{{ fbStats }}" as="st" hint-placeholder-count="3">
+<div class="col-sm-4"><div class="card h-100"><div class="card-body"><div class="small fw-semibold text-secondary mb-1">{{ st.label }}</div><div class="h4 fw-bold mb-0">{{ st.value }}</div></div></div></div>
+</sc-for>
+</div>
+<div class="d-flex flex-column gap-3">
+<sc-for list="{{ fbTeamGroups }}" as="g" hint-placeholder-count="4">
+<div class="card">
+<div class="card-header bg-white py-3 d-flex justify-content-between align-items-center gap-2"><h2 class="h6 fw-bold mb-0"><button type="button" sc-camel-on-click="{{ g.onOpen }}" class="btn btn-link p-0 fw-bold text-start">{{ g.name }}</button></h2><span class="small text-secondary">{{ g.count }}</span></div>
+<div class="list-group list-group-flush">
+<sc-for list="{{ g.comments }}" as="ft">
+<button type="button" sc-camel-on-click="{{ ft.onClick }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start gap-3 py-3">
+<div style="min-width:0"><div class="fw-semibold">{{ ft.title }}</div><div class="small text-secondary">{{ ft.meta }}</div></div>
+<span class="small text-secondary text-nowrap">{{ ft.date }}</span>
+</button>
+</sc-for>
+</div>
+<sc-if value="{{ g.none }}"><div class="card-body small text-secondary py-3">No comments yet.</div></sc-if>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{ fbTeamEmpty }}"><div class="alert alert-light border text-center mb-0">This team has no interns yet.</div></sc-if>
+</div>
+</sc-if>
+
 <sc-if value="{{ isFbDetail }}">
 <div style="max-width:800px">
 <div class="row g-3 mb-4">
@@ -979,6 +1046,19 @@ const SAMPLE_FILES = ['sepsis-bundle-checklist.pdf','ipass-handoff-card.pdf','ec
 const MEDIA_TABS = [['file','Static Media'],['url','URLs'],['board','Rounds'],['quiz','Quizzes']];
 const MEDIA_TYPES = [{value:'file',label:'Static Media'},{value:'url',label:'URL'},{value:'board',label:'Round'},{value:'quiz',label:'Quiz'}];
 const MEDIA_COLL = {file:'files',url:'urls',board:'boards',quiz:'quizzes'};
+const mdInline = t => t.replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*([^*]+)\*\*|__([^_]+)__/g,(m,a,b)=>'<strong>'+(a||b)+'</strong>').replace(/\*([^*\s][^*]*)\*|(^|\W)_([^_]+)_(?=\W|$)/g,(m,a,pre,b)=>a?'<em>'+a+'</em>':pre+'<em>'+b+'</em>').replace(/~~([^~]+)~~/g,'<del>$1</del>').replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+const mdToHtml = src => { const esc=String(src||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\r/g,''); const out=[]; let list=null, para=[];
+  const flushP=()=>{ if(para.length){ out.push('<p class="mb-3">'+mdInline(para.join('<br>'))+'</p>'); para=[]; } };
+  const flushL=()=>{ if(list){ out.push('<'+list.t+' class="mb-3 ps-4">'+list.items.map(i=>'<li>'+mdInline(i)+'</li>').join('')+'</'+list.t+'>'); list=null; } };
+  esc.split('\n').forEach(line=>{ let m;
+    if(!line.trim()){ flushP(); flushL(); }
+    else if(m=line.match(/^(#{1,4})\s+(.*)$/)){ flushP(); flushL(); const n=Math.min(m[1].length+2,6); out.push('<h'+n+' class="fw-bold mt-3 mb-2">'+mdInline(m[2])+'</h'+n+'>'); }
+    else if(m=line.match(/^\s*[-*+]\s+(.*)$/)){ flushP(); if(!list||list.t!=='ul'){ flushL(); list={t:'ul',items:[]}; } list.items.push(m[1]); }
+    else if(m=line.match(/^\s*\d+[.)]\s+(.*)$/)){ flushP(); if(!list||list.t!=='ol'){ flushL(); list={t:'ol',items:[]}; } list.items.push(m[1]); }
+    else if(m=line.match(/^&gt;\s?(.*)$/)){ flushP(); flushL(); out.push('<blockquote class="border-start border-3 ps-3 text-secondary mb-3">'+mdInline(m[1])+'</blockquote>'); }
+    else if(/^(-{3,}|\*{3,})\s*$/.test(line)){ flushP(); flushL(); out.push('<hr>'); }
+    else { flushL(); para.push(line); } });
+  flushP(); flushL(); return out.join(''); };
 const ROT_TABS = [['prompt','Prompt Sequence'],['file','Static Media'],['url','URLs'],['board','Rounds'],['quiz','Quizzes']];
 const MEMBER_TABS = [['team','Teams'],['intern','Interns'],['faculty','Faculty']];
 const unreadPosts = d => { const read=new Set(d.readPosts||[]), out=[]; (d.boards||[]).forEach(b=>{ const ps=b.posts||[]; ps.forEach(c=>{ if(c.role==='Faculty'||read.has(c.id)) return; if(ps.some(x=>x.parent===c.id&&x.role==='Faculty')) return; out.push({b,c,parent:c.parent?ps.find(x=>x.id===c.parent):null}); }); }); return out.sort((x,y)=>Date.parse(y.c.ts)-Date.parse(x.c.ts)); };
@@ -1004,7 +1084,7 @@ const DEMO_UNREAD = {
   b3:[{id:'d6',parent:'w2',author:"Sofia Rossi",role:'Intern',ts:'2026-10-19T16:05:00',up:2,down:0,text:"Agreed. The smart phrases for the review of systems saved me a lot of documentation time.",kw:["k4"]},
     {id:'d7',parent:null,author:"Ethan Nakamura",role:'Intern',ts:'2026-10-20T12:20:00',up:1,down:0,text:"I was surprised how much of the day is communication with nurses and families, not just writing orders.",kw:["k5"]}]};
 const SEED_READ = ['c3','c7','c8','c9','c10','f3'];
-const FB_TABS = [['comments','Comments'],['discussion','Discussion'],['teams','Teams'],['interns','Interns'],['keywords','Keywords']];
+const FB_TABS = [['comments','Comments'],['discussion','Discussion'],['teams','Teams'],['interns','Interns']];
 const allComments = d => { const out=[]; (d.boards||[]).forEach(b=>{ const ps=b.posts||[]; ps.forEach(c=>{ if(c.role==='Faculty') return; out.push({b,c,parent:c.parent?ps.find(x=>x.id===c.parent):null}); }); }); return out.sort((x,y)=>Date.parse(y.c.ts)-Date.parse(x.c.ts)); };
 const kwMatch = (k,c) => (c.kw||[]).includes(k.id) || (c.text||'').toLowerCase().includes(k.word.toLowerCase());
 const FACULTY = 'Dr. Anika Patel';
@@ -1165,6 +1245,7 @@ const promptName = (d,id) => { const p=d.prompts.find(x=>x.id===id); return p?p.
 const mediaTypeLabel = t => (MEDIA_TYPES.find(m=>m.value===t)||{label:'No media'}).label;
 const mediaItem = (d,p) => p&&p.mediaType ? d[MEDIA_COLL[p.mediaType]].find(x=>x.id===p.mediaId) : null;
 const mediaLabel = (d,p) => { if(!p.mediaType) return 'None'; const m=mediaItem(d,p); return mediaTypeLabel(p.mediaType)+(m?' · '+m.title:''); };
+const mediaLabelAll = (d,p) => { const lines=[]; if(p.mediaType){ const m=mediaItem(d,p); lines.push(mediaTypeLabel(p.mediaType)+(m?' · '+m.title:'')); } (p.extras||[]).forEach(x=>{ const it=(d[MEDIA_COLL[x.type]]||[]).find(y=>y.id===x.id); if(it) lines.push(mediaTypeLabel(x.type)+' · '+it.title); }); return lines.length?lines.join('\n'):'None'; };
 const boardStatus = b => 'Open';
 const EXTRA_Q = {b1:[{id:'b1q2',text:'What information did you share when you escalated, and how did you share it?'},{id:'b1q3',text:'What would you do differently next time?'}]};
 const SEED_REQ = {p4:{reqOpen:true},p19:{reqOpen:true},p25:{reqAnswers:2,reqReplies:1},p28:{reqOpen:true}};
@@ -1179,7 +1260,10 @@ const reqText = (d,p) => { const bd=p.mediaType==='board'?(d.boards||[]).find(x=
 const INS_QUIZ = {q1:{attempts:34,passed:27,avg:82},q2:{attempts:30,passed:28,avg:88}};
 const median = a => { if(!a.length) return null; const s=[...a].sort((x,y)=>x-y), m=Math.floor(s.length/2); return s.length%2?s[m]:(s[m-1]+s[m])/2; };
 const fmtDur = hrs => hrs==null?'—':hrs<1?Math.max(1,Math.round(hrs*60))+' min':hrs<48?(Math.round(hrs*10)/10)+' hrs':(Math.round(hrs/24*10)/10)+' days';
-const blankQ = () => ({text:'',options:['','','',''],correct:0});
+const QTYPES = [['mc','Multiple choice'],['tf','True or false'],['essay','Essay (open-ended)']];
+const blankQ = (t='mc') => t==='tf'?{type:'tf',text:'',options:['True','False'],correct:0}:t==='essay'?{type:'essay',text:'',options:[],correct:0}:{type:'mc',text:'',options:['','','',''],correct:0};
+const qType = q => q.type||'mc';
+const qTypeLabel = q => (QTYPES.find(x=>x[0]===qType(q))||QTYPES[0])[1];
 const THREAD_BOARD = {h1:'b1',h2:'b2',h3:'b1',h4:'b1',h5:'b2'};
 const fmtTs = ts => { const d=new Date(ts); return isNaN(d)?'':d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}); };
 const snippet = t => t.length>70?t.slice(0,70).trim()+'…':t;
@@ -1210,13 +1294,14 @@ const ENT = {
         items:ps.map((p,idx)=>({title:p.order+'. '+p.title,meta:mediaTypeLabel(p.mediaType),tag:idx<prog?'Completed':idx===prog?'Current':'Not started',route:{page:'view',ent:'prompt',id:p.id}}))}]; }},
   prompt:{coll:'prompts',label:'Prompt',plural:'Prompts',nameKey:'title',strong:1,
     fields:d=>[{key:'title',label:'Title',type:'text',required:true},
-      {key:'text',label:'Prompt text',type:'textarea',required:true,placeholder:'What should interns do or answer?'},
+      {key:'text',label:'Prompt text',type:'textarea',required:true,placeholder:'What should interns do or answer?',hint:'Markdown supported: **bold**, *italic*, # headings, - bullet lists, 1. numbered lists, > quotes, [link text](https://…). Students see it formatted.'},
       {key:'order',label:'Order in sequence',type:'number'},
       {key:'media',label:'Attached media',type:'media'},
+      {key:'extras',label:'Additional attachments',type:'extras',hint:'Attach more files or links for students to use alongside the main media. Requirements apply to the main media only.'},
       {key:'reqs',label:'Requirements',type:'reqs'},
       {key:'locked',label:'Student access',type:'toggle',onLabel:'Locked',offLabel:'Unlocked',hint:'When locked, students can’t open this prompt or any prompt after it.'}],
-    cols:['#','Title','Attached media','Requirements','Access'], cells:(p,d)=>[String(p.order),p.title,mediaLabel(d,p),reqText(d,p),p.locked?'Locked':'Open'],
-    defaults:d=>({order:String(Math.max(0,...d.prompts.map(p=>p.order))+1),mediaType:'',mediaId:'',locked:false,reqAnswers:'',reqReplies:'0',reqOpen:false})},
+    cols:['#','Title','Attached media','Requirements','Access'], cells:(p,d)=>[String(p.order),p.title,mediaLabelAll(d,p),reqText(d,p),p.locked?'Locked':'Open'],
+    defaults:d=>({order:String(Math.max(0,...d.prompts.map(p=>p.order))+1),mediaType:'',mediaId:'',extras:[],locked:false,reqAnswers:'',reqReplies:'0',reqOpen:false})},
   file:{coll:'files',label:'File',plural:'Static Media',nameKey:'title',
     fields:()=>[{key:'title',label:'Title',type:'text',required:true},{key:'file',label:'File',type:'file',required:true},{key:'description',label:'Description',type:'textarea'}],
     cols:['Title','File'], cells:f=>[f.title,f.file], defaults:()=>({})},
@@ -1224,16 +1309,16 @@ const ENT = {
     fields:()=>[{key:'title',label:'Title',type:'text',required:true},{key:'url',label:'URL',type:'url',required:true,placeholder:'https://'},{key:'description',label:'Description',type:'textarea'}],
     cols:['Title','URL'], cells:u=>[u.title,u.url.replace(/^https?:\/\//,'')], defaults:()=>({url:'https://'})},
   board:{coll:'boards',label:'Round',plural:'Rounds',nameKey:'title',
-    fields:()=>[{key:'title',label:'Title',type:'text',required:true},{key:'questions',label:'Questions',type:'roundQs',viewHide:true,hint:'Students answer each question in its own conversation. Add as many as the round needs.'}],
+    fields:()=>[{key:'title',label:'Title',type:'text',required:true},{key:'questions',label:'Questions',type:'roundQs',viewHide:true,hint:'Markdown supported (**bold**, *italic*, lists, links). Students answer each question in its own conversation. Add as many as the round needs.'}],
     cols:['Title','Questions','Comments'], cells:b=>[b.title,String((b.questions||[]).length),String((b.posts||[]).length)],
     defaults:()=>({posts:[],questions:[{id:uid('q'),text:''}]}),
     sections:()=>[]},
   quiz:{coll:'quizzes',label:'Quiz',plural:'Quizzes',nameKey:'title',
     fields:()=>[{key:'title',label:'Title',type:'text',required:true},{key:'passing',label:'Passing score (%)',type:'number'},
-      {key:'questions',label:'Questions',type:'questions',required:true,viewHide:true,hint:'Click a letter to mark the correct answer.'}],
+      {key:'questions',label:'Questions',type:'questions',required:true,viewHide:true,hint:'Choose a type for each question. Click a letter to mark the correct answer.'}],
     cols:['Title','Questions','Passing score'], cells:q=>[q.title,String((q.questions||[]).length),q.passing+'%'],
     defaults:()=>({passing:'80',questions:[blankQ()]}),
-    sections:q=>[{title:'Questions',empty:'No questions yet.',items:(q.questions||[]).map((x,i)=>({title:(i+1)+'. '+x.text,meta:'Answer: '+LETTERS[x.correct]+'. '+(x.options[x.correct]||''),tag:x.options.filter(Boolean).length+' options'}))}]}
+    sections:q=>[{title:'Questions',empty:'No questions yet.',items:(q.questions||[]).map((x,i)=>({title:(i+1)+'. '+x.text,meta:qType(x)==='essay'?'Open-ended answer, not scored':'Answer: '+LETTERS[x.correct]+'. '+(x.options[x.correct]||''),tag:qTypeLabel(x)}))}]}
 };
 const listRoute = k => (k==='team'||k==='intern'||k==='faculty') ? {page:'interns',tab:k} : {page:'rotation',tab:k};
 const baseCrumbs = k => {
@@ -1291,7 +1376,7 @@ class Component extends DCLogic {
   updateQs(fn){ this.setState(s=>({draft:{...s.draft,questions:fn(s.draft.questions.map(q=>({...q,options:[...q.options]})))},errors:{...s.errors,questions:null}})); }
   save(){
     const {route,draft,data}=this.state, k=route.ent, e=ENT[k], errors={};
-    e.fields(data).forEach(f=>{ if(['questions','media','reqs','roundQs'].includes(f.type)) return; const v=draft[f.key]; if(f.required && (!v || !String(v).trim() || v==='https://')) errors[f.key]=f.label+' is required.'; });
+    e.fields(data).forEach(f=>{ if(['questions','media','reqs','roundQs','extras'].includes(f.type)) return; const v=draft[f.key]; if(f.required && (!v || !String(v).trim() || v==='https://')) errors[f.key]=f.label+' is required.'; });
     if(k==='intern' && draft.email && !/^\S+@\S+\.\S+$/.test(draft.email)) errors.email='Enter a valid email address.';
     if(k==='url' && draft.url && draft.url!=='https://' && !/^https?:\/\/\S+\.\S+/.test(draft.url)) errors.url='Enter a full URL starting with https://';
     if(k==='prompt' && draft.mediaType && (!draft.mediaId||draft.mediaId==='__new')) errors.media=draft.mediaId==='__new'?'Create the new round first, or choose an existing one.':'Choose which item to attach.';
@@ -1301,13 +1386,14 @@ class Component extends DCLogic {
       if(draft.passing!=='' && (Number(draft.passing)<0||Number(draft.passing)>100)) errors.passing='Passing score must be between 0 and 100.';
       const qs=draft.questions||[];
       if(!qs.length) errors.questions='Add at least one question.';
-      else if(qs.some(q=>!q.text.trim()||q.options.filter(o=>o.trim()).length<2||!q.options[q.correct].trim())) errors.questions='Each question needs text, at least two options, and a correct answer.';
+      else if(qs.some(q=>!q.text.trim())) errors.questions='Fill in the text of every question.';
+      else if(qs.some(q=>qType(q)==='mc'&&(q.options.filter(o=>o.trim()).length<3||!q.options[q.correct].trim()))) errors.questions='Each multiple-choice question needs at least three choices and a correct answer.';
     }
     if(Object.keys(errors).length){ this.setState({errors}); return; }
     const rec={...draft}; ['order','passing','reqAnswers','reqReplies'].forEach(n=>{ if(n in rec) rec[n]=Number(rec[n])||0; });
     delete rec.newTitle; delete rec.newQ;
     if(k==='board') rec.questions=rec.questions.map(q=>({id:q.id,text:q.text.trim()}));
-    if(k==='quiz') rec.questions=rec.questions.map(q=>({text:q.text.trim(),options:q.options.map(o=>o.trim()),correct:q.correct}));
+    if(k==='quiz') rec.questions=rec.questions.map(q=>({type:qType(q),text:q.text.trim(),options:q.options.map(o=>o.trim()),correct:q.correct}));
     const members=rec.members; delete rec.members;
     const isNew=route.page==='add'; const id=isNew?uid(k[0]):route.id; rec.id=id;
     if(isNew && k==='intern') rec.progress=0;
@@ -1372,6 +1458,7 @@ class Component extends DCLogic {
       dRows:rows,dEmpty:!all.length};
   }
   setStudentProgress(n){ this.setState(s=>({data:{...s.data,interns:s.data.interns.map(i=>i.id===STUDENT_ID?{...i,progress:Math.max(i.progress||0,n)}:i)}})); }
+  saveLocal(name){ const b=this._blobs&&this._blobs[name]; if(!b){ this.flash('Download started (prototype)'); return; } const u=URL.createObjectURL(b), a=document.createElement('a'); a.href=u; a.download=name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),1000); this.flash('Downloaded '+name); }
   quizState(id){ return (this.state.quiz||{})[id]||{answers:{},submitted:false}; }
   setQuiz(id,v){ this.setState(s=>({quiz:{...s.quiz,[id]:v},quizError:''})); }
   renderVals(){
@@ -1385,13 +1472,13 @@ class Component extends DCLogic {
     const go=route=>()=>this.go(route);
     const isFaculty=s.role==='faculty';
     if(p==='thread'){ r={page:'feedback',tab:'comments'}; p='feedback'; }
-    const appPages=['insights','facultyHome','studentHome','studentRotation','about','interns','rotation','prompts','media','feedback','add','view','edit','thread','fbIntern','fbKeyword'];
+    const appPages=['insights','facultyHome','studentHome','studentRotation','about','interns','rotation','prompts','media','feedback','add','view','edit','thread','fbIntern','fbKeyword','fbTeam'];
     const inApp=!!s.role&&appPages.includes(p);
     const sec=(()=>{ if(p==='interns'||(['add','view','edit'].includes(p)&&(r.ent==='team'||r.ent==='intern'||r.ent==='faculty'))) return 'interns';
       if(['rotation','prompts','media','add','view','edit'].includes(p)) return 'rotation';
-      if(['feedback','thread','fbIntern','fbKeyword'].includes(p)) return 'feedback'; if(p==='facultyHome') return 'home'; return p; })();
+      if(['feedback','thread','fbIntern','fbKeyword','fbTeam'].includes(p)) return 'feedback'; if(p==='facultyHome') return 'home'; return p; })();
     const uList=unreadPosts(d), uSet=new Set(uList.map(x=>x.c.id)), allC=allComments(d);
-    const cRow=({b,c,parent})=>({author:c.author,initials:initials(c.author),context:parent?'replied to '+parent.author:'posted a new comment',board:b.title,snippet:snippet(c.text),time:fmtTs(c.ts),isNew:uSet.has(c.id),onView:()=>this.openPost(b.id,c.id),onMarkRead:()=>this.markRead([c.id])});
+    const cRow=({b,c,parent})=>({author:c.author,initials:initials(c.author),context:parent?'replied to '+parent.author:'posted a new comment',board:b.title,snippet:snippet(c.text),time:fmtTs(c.ts),isNew:uSet.has(c.id),onView:()=>this.openPost(b.id,c.id),onMarkRead:()=>this.markRead([c.id]),replyId:'fr-'+c.id,fullText:c.text,replyOpen:s.fcOpen===c.id,replyClosed:s.fcOpen!==c.id,replied:!!(s.fcReplied||{})[c.id],notReplied:!(s.fcReplied||{})[c.id],closedLabel:(s.fcReplied||{})[c.id]?'Replied':'Reply now',openLabel:(s.fcReplied||{})[c.id]?'Replied':'Close reply',draft:(s.fcDrafts||{})[c.id]||'',onDraft:e=>{ const v=e.target.value; this.setState(st=>({fcDrafts:{...st.fcDrafts,[c.id]:v}})); },onToggleReply:()=>this.setState({fcOpen:s.fcOpen===c.id?null:c.id}),onSend:()=>{ if(this.addComment(b.id,c.id,(this.state.fcDrafts||{})[c.id],{name:facultyName,role:'Faculty'})) this.setState(st=>({fcReplied:{...st.fcReplied,[c.id]:true}})); }});
     const cLink=x=>({title:snippet(x.c.text),meta:x.c.author+' · '+(x.parent?'replied to '+x.parent.author:'new comment')+' · '+x.b.title,date:fmtTs(x.c.ts),onClick:()=>this.openPost(x.b.id,x.c.id)});
     const nav=[['home','Dashboard',{page:'facultyHome'}],['interns','Members',{page:'interns'}],['rotation','Rotation',{page:'rotation'}],['feedback','Feedback',{page:'feedback',tab:'comments',filter:uList.length?'unread':'all'}],['insights','Insights',{page:'insights'}],['about','About eHospital',{page:'about'}]]
       .map(([k,label,route])=>{ const nb=k==='feedback'?uList.length:0; return {label,active:sec===k,inactive:sec!==k,onClick:go(route),hasBadge:nb>0,badge:String(nb),badgeLabel:nb+' unread'}; });
@@ -1429,15 +1516,14 @@ class Component extends DCLogic {
     if(p==='insights'){ title='Insights'; sub='How interns are progressing, how they engage, and how quickly faculty respond.'; crumbs=[['Insights']]; }
     let fcFilter='all', fbTab='comments';
     if(p==='feedback'){ const tab=(r.tab==='unread'||r.tab==='threads')?'comments':(FB_TABS.some(t=>t[0]===r.tab)?r.tab:'comments'); fcFilter=(r.filter==='unread'||r.tab==='unread')?'unread':'all';
-      fbTab=tab; title='Feedback'; sub='Intern comments from rounds, grouped by team, intern and keyword.';
+      fbTab=tab; title='Feedback'; sub='Intern comments from rounds, grouped by team, round and intern.';
       crumbs=[['Feedback',{page:'feedback',tab:'comments'}],[FB_TABS.find(t=>t[0]===tab)[1]]];
-      const counts={comments:allC.length,discussion:d.boards.reduce((n,b)=>n+(b.posts||[]).length,0),teams:d.teams.length,interns:d.interns.length,keywords:d.keywords.length};
+      const counts={comments:allC.length,discussion:d.boards.reduce((n,b)=>n+(b.posts||[]).length,0),teams:d.teams.length,interns:d.interns.length};
       tabs=FB_TABS.map(([k,l])=>({label:l,count:String(counts[k]),active:k===tab,inactive:k!==tab,onClick:go({page:'feedback',tab:k})}));
       const mk=(t,cols,items,cells,route)=>({title:t,count:String(items.length),hasAdd:false,cols,isEmpty:!items.length,emptyText:'Nothing here yet.',
         rows:items.map(it=>({onClick:go(route(it)),cells:cells(it).map((x,i)=>({text:x,strong:false,plain:i!==0,link:i===0,onOpen:ev=>{ if(ev&&ev.stopPropagation) ev.stopPropagation(); go(route(it))(); }}))}))});
-      if(tab==='teams') lists=[mk('Teams',['Team','Rotation','Interns','Comments','Unread'],[...d.teams].sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true})),t=>{ const names=new Set(d.interns.filter(i=>i.team===t.id).map(i=>i.name)); return [t.name,rotName(d,t.rotation),String(names.size),String(allC.filter(x=>names.has(x.c.author)).length),String(uList.filter(x=>names.has(x.c.author)).length)]; },t=>({page:'view',ent:'team',id:t.id}))];
+      if(tab==='teams') lists=[mk('Teams',['Team','Rotation','Interns','Comments','Unread'],[...d.teams].sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true})),t=>{ const names=new Set(d.interns.filter(i=>i.team===t.id).map(i=>i.name)); return [t.name,rotName(d,t.rotation),String(names.size),String(allC.filter(x=>names.has(x.c.author)).length),String(uList.filter(x=>names.has(x.c.author)).length)]; },t=>({page:'fbTeam',id:t.id}))];
       if(tab==='interns') lists=[mk('Interns',['Intern','Team','Comments'],[...d.interns].sort((a,b)=>a.name.localeCompare(b.name)),i=>[i.name,teamName(d,i.team),String(allC.filter(x=>x.c.author===i.name).length)],i=>({page:'fbIntern',id:i.id}))];
-      if(tab==='keywords') lists=[mk('Keywords',['Keyword','Comments','Interns'],[...d.keywords].sort((a,b)=>a.word.localeCompare(b.word)),k=>{ const m=allC.filter(x=>kwMatch(k,x.c)); return [k.word,String(m.length),String(new Set(m.map(x=>x.c.author)).size)]; },k=>({page:'fbKeyword',id:k.id}))];
     }
 
     if(p==='add'){ title='Add '+ent.label; crumbs=[...baseCrumbs(r.ent),['Add '+ent.label]]; }
@@ -1452,6 +1538,12 @@ class Component extends DCLogic {
       title=it.name; sub=teamName(d,it.team); crumbs=[['Feedback',{page:'feedback',tab:'comments'}],['Interns',{page:'feedback',tab:'interns'}],[it.name]];
       fbStats=[{label:'Comments',value:String(cm.length)},{label:'Likes received',value:String(cm.reduce((a,x)=>a+(x.c.up||0),0))},{label:'Rotation progress',value:Math.min(it.progress||0,N)+' of '+N}];
       fbThreads=cm.map(cLink); }
+    let fbTeamGroups=[];
+    if(p==='fbTeam'){ const tm=d.teams.find(t=>t.id===r.id)||d.teams[0]; const members=d.interns.filter(i=>i.team===tm.id).sort((a,b)=>a.name.localeCompare(b.name));
+      title=tm.name; sub=rotName(d,tm.rotation); crumbs=[['Feedback',{page:'feedback',tab:'comments'}],['Teams',{page:'feedback',tab:'teams'}],[tm.name]];
+      const names=new Set(members.map(i=>i.name));
+      fbStats=[{label:'Interns',value:String(members.length)},{label:'Comments',value:String(allC.filter(x=>names.has(x.c.author)).length)},{label:'Unread',value:String(uList.filter(x=>names.has(x.c.author)).length)}];
+      fbTeamGroups=members.map(i=>{ const cm=allC.filter(x=>x.c.author===i.name); return {name:i.name,count:cm.length+' comment'+(cm.length===1?'':'s'),onOpen:go({page:'fbIntern',id:i.id}),comments:cm.map(cLink),none:!cm.length}; }); }
     if(p==='fbKeyword'){ const k=d.keywords.find(x=>x.id===r.id)||d.keywords[0]; const cm=allC.filter(x=>kwMatch(k,x.c));
       title='“'+k.word+'”'; sub='Keyword'; crumbs=[['Feedback',{page:'feedback',tab:'comments'}],['Keywords',{page:'feedback',tab:'keywords'}],[k.word]];
       fbStats=[{label:'Comments',value:String(cm.length)},{label:'Interns',value:String(new Set(cm.map(x=>x.c.author)).size)}];
@@ -1463,11 +1555,17 @@ class Component extends DCLogic {
     if((p==='add'||p==='edit')&&s.draft){ formFields=ent.fields(d).map(f=>{ const v=s.draft[f.key]; const err=s.errors[f.key];
       const base={label:f.label,required:!!f.required,placeholder:f.placeholder||'',hint:f.hint||'',hasHint:!!f.hint,error:err||'',hasError:!!err,fid:'fld-'+f.key,lid:'lbl-'+f.key,hid:'hint-'+f.key,eid:'err-'+f.key,dby:[err?'err-'+f.key:'',f.hint?'hint-'+f.key:''].filter(Boolean).join(' '),
         isInput:['text','email','url','number','date'].includes(f.type),isTextarea:f.type==='textarea',isSelect:f.type==='select',isMulti:f.type==='multi',isFile:f.type==='file',
-        isMediaPick:f.type==='media',isQuestions:f.type==='questions',isReqs:f.type==='reqs',isRoundQs:f.type==='roundQs',isToggle:f.type==='toggle',on:!!v,off:!v,toggleText:v?f.onLabel:f.offLabel,onToggle:()=>this.setDraft({[f.key]:!v},f.key),
+        isMediaPick:f.type==='media',isExtras:f.type==='extras',isQuestions:f.type==='questions',isReqs:f.type==='reqs',isRoundQs:f.type==='roundQs',isToggle:f.type==='toggle',on:!!v,off:!v,toggleText:v?f.onLabel:f.offLabel,onToggle:()=>this.setDraft({[f.key]:!v},f.key),
         inputType:f.type,value:v==null?'':v,onChange:e=>this.setDraft({[f.key]:e.target.value},f.key),options:f.options||[]};
       if(f.type==='multi'){ const sel=v||[]; base.chips=f.options.map(o=>({label:o.label,selected:sel.includes(o.value),unselected:!sel.includes(o.value),
         onToggle:()=>this.setDraft({[f.key]:sel.includes(o.value)?sel.filter(x=>x!==o.value):[...sel,o.value]},f.key)})); }
-      if(f.type==='file'){ base.hasFile=!!v; base.noFile=!v; base.ext=v?v.split('.').pop().toUpperCase():''; base.onPick=()=>this.setDraft({[f.key]:SAMPLE_FILES[Math.floor(Math.random()*SAMPLE_FILES.length)]},f.key); }
+      if(f.type==='file'){ base.hasFile=!!v; base.noFile=!v; base.ext=v?v.split('.').pop().toUpperCase():''; base.fileId='fileinput-'+f.key; base.onPick=()=>{ const el=document.getElementById('fileinput-'+f.key); if(el) el.click(); };
+        base.onFile=e=>{ const el=e.target, fl=el.files&&el.files[0]; if(!fl) return; const ok=/\.(pdf|docx?|pptx?|png|jpe?g)$/i.test(fl.name);
+          if(!ok){ this.setState(st=>({errors:{...st.errors,[f.key]:'Choose a PDF, DOCX, PPTX, PNG or JPG file.'}})); el.value=''; return; }
+          if(fl.size>25*1024*1024){ this.setState(st=>({errors:{...st.errors,[f.key]:'That file is larger than 25 MB.'}})); el.value=''; return; }
+          this._blobs=this._blobs||{}; this._blobs[fl.name]=fl;
+          const upd={[f.key]:fl.name}; if(!(s.draft.title||'').trim()) upd.title=fl.name.replace(/\.[^.]+$/,'').replace(/[-_]+/g,' ');
+          this.setDraft(upd,f.key); el.value=''; }; }
       if(f.type==='media'){ const t=s.draft.mediaType||''; base.typeValue=t; base.typeOptions=MEDIA_TYPES; base.hasType=!!t;
         base.itemValue=s.draft.mediaId||''; base.itemOptions=t?d[MEDIA_COLL[t]].map(m=>({value:m.id,label:m.title})):[];
         if(t==='board') base.itemOptions=[...base.itemOptions,{value:'__new',label:'+ Create new round…'}];
@@ -1475,6 +1573,11 @@ class Component extends DCLogic {
         base.onNewTitle=e=>this.setDraft({newTitle:e.target.value},'media'); base.onNewQ=e=>this.setDraft({newQ:e.target.value},'media');
         base.onCreateRound=()=>{ const tt=(s.draft.newTitle||'').trim(), qq=(s.draft.newQ||'').trim(); if(!tt||!qq){ this.setState(st=>({errors:{...st.errors,media:'Give the new round a title and a first question.'}})); return; } const id=uid('b'); this.setState(st=>({data:{...st.data,boards:[...st.data.boards,{id,title:tt,questions:[{id:id+'q1',text:qq}],posts:[],qSeeded:true}]},draft:{...st.draft,mediaId:id,newTitle:'',newQ:''},errors:{...st.errors,media:null}})); this.flash('Round created. Add more questions on the Rounds tab.'); };
         base.onType=e=>this.setDraft({mediaType:e.target.value,mediaId:''},'media'); base.onItem=e=>this.setDraft({mediaId:e.target.value},'media'); }
+      if(f.type==='extras'){ const ex=v||[], et=s.draft.exType||'file', taken=new Set(ex.map(x=>x.type+':'+x.id));
+        base.exList=ex.map((x,i)=>{ const it=(d[MEDIA_COLL[x.type]]||[]).find(m=>m.id===x.id); return {typeLabel:mediaTypeLabel(x.type),title:it?it.title:'(removed item)',onRemove:()=>this.setDraft({extras:ex.filter((_,j)=>j!==i)},'extras')}; }); base.hasExtras=ex.length>0;
+        base.exType=et; base.exId=s.draft.exId||''; base.exOptions=d[MEDIA_COLL[et]].filter(m=>!taken.has(et+':'+m.id)).map(m=>({value:m.id,label:m.title}));
+        base.onExType=e=>this.setDraft({exType:e.target.value,exId:''},'extras'); base.onExId=e=>this.setDraft({exId:e.target.value},'extras');
+        base.onExAdd=()=>{ const id=s.draft.exId; if(!id){ this.flash('Select an item to add'); return; } this.setDraft({extras:[...ex,{type:et,id}],exId:''},'extras'); }; }
       if(f.type==='reqs'){ const t=s.draft.mediaType||'', bd=t==='board'?d.boards.find(x=>x.id===s.draft.mediaId):null, nq=bd?bd.questions.length:0;
         base.showBoard=!!bd; base.showOpen=t==='file'||t==='url'; base.showQuiz=t==='quiz'; base.showNone=!t||(t==='board'&&!bd);
         base.reqAnswers=s.draft.reqAnswers||''; base.reqAnswersHint=nq?'Leave blank to require all '+nq+' question'+(nq===1?'':'s')+'.':''; base.reqReplies=s.draft.reqReplies||'0';
@@ -1482,13 +1585,14 @@ class Component extends DCLogic {
         base.reqOpenOn=!!s.draft.reqOpen; base.onReqOpen=()=>this.setDraft({reqOpen:!s.draft.reqOpen},'reqs'); base.openVerb=t==='url'?'open the link':'download the file'; }
       if(f.type==='roundQs'){ const qs=v||[]; base.rqs=qs.map((q,i)=>({num:String(i+1),text:q.text,canRemove:qs.length>1,onText:e=>{ const val=e.target.value; this.updateRQs(a=>{a[i].text=val; return a;}); },onRemove:()=>this.updateRQs(a=>a.filter((_,j)=>j!==i))})); base.onAddRQ=()=>this.updateRQs(a=>[...a,{id:uid('q'),text:''}]); }
       if(f.type==='questions'){ const qs=v||[];
-        base.qs=qs.map((q,qi)=>({num:String(qi+1),text:q.text,canRemove:qs.length>1,
+        base.qTypes=QTYPES.map(([value,label])=>({value,label})); base.addBtns=QTYPES.map(([t,label])=>({label,onClick:()=>this.updateQs(a=>[...a,blankQ(t)])}));
+        base.qs=qs.map((q,qi)=>({num:String(qi+1),text:q.text,canRemove:qs.length>1,type:qType(q),isEssay:qType(q)==='essay',isTf:qType(q)==='tf',canAddOpt:qType(q)==='mc'&&q.options.length<6,optCount:q.options.length+' of 6 choices (minimum 3)',onAddOpt:()=>this.updateQs(a=>{ a[qi].options.push(''); return a; }),onType:e=>{ const t=e.target.value; this.updateQs(a=>{ const o=blankQ(t); a[qi]={...o,text:a[qi].text}; return a; }); },
           onText:e=>{ const val=e.target.value; this.updateQs(a=>{a[qi].text=val; return a;}); },
           onRemove:()=>this.updateQs(a=>a.filter((_,j)=>j!==qi)),
-          opts:q.options.map((o,oi)=>({letter:LETTERS[oi],value:o,isCorrect:q.correct===oi,notCorrect:q.correct!==oi,
+          opts:q.options.map((o,oi)=>({fixed:qType(q)==='tf',canRemove:qType(q)==='mc'&&q.options.length>3,onRemove:()=>this.updateQs(a=>{ const x=a[qi]; x.options.splice(oi,1); if(x.correct===oi) x.correct=0; else if(x.correct>oi) x.correct--; return a; }),letter:LETTERS[oi],value:o,isCorrect:q.correct===oi,notCorrect:q.correct!==oi,
             onChange:e=>{ const val=e.target.value; this.updateQs(a=>{a[qi].options[oi]=val; return a;}); },
             onMark:()=>this.updateQs(a=>{a[qi].correct=oi; return a;})}))}));
-        base.onAddQ=()=>this.updateQs(a=>[...a,blankQ()]); }
+        }
       return base; }); }
 
     let viewRows=[], viewSections=[];
@@ -1498,10 +1602,11 @@ class Component extends DCLogic {
         else if(f.type==='date') out=fmtDate(v);
         else if(f.type==='toggle') out=v?'Locked. Students can’t open this prompt or any after it.':'Unlocked';
         else if(f.type==='media') out=mediaLabel(d,item);
+        else if(f.type==='extras') out=((v||[]).map(x=>{ const it=(d[MEDIA_COLL[x.type]]||[]).find(m=>m.id===x.id); return it?mediaTypeLabel(x.type)+' · '+it.title:null; }).filter(Boolean).join('\n'))||'None';
         else if(f.type==='reqs') out=reqText(d,item);
         else if(f.key==='passing') out=v+'%';
         else out=(v===''||v==null)?'—':String(v);
-        return {label:f.label,value:out}; });
+        const md=r.ent==='prompt'&&f.key==='text'&&v; return {label:f.label,value:out,plain:!md,isMd:!!md,html:{__html:md?mdToHtml(v):''}}; });
       viewSections=(ent.sections?ent.sections(item,d):[]).map(sc=>({title:sc.title,count:sc.count||String(sc.items.length),empty:sc.empty,isEmpty:!sc.items.length,
         items:sc.items.map(x=>({title:x.title,meta:x.meta,tag:x.tag,isLink:!!x.route,isStatic:!x.route,onClick:x.route?go(x.route):null}))})); }
 
@@ -1519,27 +1624,29 @@ class Component extends DCLogic {
     const cur=ps[step];
     if(p==='studentRotation'&&cur&&crumbVals.length) crumbVals[crumbVals.length-1].label='Prompt '+(step+1)+': '+cur.title;
     if(s.step!==step&&p==='studentRotation') setTimeout(()=>this.setState({step}),0);
-    const m=cur?mediaItem(d,cur):null, mt=m?cur.mediaType:'';
+    const pm=cur?mediaItem(d,cur):null, pmt=pm?cur.mediaType:'';
+    const xs=(s.xSel&&cur&&s.xSel.pid===cur.id)?s.xSel:null, xm=xs?(d[MEDIA_COLL[xs.type]]||[]).find(y=>y.id===xs.id):null;
+    const m=xm||pm, mt=xm?xs.type:pmt;
     let qItems=[], quizVals={quizOpen:false,quizPassed:false,quizFailed:false,quizResultText:'',quizMeta:''};
     if(mt==='quiz'){ const qs=this.quizState(m.id); const n=m.questions.length;
-      qItems=m.questions.map((q,qi)=>({num:String(qi+1),text:q.text,opts:q.options.map((o,oi)=>({o,oi})).filter(x=>x.o).map(({o,oi})=>{ const sel=qs.answers[qi]===oi, sub=qs.submitted;
+      qItems=m.questions.map((q,qi)=>({num:String(qi+1),text:q.text,isEssay:qType(q)==='essay',essay:typeof qs.answers[qi]==='string'?qs.answers[qi]:'',essayLocked:qs.submitted,onEssay:e=>{ const v=e.target.value; if(!qs.submitted) this.setQuiz(m.id,{...qs,answers:{...qs.answers,[qi]:v}}); },opts:(qType(q)==='essay'?[]:q.options).map((o,oi)=>({o,oi})).filter(x=>x.o).map(({o,oi})=>{ const sel=qs.answers[qi]===oi, sub=qs.submitted;
         return {letter:LETTERS[oi],label:o,onPick:()=>{ if(!sub) this.setQuiz(m.id,{...qs,answers:{...qs.answers,[qi]:oi}}); },
           neutral:!sub&&!sel,selected:!sub&&sel,correct:sub&&oi===q.correct,wrong:sub&&sel&&oi!==q.correct,locked:sub&&!sel&&oi!==q.correct}; })}));
-      const score=m.questions.filter((q,qi)=>qs.answers[qi]===q.correct).length, pct=n?Math.round(score/n*100):0, passed=pct>=m.passing;
-      quizVals={quizOpen:!qs.submitted,quizPassed:qs.submitted&&passed,quizFailed:qs.submitted&&!passed,quizMeta:n+' questions · Pass with '+m.passing+'%',
-        quizResultText:'You scored '+pct+'% ('+score+' of '+n+'). '+(passed?'Passed.':'The passing score is '+m.passing+'%.'),
-        submitQuiz:()=>{ if(Object.keys(qs.answers).length<n){ this.setState({quizError:'Answer every question before submitting.'}); return; } this.setQuiz(m.id,{...qs,submitted:true}); },
+      const gq=m.questions.filter(q=>qType(q)!=='essay'), nG=gq.length, score=m.questions.filter((q,qi)=>qType(q)!=='essay'&&qs.answers[qi]===q.correct).length, pct=nG?Math.round(score/nG*100):100, passed=pct>=m.passing;
+      quizVals={quizOpen:!qs.submitted,quizPassed:qs.submitted&&passed,quizFailed:qs.submitted&&!passed,quizMeta:n+' questions · '+(nG?'Pass with '+m.passing+'%':'Not scored')+(nG<n?' · '+(n-nG)+' essay':''),
+        quizResultText:nG?'You scored '+pct+'% ('+score+' of '+nG+(nG<n?' scored questions':'')+'). '+(passed?'Passed.':'The passing score is '+m.passing+'%.'):'Your answers were submitted.',
+        submitQuiz:()=>{ if(m.questions.some((q,qi)=>qType(q)==='essay'?!String(qs.answers[qi]||'').trim():qs.answers[qi]==null)){ this.setState({quizError:'Answer every question before submitting.'}); return; } this.setQuiz(m.id,{...qs,submitted:true}); },
         retakeQuiz:()=>this.setQuiz(m.id,{answers:{},submitted:false})}; }
 
     const opened=s.opened||{}, reqs=[];
-    if(cur&&mt==='file'&&cur.reqOpen) reqs.push({label:'Download the file',met:!!opened[cur.id]});
-    if(cur&&mt==='url'&&cur.reqOpen) reqs.push({label:'Open the link',met:!!opened[cur.id]});
-    if(cur&&mt==='board'){ const nq=m.questions.length, need=Math.min(nq,cur.reqAnswers||0), mine=(m.posts||[]).filter(c=>c.author===me.name);
-      const ans=new Set(mine.filter(c=>!c.parent).map(c=>postQ(m,c))).size;
+    if(cur&&pmt==='file'&&cur.reqOpen) reqs.push({label:'Download the file',met:!!opened[cur.id]});
+    if(cur&&pmt==='url'&&cur.reqOpen) reqs.push({label:'Open the link',met:!!opened[cur.id]});
+    if(cur&&pmt==='board'){ const nq=pm.questions.length, need=Math.min(nq,cur.reqAnswers||0), mine=(pm.posts||[]).filter(c=>c.author===me.name);
+      const ans=new Set(mine.filter(c=>!c.parent).map(c=>postQ(pm,c))).size;
       if(need>0) reqs.push({label:'Answer '+need+' of '+nq+' question'+(nq===1?'':'s')+' ('+Math.min(ans,need)+'/'+need+')',met:ans>=need});
-      const nr=cur.reqReplies||0, rep=mine.filter(c=>{ const pp=c.parent&&(m.posts||[]).find(x=>x.id===c.parent); return pp&&pp.role==='Intern'&&pp.author!==me.name; }).length;
+      const nr=cur.reqReplies||0, rep=mine.filter(c=>{ const pp=c.parent&&(pm.posts||[]).find(x=>x.id===c.parent); return pp&&pp.role==='Intern'&&pp.author!==me.name; }).length;
       if(nr>0) reqs.push({label:'Reply to '+nr+' classmate'+(nr===1?'':'s')+' ('+Math.min(rep,nr)+'/'+nr+')',met:rep>=nr}); }
-    if(cur&&mt==='quiz'){ const qq=this.quizState(m.id), nQ=m.questions.length, sc=m.questions.filter((q,qi)=>qq.answers[qi]===q.correct).length; reqs.push({label:'Pass the quiz ('+m.passing+'% to pass)',met:qq.submitted&&Math.round(sc/nQ*100)>=m.passing}); }
+    if(cur&&pmt==='quiz'){ const qq=this.quizState(pm.id), nQ=pm.questions.filter(q=>qType(q)!=='essay').length, sc=pm.questions.filter((q,qi)=>qType(q)!=='essay'&&qq.answers[qi]===q.correct).length; reqs.push({label:nQ?'Pass the quiz ('+pm.passing+'% to pass)':'Submit the quiz',met:qq.submitted&&(!nQ||Math.round(sc/nQ*100)>=pm.passing)}); }
     const reqTry=s.reqTry===step, reqVals=reqs.map(r=>({label:r.label,met:r.met,pending:!r.met&&!reqTry,alert:!r.met&&reqTry}));
     const blockNext=()=>{ if(reqs.some(r=>!r.met)){ this.setState({reqTry:step}); this.flash('Complete the requirements to continue'); return true; } return false; };
     thread=null;
@@ -1620,7 +1727,7 @@ class Component extends DCLogic {
     const loginRole=s.loginRole||'faculty';
     this._docTitle=title||({facultyHome:'Dashboard',studentHome:'Home',studentRotation:'Rotation',about:'About eHospital',landing:'Welcome',login:loginRole==='faculty'?'Faculty sign in':'Student sign in',insights:'Insights'}[p])||'eHospital';
     const discBoard=(p==='studentRotation'&&mt==='board')?m:(p==='view'&&r.ent==='board'&&item)?item:null;
-    const disc=discBoard?Object.assign({dShowView:p==='view'},{dQs:discBoard.questions.map((q,i)=>({num:String(i+1),text:q.text,heading:discBoard.questions.length>1?'Question '+(i+1)+' of '+discBoard.questions.length:'Question',...this.discussion(discBoard,isFaculty?{name:facultyName,role:'Faculty'}:{name:me.name,role:'Intern'},q.id)}))}):{dShowView:false,dQs:[]};
+    const disc=discBoard?Object.assign({dShowView:p==='view'},{dQs:discBoard.questions.map((q,i)=>({num:String(i+1),text:q.text,textHtml:{__html:mdToHtml(q.text)},heading:discBoard.questions.length>1?'Question '+(i+1)+' of '+discBoard.questions.length:'Question',...this.discussion(discBoard,isFaculty?{name:facultyName,role:'Faculty'}:{name:me.name,role:'Intern'},q.id)}))}):{dShowView:false,dQs:[]};
     return Object.assign({
       showProtoHints:this.props.showProtoHints??true,
       facultyName, facultyInitials:initials(facultyName), studentName:me.name,
@@ -1647,7 +1754,7 @@ class Component extends DCLogic {
       homeCards:[
         {bg:'#AE2573',fg:'#AE2573',tint:'#FBEFF5',line:'#EFC9DC',title:'Members',desc:'Organize interns into teams and keep their details current.',stat:d.interns.length+' interns across '+d.teams.length+' teams',onClick:go({page:'interns'})},
         {bg:'#C93D00',fg:'#C93D00',tint:'#FFF2EA',line:'#F7D2BD',title:'Rotation',desc:'Build the prompt sequence and attach supporting media.',stat:N+' prompts · '+(d.files.length+d.urls.length+d.boards.length+d.quizzes.length)+' media items',onClick:go({page:'rotation'})},
-        {bg:'#228848',fg:'#1B6E3A',tint:'#EDF7F0',line:'#C6E5D0',title:'Feedback',desc:'Read intern feedback by comment, intern or keyword.',stat:allC.length+' comments · '+uList.length+' unread',onClick:go({page:'feedback',tab:'threads'})}],
+        {bg:'#228848',fg:'#1B6E3A',tint:'#EDF7F0',line:'#C6E5D0',title:'Feedback',desc:'Read intern feedback by comment, team, round or intern.',stat:allC.length+' comments · '+uList.length+' unread',onClick:go({page:'feedback',tab:'threads'})}],
       recentThreads:allC.slice(0,3).map(cLink),
       promptCount:N+' prompts', mediaCount:(d.files.length+d.urls.length+d.boards.length+d.quizzes.length)+' items',
       promptPreview:ps.slice(0,6).map(x=>({order:String(x.order),title:x.title,media:mediaTypeLabel(x.mediaType),onClick:go({page:'view',ent:'prompt',id:x.id})})),
@@ -1674,7 +1781,7 @@ class Component extends DCLogic {
       threadPrompt:tPrompt?tPrompt.title:'—', threadPromptClick:tPrompt?go({page:'view',ent:'prompt',id:tPrompt.id}):null,
       threadDate:thread?fmtDate(thread.date):'', threadKeywords:thread?thread.keywords.map(id=>d.keywords.find(k=>k.id===id)).filter(Boolean).map(k=>({word:k.word,onClick:go({page:'fbKeyword',id:k.id})})):[],
       threadMessages:thread?thread.messages.map(x=>({...x,initials:initials(x.author)})):[],
-      isFbDetail:p==='fbIntern'||p==='fbKeyword', fbStats, fbThreads, fbNoThreads:!fbThreads.length,
+      isFbDetail:p==='fbIntern'||p==='fbKeyword', isFbTeam:p==='fbTeam', fbTeamGroups, fbTeamEmpty:!fbTeamGroups.length, fbStats, fbThreads, fbNoThreads:!fbThreads.length,
       confirmOpen:s.confirm&&p==='edit', confirmTitle:item?'Delete “'+tName(item)+'”?':'',
       confirmText:'This cannot be undone.'+(r.ent==='team'?' Its interns will stay, without a team.':''),
       cancelDelete:()=>this.setState({confirm:false}), confirmDelete:()=>this.remove(), stop:e=>e.stopPropagation(),
@@ -1693,11 +1800,13 @@ class Component extends DCLogic {
       nextLocked:step+1===lockIdx&&lockIdx<N, nextOpen:!(step+1===lockIdx&&lockIdx<N),
       onNextLocked:()=>{ if(blockNext()) return; this.setStudentProgress(step+1); this.flash('The next prompt is locked by your faculty'); },
       stepLabel:N?'Prompt '+(step+1)+' of '+N:'',
-      sOrder:String(step+1), sTitle:cur?cur.title:'', sText:cur?cur.text:'',
+      sOrder:String(step+1), sTitle:cur?cur.title:'', sText:cur?cur.text:'', sTextHtml:{__html:mdToHtml(cur?cur.text:'')},
+      sExtras:xm?[]:((cur&&cur.extras)||[]).map(x=>{ const it=(d[MEDIA_COLL[x.type]]||[]).find(y=>y.id===x.id); if(!it) return null; const t=x.type, f=t==='file', u=t==='url', rd=t==='board', qz=t==='quiz'; return {title:it.title,sub:f?it.file:u?it.url:(it.questions||[]).length+' question'+((it.questions||[]).length===1?'':'s'),desc:it.description||'',badge:f?it.file.split('.').pop().toUpperCase():u?'URL':rd?'Round':'Quiz',isFile:f,isUrl:u,isOpen:rd||qz,openLabel:rd?'Open round':'Open quiz',href:it.url||'',onOpen:()=>this.setState({xSel:{pid:cur.id,type:t,id:it.id}}),onDownload:()=>this.saveLocal(it.file)}; }).filter(Boolean), hasExtras:!xm&&!!(cur&&(cur.extras||[]).some(x=>(d[MEDIA_COLL[x.type]]||[]).some(y=>y.id===x.id))),
+      viewingExtra:!!xm, onBackExtra:()=>{ this.setState({xSel:null}); window.scrollTo(0,0); },
       mTypeLabel:m?mediaTypeLabel(mt):'Media', mFile:mt==='file', mUrl:mt==='url', mBoard:mt==='board', mQuiz:mt==='quiz', mNone:!m,
       mTitle:m?m.title:'', mDesc:m&&m.description?m.description:'', mFileName:mt==='file'?m.file:'', mExt:mt==='file'?m.file.split('.').pop().toUpperCase():'', mHref:mt==='url'?m.url:'',
       hasReqs:reqVals.length>0, reqs:reqVals, onOpenLink:()=>{ if(cur) this.setState(st=>({opened:{...st.opened,[cur.id]:true}})); },
-      onDownload:()=>{ if(cur) this.setState(st=>({opened:{...st.opened,[cur.id]:true}})); this.flash('Download started (prototype)'); },
+      onDownload:()=>{ if(cur) this.setState(st=>({opened:{...st.opened,[cur.id]:true}})); this.saveLocal(mt==='file'&&m?m.file:''); },
       
       posts:mt==='board'?(m.posts||[]).map(x=>({...x,initials:initials(x.author)})):[],
       boardOpen:mt==='board'&&boardStatus(m)==='Open', boardClosed:mt==='board'&&boardStatus(m)!=='Open',
