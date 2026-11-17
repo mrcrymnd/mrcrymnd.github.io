@@ -62,8 +62,7 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 <!-- TODO: replace with approved CUIMC lockup (placeholder "e" mark below and in the student top bar, landing and sign-in pages) -->
 <aside class="app-side d-flex flex-column flex-shrink-0 p-3 sticky-top vh-100 text-white" style="width:240px;background:#1D4F91">
 <button type="button" sc-camel-on-click="{{ goHome }}" class="btn d-flex align-items-center gap-2 px-2 border-0 text-white">
-<span class="bg-white rounded-2 d-inline-flex align-items-center justify-content-center fw-bold" style="width:36px;height:36px;font-size:12px;letter-spacing:-.02em;color:#B42318">R4R</span>
-<span class="fs-5 fw-bold">eHospital</span>
+<img src="logo.svg" alt="R4R Handoff" style="height:32px;width:auto;filter:brightness(0) invert(1)">
 </button>
 <div class="fw-semibold text-uppercase px-3 pt-4 pb-2" style="letter-spacing:.08em;font-size:12px;color:rgba(255,255,255,.8)">Faculty</div>
 <nav aria-label="Faculty"><ul class="nav nav-pills nav-dark flex-column gap-1">
@@ -89,8 +88,7 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 <nav aria-label="Student" class="navbar navbar-expand px-3 px-lg-4 text-white" style="background:#1D4F91">
 <div class="container-fluid gap-3 flex-wrap">
 <button type="button" sc-camel-on-click="{{ goHome }}" class="navbar-brand btn d-flex align-items-center gap-2 border-0 p-0 text-white">
-<span class="bg-white rounded-2 d-inline-flex align-items-center justify-content-center fw-bold" style="width:34px;height:34px;font-size:12px;letter-spacing:-.02em;color:#B42318">R4R</span>
-<span class="fw-bold">eHospital</span>
+<img src="logo.svg" alt="R4R Handoff" style="height:32px;width:auto;filter:brightness(0) invert(1)">
 </button>
 <ul class="nav nav-pills nav-dark me-auto gap-1">
 <sc-for list="{{ studentNav }}" as="n" hint-placeholder-count="3">
@@ -112,15 +110,14 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 <sc-if value="{{ isLanding }}" hint-placeholder-val="{{ true }}">
 <div class="min-vh-100 d-flex flex-column">
 <header class="d-flex align-items-center gap-2 px-4 px-lg-5 py-4">
-<span class="rounded-2 d-inline-flex align-items-center justify-content-center fw-bold" style="width:36px;height:36px;font-size:12px;letter-spacing:-.02em;color:#FFFFFF;background:#B42318">R4R</span>
-<span class="fs-5 fw-bold">eHospital</span>
+<img src="logo-navy.svg" alt="R4R Handoff" style="height:36px;width:auto">
 </header>
 <div class="container flex-grow-1 d-flex align-items-center pb-5">
 <div class="row g-5 align-items-center w-100">
 <div class="col-lg-7">
 <div class="small fw-semibold text-uppercase text-primary mb-3" style="letter-spacing:.08em">READY 4 RESIDENCY</div>
 <h1 class="display-4 fw-bold mb-4" style="letter-spacing:-0.025em;text-wrap:balance">Make decisions and take actions as a team.</h1>
-<p class="lead text-secondary mb-0" style="max-width:520px;text-wrap:pretty">eHospital is a core instructional component requiring students to articulate clinical reasoning through frequent prompts related to differential diagnosis, diagnostics, and management decisions.</p>
+<p class="lead text-secondary mb-0" style="max-width:520px;text-wrap:pretty">R4R Handoff is a core instructional component requiring students to articulate clinical reasoning through frequent prompts related to differential diagnosis, diagnostics, and management decisions.</p>
 </div>
 <div class="col-lg-5">
 <div class="fw-semibold text-secondary mb-3">Sign in to continue</div>
@@ -145,8 +142,7 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 <div class="card">
 <div class="card-body p-4 p-md-5">
 <div class="d-flex align-items-center gap-2 mb-4">
-<span class="rounded-2 d-inline-flex align-items-center justify-content-center fw-bold" style="width:34px;height:34px;font-size:12px;letter-spacing:-.02em;color:#FFFFFF;background:#B42318">R4R</span>
-<span class="fw-bold">eHospital</span>
+<img src="logo-navy.svg" alt="R4R Handoff" style="height:36px;width:auto">
 </div>
 <h1 class="h4 fw-bold mb-4">{{ loginTitle }}</h1>
 <div class="d-grid"><button type="button" sc-camel-on-click="{{ signIn }}" class="btn btn-cta btn-lg">Use my UNI</button></div>
@@ -364,7 +360,7 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 <span class="small fw-semibold text-nowrap">{{ c.author }}</span>
 <sc-if value="{{ c.isFaculty }}"><span class="badge text-bg-primary">Faculty</span></sc-if>
 <span class="small text-secondary text-nowrap">{{ c.time }}</span>
-<sc-if value="{{ c.isNew }}"><span class="badge" style="background:#0077C8">New</span><button type="button" sc-camel-on-click="{{ c.onMarkRead }}" class="btn btn-link btn-sm p-0 text-secondary text-nowrap">Mark as read</button></sc-if>
+<sc-if value="{{ c.isNew }}"><span class="badge" style="background:#0077C8">New</span></sc-if>
 <sc-if value="{{ c.collapsed }}"><span class="small text-secondary text-truncate">· {{ c.summary }}</span></sc-if>
 </div>
 <sc-if value="{{ c.expanded }}">
@@ -463,8 +459,8 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 
 <sc-if value="{{ isAbout }}">
 <div style="max-width:720px">
-<h1 class="h2 fw-bold mb-3">About eHospital</h1>
-<p class="lead mb-4">eHospital is an education platform for clinical training. Faculty organize interns into teams, build rotations from a sequence of prompts and supporting media, and review the feedback interns share along the way.</p>
+<h1 class="h2 fw-bold mb-3">About R4R Handoff</h1>
+<p class="lead mb-4">R4R Handoff is an education platform for clinical training. Faculty organize interns into teams, build rotations from a sequence of prompts and supporting media, and review the feedback interns share along the way.</p>
 <div class="d-flex flex-column gap-3">
 <div class="card"><div class="card-body p-4">
 <h2 class="h5 card-title card-title--accent text-primary mb-3">Mission</h2>
@@ -514,7 +510,6 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 <sc-if value="{{ ff.inactive }}"><button type="button" sc-camel-on-click="{{ ff.onClick }}" aria-pressed="false" class="btn btn-outline-secondary">{{ ff.label }}</button></sc-if>
 </sc-for>
 </div>
-<sc-if value="{{ hasUnread }}"><button type="button" sc-camel-on-click="{{ markAllRead }}" class="btn btn-outline-primary btn-sm">Mark all as read</button></sc-if>
 </div>
 </div>
 <div class="list-group list-group-flush">
@@ -529,7 +524,6 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 <div class="d-flex flex-column align-items-stretch gap-2 flex-shrink-0">
 <sc-if value="{{ ua.replyClosed }}"><button type="button" sc-camel-on-click="{{ ua.onToggleReply }}" aria-expanded="false" aria-controls="{{ ua.replyId }}" class="btn btn-sm {{ ua.btnClass }}" style="{{ ua.btnStyle }}">{{ ua.closedLabel }}</button></sc-if>
 <sc-if value="{{ ua.replyOpen }}"><button type="button" sc-camel-on-click="{{ ua.onToggleReply }}" aria-expanded="true" aria-controls="{{ ua.replyId }}" class="btn btn-sm {{ ua.btnClass2 }}" style="{{ ua.btnStyle }}">{{ ua.openLabel }}</button></sc-if>
-<sc-if value="{{ ua.isNew }}"><button type="button" sc-camel-on-click="{{ ua.onMarkRead }}" class="btn btn-link btn-sm text-secondary">Mark as read</button></sc-if>
 </div>
 <sc-if value="{{ ua.replyOpen }}"><div id="{{ ua.replyId }}" class="w-100 border-top pt-3 mt-1 row g-3 g-xl-4">
 <div class="col-12 col-xl-5 split-l">
@@ -853,7 +847,7 @@ a:not(.btn){font-weight:600;text-decoration:underline}a:not(.btn):hover{text-dec
 <span class="small fw-semibold text-nowrap">{{ c.author }}</span>
 <sc-if value="{{ c.isFaculty }}"><span class="badge text-bg-primary">Faculty</span></sc-if>
 <span class="small text-secondary text-nowrap">{{ c.time }}</span>
-<sc-if value="{{ c.isNew }}"><span class="badge" style="background:#0077C8">New</span><button type="button" sc-camel-on-click="{{ c.onMarkRead }}" class="btn btn-link btn-sm p-0 text-secondary text-nowrap">Mark as read</button></sc-if>
+<sc-if value="{{ c.isNew }}"><span class="badge" style="background:#0077C8">New</span></sc-if>
 <sc-if value="{{ c.collapsed }}"><span class="small text-secondary text-truncate">· {{ c.summary }}</span></sc-if>
 </div>
 <sc-if value="{{ c.expanded }}">
@@ -1292,7 +1286,7 @@ const baseCrumbs = k => {
   if (k==='team') return [['Members',{page:'interns',tab:'team'}],['Teams',{page:'interns',tab:'team'}]];
   if (k==='intern') return [['Members',{page:'interns',tab:'team'}],['Interns',{page:'interns',tab:'intern'}]];
   if (k==='faculty') return [['Members',{page:'interns',tab:'team'}],['Faculty',{page:'interns',tab:'faculty'}]];
-  return [['Rotation',{page:'rotation',tab:'prompt'}],[ROT_TABS.find(t=>t[0]===k)[1],{page:'rotation',tab:k}]];
+  return [['Case: Medicine',{page:'rotation',tab:'prompt'}],[ROT_TABS.find(t=>t[0]===k)[1],{page:'rotation',tab:k}]];
 };
 
 class Component extends DCLogic {
@@ -1314,7 +1308,7 @@ class Component extends DCLogic {
     this.state = Object.assign({journeyReset:1,commentsMerged:1,demoUnread:1,role:null,route:{page:'landing'},data:normData(mergeIn(SEED)),draft:null,errors:{},confirm:false,toast:null,loginRole:null,login:{email:'',password:''},step:0,quiz:{},reply:'',quizError:'',votes:{},dSort:'oldest',dDraft:'',replyTo:null,replyDraft:'',dFocus:null,hl:null,scrollTo:null,dDrafts:{},opened:{},reqTry:null,dragId:null,dragOver:null}, saved||{}, {collapsed,scrollTo:null});
   }
   componentDidMount(){ this._setTitle(); }
-  _setTitle(){ const t=this._docTitle; if(t&&document.title!==t+' – eHospital') document.title=t+' – eHospital'; }
+  _setTitle(){ const t=this._docTitle; if(t&&document.title!==t+' – R4R Handoff') document.title=t+' – R4R Handoff'; }
   _mkKey(){ return e=>{ if(e.key==='Escape'){ this.setState({confirm:false}); return; } if(e.key==='Tab'){ const d=document.getElementById('del-dialog'); if(!d) return; const f=[...d.querySelectorAll('button,[href],input,select,textarea')].filter(x=>!x.disabled); if(!f.length) return; const first=f[0], last=f[f.length-1], cur=document.activeElement; if(e.shiftKey&&(cur===first||cur===d)){ e.preventDefault(); last.focus(); } else if(!e.shiftKey&&(cur===last||!d.contains(cur))){ e.preventDefault(); first.focus(); } } }; }
   componentDidUpdate(pp,ps){
     this._setTitle();
@@ -1449,7 +1443,7 @@ class Component extends DCLogic {
     const unrep=unrepliedPosts(d), uList=unreadPosts(d), uSet=new Set(uList.map(x=>x.c.id)), allC=allComments(d);
     const cRow=({b,c,parent})=>({author:c.author,initials:initials(c.author),context:parent?'replied to '+parent.author:'posted a new comment',board:b.title,onRound:go({page:'view',ent:'board',id:b.id}),snippet:snippet(c.text),time:fmtTs(c.ts),isNew:uSet.has(c.id),onView:()=>this.openPost(b.id,c.id),onMarkRead:()=>this.markRead([c.id]),replyId:'fr-'+c.id,fullText:c.text,replyOpen:s.fcOpen===c.id,replyClosed:s.fcOpen!==c.id,replied:!!(s.fcReplied||{})[c.id]||facRep.has(c.id),btnClass:(s.fcReplied||{})[c.id]||facRep.has(c.id)?'text-white':'btn-primary',btnClass2:(s.fcReplied||{})[c.id]||facRep.has(c.id)?'text-white':'btn-secondary',btnStyle:(s.fcReplied||{})[c.id]||facRep.has(c.id)?{background:'#1B6E3A',borderColor:'#1B6E3A'}:{},notReplied:!((s.fcReplied||{})[c.id]||facRep.has(c.id)),closedLabel:(s.fcReplied||{})[c.id]||facRep.has(c.id)?'Replied':'Reply now',openLabel:(s.fcReplied||{})[c.id]||facRep.has(c.id)?'Replied':'Close reply',draft:(s.fcDrafts||{})[c.id]||'',onDraft:e=>{ const v=e.target.value; this.setState(st=>({fcDrafts:{...st.fcDrafts,[c.id]:v}})); },onToggleReply:()=>this.setState({fcOpen:s.fcOpen===c.id?null:c.id}),onSend:()=>{ if(this.addComment(b.id,c.id,(this.state.fcDrafts||{})[c.id],{name:facultyName,role:'Faculty'})) this.setState(st=>({fcReplied:{...st.fcReplied,[c.id]:true}})); }});
     const cLink=x=>({title:snippet(x.c.text),meta:x.c.author+' · '+(x.parent?'replied to '+x.parent.author:'new comment')+' · '+x.b.title,date:fmtTs(x.c.ts),onClick:()=>this.openPost(x.b.id,x.c.id)});
-    const nav=[['feedback','Feedback',{page:'feedback',tab:'comments',filter:unrep.length?'unread':'all'}],['rotation','Rotation',{page:'rotation'}],['interns','Members',{page:'interns'}],['insights','Insights',{page:'insights'}],['about','About eHospital',{page:'about'}]]
+    const nav=[['feedback','Feedback',{page:'feedback',tab:'comments',filter:unrep.length?'unread':'all'}],['rotation','Case: Medicine',{page:'rotation'}],['interns','Members',{page:'interns'}],['insights','Insights',{page:'insights'}],['about','About R4R Handoff',{page:'about'}]]
       .map(([k,label,route])=>{ const nb=k==='feedback'?unrep.length:0; return {label,active:sec===k,inactive:sec!==k,onClick:go(route),hasBadge:nb>0,badge:String(nb),badgeLabel:nb+' unreplied'}; });
     const studentNav=[['studentHome','Home'],['studentRotation','Rotation'],['about','About']].map(([k,label])=>({label,active:p===k,inactive:p!==k,onClick:go({page:k})}));
 
@@ -1473,13 +1467,13 @@ class Component extends DCLogic {
       crumbs=[['Members',{page:'interns',tab:'team'}],[MEMBER_TABS.find(t=>t[0]===tab)[1]]];
       tabs=MEMBER_TABS.map(([k,l])=>({label:l,count:String(d[ENT[k].coll].length),active:k===tab,inactive:k!==tab,onClick:go({page:'interns',tab:k})}));
       lists=[listFor(tab)]; }
-    if(p==='rotation'){ const tab=ROT_TABS.some(t=>t[0]===r.tab)?r.tab:'prompt'; title='Rotation'; sub='Build the prompt sequence and the media that supports it.';
-      crumbs=[['Rotation',{page:'rotation',tab:'prompt'}],[ROT_TABS.find(t=>t[0]===tab)[1]]];
+    if(p==='rotation'){ const tab=ROT_TABS.some(t=>t[0]===r.tab)?r.tab:'prompt'; title='Case: Medicine'; sub='Build the prompt sequence and the media that supports it.';
+      crumbs=[['Case: Medicine',{page:'rotation',tab:'prompt'}],[ROT_TABS.find(t=>t[0]===tab)[1]]];
       tabs=ROT_TABS.map(([k,l])=>({label:l,count:String(d[ENT[k].coll].length),active:k===tab,inactive:k!==tab,onClick:go({page:'rotation',tab:k})}));
       lists=[listFor(tab)]; }
-    if(p==='prompts'){ title='Prompt Sequence'; sub='Ordered prompts interns work through during the rotation.'; crumbs=[['Rotation',{page:'rotation'}],['Prompt Sequence']]; lists=[listFor('prompt')]; }
+    if(p==='prompts'){ title='Prompt Sequence'; sub='Ordered prompts interns work through during the rotation.'; crumbs=[['Case: Medicine',{page:'rotation'}],['Prompt Sequence']]; lists=[listFor('prompt')]; }
     if(p==='media'){ const tab=r.tab||'file'; title='Prompt Media'; sub='Files, links, rounds and quizzes that can be attached to prompts.';
-      crumbs=[['Rotation',{page:'rotation'}],['Prompt Media',{page:'media',tab:'file'}],[MEDIA_TABS.find(t=>t[0]===tab)[1]]];
+      crumbs=[['Case: Medicine',{page:'rotation'}],['Prompt Media',{page:'media',tab:'file'}],[MEDIA_TABS.find(t=>t[0]===tab)[1]]];
       tabs=MEDIA_TABS.map(([k,l])=>({label:l,count:String(d[ENT[k].coll].length),active:k===tab,inactive:k!==tab,onClick:go({page:'media',tab:k})}));
       lists=[listFor(tab)]; }
     if(p==='insights'){ title='Insights'; sub='How interns are progressing, how they engage, and how quickly faculty respond.'; crumbs=[['Insights']]; }
@@ -1500,7 +1494,7 @@ class Component extends DCLogic {
     if(p==='edit'){ title='Edit '+ent.label; sub=tName(item); crumbs=[...baseCrumbs(r.ent),[tName(item),{page:'view',ent:r.ent,id:r.id}],['Edit']]; }
     { const homeLbl='Home', homeRt={page:'studentHome'};
       if(p==='studentHome') crumbs=[[homeLbl]];
-      if(p==='about') crumbs=isFaculty?[['About eHospital']]:[[homeLbl,homeRt],['About eHospital']];
+      if(p==='about') crumbs=isFaculty?[['About R4R Handoff']]:[[homeLbl,homeRt],['About R4R Handoff']];
       if(p==='studentRotation'){ const sp=sortedPrompts(d)[Math.max(0,s.step||0)]; crumbs=[[homeLbl,homeRt],['Rotation',{page:'studentRotation'}],[sp?'Prompt '+((s.step||0)+1)+': '+sp.title:'Prompts']]; } }
     let thread=null, fbStats=[], fbThreads=[];
     if(p==='fbIntern'){ const it=d.interns.find(i=>i.id===r.id)||d.interns[0]; const cm=allC.filter(x=>x.c.author===it.name);
@@ -1703,7 +1697,7 @@ class Component extends DCLogic {
       {term:'Time to first reply',def:'Time from a student comment to the earliest faculty reply anywhere beneath it. The median is used so a few very slow replies don’t skew the number.'},
       {term:'Waiting',def:'Student comments with no faculty reply yet, measured against the newest comment on the platform.'}];
     const loginRole=s.loginRole||'faculty';
-    this._docTitle=title||({studentHome:'Home',studentRotation:'Rotation',about:'About eHospital',landing:'Welcome',login:loginRole==='faculty'?'Faculty sign in':'Student sign in',insights:'Insights'}[p])||'eHospital';
+    this._docTitle=title||({studentHome:'Home',studentRotation:'Rotation',about:'About R4R Handoff',landing:'Welcome',login:loginRole==='faculty'?'Faculty sign in':'Student sign in',insights:'Insights'}[p])||'R4R Handoff';
     const discBoard=(p==='studentRotation'&&mt==='board')?m:(p==='view'&&r.ent==='board'&&item)?item:null;
     const disc=discBoard?Object.assign({dShowView:p==='view'},{dQs:discBoard.questions.map((q,i)=>({num:String(i+1),text:q.text,textHtml:{__html:mdToHtml(q.text)},heading:discBoard.questions.length>1?'Question '+(i+1)+' of '+discBoard.questions.length:'Question',...this.discussion(discBoard,isFaculty?{name:facultyName,role:'Faculty'}:{name:me.name,role:'Intern'},q.id)}))}):{dShowView:false,dQs:[]};
     return Object.assign({
